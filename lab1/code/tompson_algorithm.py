@@ -1,3 +1,16 @@
+# Import graphviz
+import sys
+sys.path.append('..')
+sys.path.append('/usr/lib/graphviz/python/')
+sys.path.append('/usr/lib64/graphviz/python/')
+import gv
+
+# Import pygraph
+from pygraph.classes.graph import graph
+from pygraph.classes.digraph import digraph
+from pygraph.algorithms.searching import breadth_first_search
+from pygraph.readwrite.dot import write
+
 
 class FA:
     EMPTY = 'empty'
@@ -6,6 +19,25 @@ class FA:
         self.transition_table = transition_table
         self.initial_state = initial_state
         self.final_state = final_state  
+
+    def draw(self, filename):
+        gr = graph()
+        vertexes = self.transition_table.keys()
+        gr.add_nodes([str(vertex) for vertex in vertexes])
+        for initial_vertex in vertexes:
+            transitions = self.transition_table[initial_vertex]
+            for label in transitions.keys():
+                final_vertexes = transitions.get(label, None)
+                for final_vertex in final_vertexes:
+                    print '--------------------'
+                    print initial_vertex
+                    print transitions
+                    gr.add_edge(edge=(str(initial_vertex), str(final_vertex)), label=label)
+    
+        dot = write(gr)
+        gvv = gv.readstring(dot)
+        gv.layout(gvv, 'dot')
+        gv.render(gvv, 'png', '%s.png' % filename)
 
 
 class WrongExpressionError(Exception):
@@ -106,9 +138,15 @@ class TompsonAlgorithm:
         transition_table = fa1.transition_table
         transition_table.update(fa2.transition_table)
         transition_table.update({
-            initial_state: [fa1.initial_state, fa2.initial_state],
-            fa1.final_state: [final_state],
-            fa2.final_state: [final_state]
+            initial_state: {
+                FA.EMPTY: [fa1.initial_state, fa2.initial_state]
+            },
+            fa1.final_state: {
+                FA.EMPTY: [final_state]
+            },
+            fa2.final_state: {
+                FA.EMPTY: [final_state]
+            }
         })
 
         self.last_vertex += 2        
@@ -132,8 +170,5 @@ class TompsonAlgorithm:
 
 algorithm = TompsonAlgorithm("a(a(aa|b)*a)b*aa")
 fa = algorithm.buildNFA()
-print fa.transition_table
-print fa.initial_state
-print fa.final_state
-
+fa.draw('graph')
 
