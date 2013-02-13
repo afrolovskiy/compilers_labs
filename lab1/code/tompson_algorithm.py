@@ -6,7 +6,7 @@ sys.path.append('/usr/lib64/graphviz/python/')
 import gv
 
 # Import pygraph
-from pygraph.classes.graph import graph
+from pygraph.classes.digraph import digraph
 from pygraph.classes.digraph import digraph
 from pygraph.algorithms.searching import breadth_first_search
 from pygraph.readwrite.dot import write
@@ -21,7 +21,8 @@ class FA:
         self.final_state = final_state  
 
     def draw(self, filename):
-        gr = graph()
+        print "transition table:", self.transition_table 
+        gr = digraph()
         vertexes = self.transition_table.keys()
         gr.add_nodes([str(vertex) for vertex in vertexes])
         for initial_vertex in vertexes:
@@ -29,11 +30,7 @@ class FA:
             for label in transitions.keys():
                 final_vertexes = transitions.get(label, None)
                 for final_vertex in final_vertexes:
-                    print '--------------------'
-                    print initial_vertex
-                    print transitions
                     gr.add_edge(edge=(str(initial_vertex), str(final_vertex)), label=label)
-    
         dot = write(gr)
         gvv = gv.readstring(dot)
         gv.layout(gvv, 'dot')
@@ -108,6 +105,9 @@ class TompsonAlgorithm:
         transition_table[fa.final_state] = {
             FA.EMPTY: [fa.initial_state, final_state]
         }
+        transition_table[final_state] = {
+            FA.EMPTY: []
+        }
 
         self.last_vertex += 2
         return FA(transition_table, initial_state, final_state)
@@ -146,7 +146,8 @@ class TompsonAlgorithm:
             },
             fa2.final_state: {
                 FA.EMPTY: [final_state]
-            }
+            },
+            final_state: {},
         })
 
         self.last_vertex += 2        
@@ -167,8 +168,13 @@ class TompsonAlgorithm:
         return FA(transition_table, initial_state, final_state)
      
         
-
-algorithm = TompsonAlgorithm("a(a(aa|b)*a)b*aa")
+#regexp = "a(a(aa|b)*a)b*aa"
+#regexp = "a*"
+#regexp = "(ab)*"
+#regexp = "aa|bb"
+#regexp = "a(a|b)*b"
+regexp = "aaabbb"
+algorithm = TompsonAlgorithm(regexp)
 fa = algorithm.buildNFA()
 fa.draw('graph')
 
