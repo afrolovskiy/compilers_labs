@@ -1,40 +1,4 @@
-# Import graphviz
-import sys
-sys.path.append('..')
-sys.path.append('/usr/lib/graphviz/python/')
-sys.path.append('/usr/lib64/graphviz/python/')
-import gv
-
-# Import pygraph
-from pygraph.classes.digraph import digraph
-from pygraph.classes.digraph import digraph
-from pygraph.algorithms.searching import breadth_first_search
-from pygraph.readwrite.dot import write
-
-
-class FA:
-    EMPTY = 'empty'
-    
-    def __init__(self, transition_table, initial_state, final_state):
-        self.transition_table = transition_table
-        self.initial_state = initial_state
-        self.final_state = final_state  
-
-    def draw(self, filename):
-        print "transition table:", self.transition_table 
-        gr = digraph()
-        vertexes = self.transition_table.keys()
-        gr.add_nodes([str(vertex) for vertex in vertexes])
-        for initial_vertex in vertexes:
-            transitions = self.transition_table[initial_vertex]
-            for label in transitions.keys():
-                final_vertexes = transitions.get(label, None)
-                for final_vertex in final_vertexes:
-                    gr.add_edge(edge=(str(initial_vertex), str(final_vertex)), label=label)
-        dot = write(gr)
-        gvv = gv.readstring(dot)
-        gv.layout(gvv, 'dot')
-        gv.render(gvv, 'png', '%s.png' % filename)
+from fa import FA
 
 
 class WrongExpressionError(Exception):
@@ -42,19 +6,10 @@ class WrongExpressionError(Exception):
 
 
 class TompsonAlgorithm:
-    GROUP_START = '('
-    GROUP_END = ')'
-    ITERATION = '*'
-    OR = '|'
-    SPECIAL_SYMBOLS = [GROUP_START, GROUP_END, ITERATION, OR]
-   
+
     def __init__(self, regexp):
         self.regexp = regexp
-        self.alphabet = self.get_alphabet()
         self.last_vertex = 0
-    
-    def get_alphabet(self):
-        return set(self.regexp) - set(self.SPECIAL_SYMBOLS)
 
     def buildNFA(self):
         return self._buildNFA(self.regexp)
@@ -173,8 +128,8 @@ class TompsonAlgorithm:
 #regexp = "(ab)*"
 #regexp = "aa|bb"
 #regexp = "a(a|b)*b"
-regexp = "aaabbb"
-algorithm = TompsonAlgorithm(regexp)
-fa = algorithm.buildNFA()
-fa.draw('graph')
+#regexp = "aaabbb"
+#algorithm = TompsonAlgorithm(regexp)
+#fa = algorithm.buildNFA()
+#fa.draw('graph')
 
