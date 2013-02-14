@@ -8,7 +8,6 @@ class DeterminizationAlgorithm:
         self.nfa = nfa    
         self.alphabet = alphabet
 
-
     def _build_subsets(self):
         last_state = 0
         generalized_states = {}
