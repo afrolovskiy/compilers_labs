@@ -105,16 +105,15 @@ class MinimizationAlgorithm:
 
 
 #regexp = "a(a*|b)*b"
-regexp = "a|b"
-alg1 = TompsonAlgorithm(regexp)
-fa = alg1.buildNFA()
-fa.draw('graph')
+#regexp = "a|b"
+#alg1 = TompsonAlgorithm(regexp)
+#fa = alg1.buildNFA()
+#fa.draw('graph')
 
-alg2 = DeterminizationAlgorithm(fa, ['a', 'b'])
-fa2 = alg2.build_subsets()
+#alg2 = DeterminizationAlgorithm(fa, ['a', 'b'])
+#fa2 = alg2.build_subsets()
+#fa2.draw('graph2') 
 
-fa2.draw('graph2') 
-
-alg3 = MinimizationAlgorithm(fa2, ['a', 'b'])
-fa3 = alg3.minimize()
-fa3.draw('graph3') 
+#alg3 = MinimizationAlgorithm(fa2, ['a', 'b'])
+#fa3 = alg3.minimize()
+#fa3.draw('graph3') 

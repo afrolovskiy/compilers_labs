@@ -22,6 +22,8 @@ class FA:
         self.final_state = final_state  
 
     def draw(self, filename):
+        print "initial state:", self.initial_state
+        print "final states", self.final_state	
         print "transition table:", self.transition_table 
         gr = digraph()
         edges = {}
