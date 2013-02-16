@@ -10,6 +10,7 @@ from pygraph.classes.digraph import digraph
 from pygraph.classes.digraph import digraph
 from pygraph.algorithms.searching import breadth_first_search
 from pygraph.readwrite.dot import write
+from pygraph.classes.exceptions import AdditionError
 
 
 class FA:
@@ -30,7 +31,10 @@ class FA:
             for label in transitions.keys():
                 final_vertexes = transitions.get(label, [])
                 for final_vertex in final_vertexes:
-                    gr.add_edge(edge=(str(initial_vertex), str(final_vertex)), label=label)
+                    try: 
+                        gr.add_edge(edge=(str(initial_vertex), str(final_vertex)), label=label)
+                    except AdditionError:
+                        pass
         dot = write(gr)
         gvv = gv.readstring(dot)
         gv.layout(gvv, 'dot')
