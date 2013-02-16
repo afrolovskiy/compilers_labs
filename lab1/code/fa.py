@@ -24,17 +24,23 @@ class FA:
     def draw(self, filename):
         print "transition table:", self.transition_table 
         gr = digraph()
+        edges = {}
         vertexes = self.transition_table.keys()
-        gr.add_nodes([str(vertex) for vertex in vertexes])
         for initial_vertex in vertexes:
             transitions = self.transition_table[initial_vertex]
             for label in transitions.keys():
                 final_vertexes = transitions.get(label, [])
                 for final_vertex in final_vertexes:
-                    try: 
-                        gr.add_edge(edge=(str(initial_vertex), str(final_vertex)), label=label)
-                    except AdditionError:
-                        pass
+                    if edges.get((str(initial_vertex), str(final_vertex)), None):
+                        edges[(str(initial_vertex), str(final_vertex))].append(label)
+                    else:
+                        edges[(str(initial_vertex), str(final_vertex))] = [label]
+
+        gr.add_nodes([str(vertex) for vertex in vertexes])
+        for edge, label in edges.items():
+            label = ', '.join(label)
+            gr.add_edge(edge=edge, label=label)
+
         dot = write(gr)
         gvv = gv.readstring(dot)
         gv.layout(gvv, 'dot')

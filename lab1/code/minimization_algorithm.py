@@ -100,9 +100,7 @@ class MinimizationAlgorithm:
                 new_transition_table[idx][symbol] = group_idx
 
         initial_state = self._group_index(self.fa.initial_state, partition)
-        print "initial state:", initial_state
         final_state = [self._group_index(self.fa.final_state[0], partition)]
-        print "final state:", final_state
         return FA(new_transition_table, initial_state, final_state)
 
 
