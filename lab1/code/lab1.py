@@ -3,7 +3,19 @@ from fa import (FA, TompsonAlgorithm, DeterminizationAlgorithm, MinimizationAlgo
 		      ModellingAlgorithm)
 
 
-regexp = "a(a*|b)*b"
+#regexp = "a(a*|b)*b"
+#s = 'aa'
+#s = 'ab'
+
+#regexp = "a(a|bbb)*bab"
+#s = 'aabab'
+#s = 'abbbabab'
+#s = 'abbabab'
+
+regexp = 'abc*|bbb|a*'
+s = 'aaaaaaaaaa'
+#s = 'ab'
+#s = 'bb'
 
 alg1 = TompsonAlgorithm(regexp)
 fa = alg1.buildNFA()
@@ -18,4 +30,4 @@ fa3 = alg3.minimize()
 fa3.draw('graph3') 
 
 alg4 = ModellingAlgorithm(fa3)
-alg4.model('aaaaab')
+alg4.model(s)

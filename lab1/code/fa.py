@@ -38,7 +38,15 @@ class FA:
         edges = self._edges()
 
         gr = digraph()        
-        gr.add_nodes([str(vertex) for vertex in vertexes])
+        #gr.add_nodes([str(vertex) for vertex in vertexes])
+        for vertex in vertexes:
+            attrs = []
+            
+            if ((isinstance(self.final_state, list) and vertex in self.final_state) or
+                    (isinstance(self.final_state, int) and vertex == self.final_state)):
+                attrs.append('final')
+            gr.add_node(str(vertex), attrs=attrs)
+
         for edge, label in edges.items():
             label = ', '.join(label)
             gr.add_edge(edge=edge, label=label)
