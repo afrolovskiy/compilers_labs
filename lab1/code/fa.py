@@ -217,6 +217,8 @@ class DeterminizationAlgorithm:
 
         closure = self._closure([self.nfa.initial_state], self.nfa.transition_table)
         generalized_states = {last_state: set(closure)}
+        if self.nfa.final_state in closure:
+            final_state.append(last_state)
         initial_state = last_state
         last_state += 1
 
@@ -234,7 +236,7 @@ class DeterminizationAlgorithm:
                         d_states.append(U)
                         generalized_states[last_state] = U
                         if self.nfa.final_state in U:
-				            final_state.append(last_state)
+                            final_state.append(last_state)
                         last_state += 1
                         unmarked.append(U)
                     transitions.update({a: [self.get_key_by_value(generalized_states, U)]})

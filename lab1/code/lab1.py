@@ -3,8 +3,8 @@ from fa import (FA, TompsonAlgorithm, DeterminizationAlgorithm, MinimizationAlgo
 		      ModellingAlgorithm)
 
 
-#regexp = "a(a*|b)*b"
-#s = 'aa'
+regexp = "a(a*|b)*b"
+s = 'aa'
 #s = 'ab'
 
 #regexp = "a(a|bbb)*bab"
@@ -12,8 +12,9 @@ from fa import (FA, TompsonAlgorithm, DeterminizationAlgorithm, MinimizationAlgo
 #s = 'abbbabab'
 #s = 'abbabab'
 
-regexp = 'abc*|bbb|a*'
-s = 'aaaaaaaaaa'
+#regexp = 'abc*|bbb|a*'
+#s = ''
+#s = 'aaaaaaaaaa'
 #s = 'ab'
 #s = 'bb'
 
