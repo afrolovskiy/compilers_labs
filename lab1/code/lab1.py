@@ -3,8 +3,8 @@ from fa import (FA, TompsonAlgorithm, DeterminizationAlgorithm, MinimizationAlgo
 		      ModellingAlgorithm)
 
 
-regexp = "a(a*|b)*b"
-s = 'aa'
+regexp = "(a|b)*"
+s = ''
 #s = 'ab'
 
 #regexp = "a(a|bbb)*bab"
