@@ -29,6 +29,7 @@ def has_empty_chain(grammar):
 
 
 ###############################################################################
+# Algorithm 8.1
 def convert_grammar(grammar, disappearing_nonterminals):
 	new_grammar = Grammar()
 
@@ -112,6 +113,7 @@ def build_adding_rules(rule, idx):
 
 
 ###############################################################################
+# Algorithm 8.2
 def delete_empty_rules(grammar):
 	disappearing_nonterminals = find_disappearing_nonterminals(grammar)
 
@@ -149,80 +151,77 @@ def build_new_grammar(grammar):
 	new_grammar.terminals = set(grammar.terminals)
 	new_grammar.axiom = ComplexNonterminal(
 		[grammar.axiom], grammar.axiom.is_nullable)
-	print "axiom:", new_grammar.axiom
 
 	new_rules = []
-	rules = grammar.rules
-	unwatched = [new_grammar.axiom]
-	watched = set()
+	unwatched, watched = [new_grammar.axiom], set()
 	while unwatched:
-		print "***************************************************************"
-		print "unwatched:", [str(symbol) for symbol in unwatched]
-		print "watched:", [str(symbol) for symbol in watched]
-
 		complex_nonterminal = unwatched[0]
 		unwatched.remove(complex_nonterminal)
 		watched.add(complex_nonterminal)
-		print "complex nonterminal:", str(complex_nonterminal)
 
 		if complex_nonterminal.starts_with_nonterminal():
-			print "starts_with_nonterminal"
-			nonterminal_rules = find_rules_for_nonterminal(rules, complex_nonterminal.name[0])
-			for rule in nonterminal_rules:
-				if not rule.is_empty():
-					print "rule:", rule
-					left_side = [complex_nonterminal]
-
-					new_name = replace_nonterminal(complex_nonterminal.name, 0, rule.right_side)
-					new_complex_nonterminal = ComplexNonterminal(new_name)
-					right_side = [new_complex_nonterminal]
-					if (new_complex_nonterminal not in watched and
-							new_complex_nonterminal not in unwatched):
-						unwatched.append(new_complex_nonterminal)				
-
-					new_rule = Rule(left_side, right_side)
-					print "new_rule:", new_rule
-					new_rules.append(new_rule)
-			
+			new_rules.extend(build_rules_starts_with_nonterminal(
+				grammar.rules, complex_nonterminal, watched, unwatched))
 		elif complex_nonterminal.starts_with_terminal():
-			print "starts_with_terminal"
-			symbols = complex_nonterminal.name
-			for idx in range(1, len(symbols)):
-				symbol = symbols[idx]
-				print "symbol:", symbol
-
-				if (isinstance(symbol, Terminal) or 
-						(isinstance(symbol, Nonterminal) and not symbol.is_nullable)):
-					break
-
-				selected_rules = find_rules_for_nonterminal(rules, symbol)
-				for rule  in selected_rules:
-					if not rule.is_empty():
-						print "rule:", rule
-						left_side = [complex_nonterminal]
-
-						new_name = list(rule.right_side)
-						if (idx + 1) < len(symbols):
-							new_name.extend(symbols[idx + 1:])
-						new_complex_nonterminal = ComplexNonterminal(new_name)
-						right_side = [symbols[0], new_complex_nonterminal]
-						if (new_complex_nonterminal not in watched and
-								new_complex_nonterminal not in unwatched):
-							unwatched.append(new_complex_nonterminal)
-					
-						new_rule = Rule(left_side, right_side)
-						print "new_rule:", new_rule
-						new_rules.append(new_rule)
-
-			new_rule = Rule([complex_nonterminal], [symbols[0]])
-			print "new_rule:", new_rule
-			new_rules.append(new_rule)
-
+			new_rules.extend(build_rules_starts_with_terminal(
+				grammar.rules, complex_nonterminal, watched, unwatched))
 					
 	new_grammar.rules = new_rules
 	new_grammar.nonterminals = watched
 	return new_grammar
 
+
+def build_rules_starts_with_nonterminal(rules, complex_nonterminal, watched, unwatched):
+	adding_rules = []
+	nonterminal_rules = find_rules_for_nonterminal(
+		rules, complex_nonterminal.name[0])
+	for rule in nonterminal_rules:
+		if not rule.is_empty():
+			left_side = [complex_nonterminal]
+
+			new_name = replace_nonterminal(complex_nonterminal.name, 0, rule.right_side)
+			new_complex_nonterminal = ComplexNonterminal(new_name)
+			right_side = [new_complex_nonterminal]
+			
+			if (new_complex_nonterminal not in watched and
+					new_complex_nonterminal not in unwatched):
+				unwatched.append(new_complex_nonterminal)				
+
+			new_rule = Rule(left_side, right_side)
+			adding_rules.append(new_rule)
+	return adding_rules
+
+
+def build_rules_starts_with_terminal(rules, complex_nonterminal, watched, unwatched):
+	adding_rules = []
+	symbols = complex_nonterminal.name
+	for idx in range(1, len(symbols)):
+		symbol = symbols[idx]
+
+		if (isinstance(symbol, Terminal) or 
+				(isinstance(symbol, Nonterminal) and not symbol.is_nullable)):
+			break
+
+		selected_rules = find_rules_for_nonterminal(rules, symbol)
+		for rule  in selected_rules:
+			if not rule.is_empty():
+				left_side = [complex_nonterminal]
+
+				new_name = list(rule.right_side)
+				if (idx + 1) < len(symbols):
+					new_name.extend(symbols[idx + 1:])
+				new_complex_nonterminal = ComplexNonterminal(new_name)
+				right_side = [symbols[0], new_complex_nonterminal]
+
+				if (new_complex_nonterminal not in watched and
+						new_complex_nonterminal not in unwatched):
+					unwatched.append(new_complex_nonterminal)
+			
+				adding_rules.append(Rule(left_side, right_side))
+
+	adding_rules.append(Rule([complex_nonterminal], [symbols[0]]))
+
+	return adding_rules
 #################################################
 def delete_useless_nonterminals(grammar):
 	new_rules = list(grammar.rules)
