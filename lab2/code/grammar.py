@@ -74,8 +74,8 @@ class Nonterminal(Symbol):
 
 	
 class ComplexNonterminal(Nonterminal):
-	def __init__(self, is_nullable=True):
-		self.name = []
+	def __init__(self, name=[], is_nullable=True):
+		self.name = name
 		self.is_nullable = is_nullable
 		
 	def __hash__(self):
@@ -89,10 +89,7 @@ class ComplexNonterminal(Nonterminal):
 		return False
 
 	def __str__(self):
-		result_str = "[%s]" % ''.join([str(symbol) for symbol in name])
-		if not self.is_nullable:
-			return "nonnullable{%s}" % result_str
-		return result_str
+		return "[%s]" % ''.join([str(symbol) for symbol in self.name])
 		
 
 class Rule:

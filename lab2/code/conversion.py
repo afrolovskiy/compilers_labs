@@ -1,5 +1,5 @@
 from grammar import (Symbol , EmptySymbol,Terminal, 
-					 Nonterminal, Rule, Grammar)
+					 Nonterminal, ComplexNonterminal, Rule, Grammar)
 
 
 def find_disappearing_nonterminals(grammar):
@@ -114,10 +114,22 @@ def build_adding_rules(rule, idx):
 ###############################################################################
 def delete_empty_rules(grammar):
 	disappearing_nonterminals = find_disappearing_nonterminals(grammar)
-	converted_grammar = convert_grammar(grammar, disappearing_nonterminals)
-	cleared_grammar = delete_useless_nonterminals(grammar)
 
-	return None
+	converted_grammar = convert_grammar(grammar, disappearing_nonterminals)
+	print "converted_grammar:"
+	print converted_grammar
+
+	cleared_grammar = delete_useless_nonterminals(converted_grammar)
+	print "cleared_grammar:"
+	print cleared_grammar
+
+	# build new grammar
+	new_grammar = Grammar()
+	new_grammar.axiom = ComplexNonterminal(
+		[cleared_grammar.axiom], cleared_grammar.axiom.is_nullable)
+
+
+	return new_grammar
 
 
 #################################################
