@@ -57,6 +57,12 @@ class Nonterminal(Symbol):
 			return True
 		return False
 
+	def __hash__(self):
+		result_hash = sum([ord(symbol) for symbol in self.name]) 
+		if not self.is_nullable:
+			return result_hash + 1000
+		return result_hash
+
 	def __str__(self):
 		result_str = self.name
 		if not self.is_nullable:
