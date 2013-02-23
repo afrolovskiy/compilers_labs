@@ -1,7 +1,7 @@
 from grammar import (Symbol , EmptySymbol,Terminal,
 					 Nonterminal, Rule, Grammar)
 from conversion import (has_empty_chain, convert_grammar, find_disappearing_nonterminals,
-				   delete_empty_rules, delete_useless_nonterminals)
+				   delete_empty_rules, delete_useless_nonterminals, convert_to_greibach)
 
 
 grammar = Grammar()
@@ -25,16 +25,18 @@ grammar.rules.append(Rule([A], [e]))
 grammar.rules.append(Rule([B], [b, A]))
 grammar.rules.append(Rule([B], [e]))
 
-print "grammar:\n", grammar
+#print "grammar:\n", grammar
 
 #disappearing_nonterminals = find_disappearing_nonterminals(grammar)
 #new_grammar = convert_grammar(grammar, disappearing_nonterminals)
 #print "new_grammar:\n", new_grammar
 
-new_grammar2 = delete_empty_rules(grammar)
-print "new_grammar2:"
-print new_grammar2
+#new_grammar2 = delete_empty_rules(grammar)
+#print "new_grammar2:"
+#print new_grammar2
 
+new_grammar3 = convert_to_greibach(grammar)
+print "grammar3:", new_grammar3
 ###################################################################
 #grammar2 = Grammar()
 

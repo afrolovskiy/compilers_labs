@@ -1,3 +1,4 @@
+# variant 14
 from grammar import (Symbol , EmptySymbol,Terminal, 
 					 Nonterminal, ComplexNonterminal, Rule, Grammar)
 
@@ -291,7 +292,141 @@ def delete_useless_nonterminals_rules(rules, useless_nonterminals):
 ################################################
 
 
-
-
 ###############################################################################
+# Algorithm 8.3
+def convert_to_greibach(grammar):
+	converted_grammar = delete_empty_rules(grammar)
+	
+	new_grammar = Grammar()
+	new_grammar.axiom = converted_grammar.axiom	
+	new_grammar.terminals = set(converted_grammar.terminals)	
 
+	sorted_nonterminals = sort_nonterminals(
+		converted_grammar.nonterminals, converted_grammar.rules)
+	new_grammar.nonterminals = set(sorted_nonterminals)
+
+	# rebuild rules
+	nonterminal = sorted_nonterminals[-1]
+	new_rules = find_rules_for_nonterminal(converted_grammar.rules, nonterminal)
+	for idx in range(len(sorted_nonterminals)  - 2, -1, -1):
+		nonterminal = sorted_nonterminals[idx]
+		rules = find_rules_for_nonterminal(converted_grammar.rules, nonterminal)
+		for rule in rules:
+			if isinstance(rule.right_side[0], Nonterminal):
+				new_rules.extend(replace_rule(new_rules, rule))
+			else:
+				new_rules.append(rule)
+
+	# add rules for terminals
+	for terminal in converted_grammar.terminals:
+		new_nonterminal = Nonterminal("X{%s}" % str(terminal))
+		new_grammar.nonterminals.add(new_nonterminal)
+		new_rules.append(Rule([new_nonterminal], [terminal]))
+
+		# replace nonleft terminal to new nonterminals
+		for rule in new_rules:
+			rule =replace_nonleft_terminal_to_nonterminal(rule, terminal, new_nonterminal)
+
+	new_grammar.rules = new_rules
+	
+	print "grammar:", new_grammar
+		
+	return delete_nonderivable_nonterminals(new_grammar)
+
+
+def replace_rule(new_rules, rule):
+	adding_rules = []
+
+	nonterminal = rule.right_side[0]
+	nonterminal_rules = find_rules_for_nonterminal(new_rules, nonterminal)
+
+	if nonterminal_rules:
+		left_side = rule.left_side
+		for nonterminal_rule in nonterminal_rules:
+			right_side = replace_nonterminal(rule.right_side, 0, nonterminal_rule.right_side) 
+			adding_rules.append(Rule(left_side, right_side))
+	else:
+		adding_rules.append(rule)
+
+	return adding_rules
+
+
+def replace_nonleft_terminal_to_nonterminal(rule, terminal, nonterminal):
+	if terminal in rule.right_side[1:]:
+		new_right_side = list(rule.right_side)
+		for idx in range(1, len(rule.right_side)):
+			symbol = rule.right_side[idx]
+			if symbol == terminal:
+				new_right_side[idx] = nonterminal
+	else:
+		new_right_side = rule.right_side
+	return Rule(rule.left_side, new_right_side)
+
+#########################################################
+def delete_nonderivable_nonterminals(grammar):
+	new_grammar = Grammar()
+	new_grammar.axiom = grammar.axiom
+	new_grammar.terminals = grammar.terminals
+
+	unwatched = list([new_grammar.axiom])
+	watched = set()
+	while unwatched:
+		nonterminal = unwatched[0]
+		unwatched = unwatched.remove(nonterminal) or []
+		watched.add(nonterminal)
+
+		rules = find_rules_for_nonterminal(grammar.rules, nonterminal)
+		for rule in rules:
+			for symbol in rule.right_side:
+				if isinstance(symbol, Nonterminal):
+					if symbol not in watched and symbol not in unwatched:
+						unwatched.append(symbol)
+
+	new_grammar.nonterminals = watched
+
+	new_rules = []
+	for rule in grammar.rules:
+		if rule.left_side[0] in watched:
+			new_rules.append(rule)
+
+	new_grammar.rules = new_rules
+
+	return new_grammar	 
+	
+
+#########################################################
+def sort_nonterminals(nonterminals, rules):
+	def delete_recursive_rules(rules):
+		result_rules = []
+		for rule in rules:
+			nonterminal = rule.left_side[0]
+			if nonterminal not in rule.right_side:	
+				result_rules.append(rule)
+		return result_rules
+
+	def compare(nonterminal1, nonterminal2):
+		if nonterminal1 == nonterminal2:
+			return 0
+
+		rules1 = find_rules_for_nonterminal(tuning_rules, nonterminal1)
+		for rule in rules1:
+			if nonterminal2 in rule.right_side:
+				return -1
+			for symbol in rule.right_side:
+				if isinstance(symbol, Nonterminal):
+					return compare(symbol, nonterminal2)
+
+		rules2 = find_rules_for_nonterminal(tuning_rules, nonterminal2)
+		for rule in rules2:
+			if nonterminal1 in rule.right_side:
+				return 1
+			for symbol in rule.right_side:
+				if isinstance(symbol, Nonterminal):
+					return compare(nonterminal1, symbol)
+
+	tuning_rules = delete_recursive_rules(rules)
+	return sorted(list(nonterminals), compare)
+#########################################################
+	
+
+	
