@@ -79,7 +79,7 @@ class ComplexNonterminal(Nonterminal):
 		self.is_nullable = is_nullable
 		
 	def __hash__(self):
-		return sum([ord(symbol) for symbol in name])
+		return sum([hash(symbol.name) for symbol in self.name])
 	
 	def __eq__(self, other):
 		if not isinstance(other, ComplexNonterminal):
@@ -90,6 +90,16 @@ class ComplexNonterminal(Nonterminal):
 
 	def __str__(self):
 		return "[%s]" % ''.join([str(symbol) for symbol in self.name])
+
+	def starts_with_nonterminal(self):
+		if not self.name:
+			return False
+		return isinstance(self.name[0], Nonterminal)
+
+	def starts_with_terminal(self):
+		if not self.name:
+			return False
+		return isinstance(self.name[0], Terminal)
 		
 
 class Rule:
