@@ -32,6 +32,7 @@ def has_empty_chain(grammar):
 ###############################################################################
 # Algorithm 8.1
 def convert_grammar(grammar, disappearing_nonterminals):
+	print "algorithm 1"
 	new_grammar = Grammar()
 
 	# build new nonterminals set
@@ -116,6 +117,7 @@ def build_adding_rules(rule, idx):
 ###############################################################################
 # Algorithm 8.2
 def delete_empty_rules(grammar):
+	print "algorithm 2"
 	disappearing_nonterminals = find_disappearing_nonterminals(grammar)
 
 	converted_grammar = convert_grammar(grammar, disappearing_nonterminals)
@@ -295,7 +297,10 @@ def delete_useless_nonterminals_rules(rules, useless_nonterminals):
 ###############################################################################
 # Algorithm 8.3
 def convert_to_greibach(grammar):
+	print "algorithm 3"
 	converted_grammar = delete_empty_rules(grammar)
+	print "converted grammar:"
+	print converted_grammar
 	
 	new_grammar = Grammar()
 	new_grammar.axiom = converted_grammar.axiom	
@@ -303,6 +308,7 @@ def convert_to_greibach(grammar):
 
 	sorted_nonterminals = sort_nonterminals(
 		converted_grammar.nonterminals, converted_grammar.rules)
+	print "sorted nonterminals:", [str(s) for s in sorted_nonterminals]
 	new_grammar.nonterminals = set(sorted_nonterminals)
 
 	# rebuild rules

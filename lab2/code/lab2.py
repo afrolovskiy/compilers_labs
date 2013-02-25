@@ -25,7 +25,7 @@ grammar.rules.append(Rule([A], [e]))
 grammar.rules.append(Rule([B], [b, A]))
 grammar.rules.append(Rule([B], [e]))
 
-#print "grammar:\n", grammar
+print "grammar:\n", grammar
 
 #disappearing_nonterminals = find_disappearing_nonterminals(grammar)
 #new_grammar = convert_grammar(grammar, disappearing_nonterminals)
