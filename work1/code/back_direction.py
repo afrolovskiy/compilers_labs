@@ -49,7 +49,8 @@ class Algorithm:
 			elif s.startswith('Continue on '):
 				self.process_continue_instruction(way, s)
 			else:
-				raise WringFileFormat()
+				print s
+				raise WrongFileFormat()
 
 	def  process_turn_instruction(self, way, s):
 		at_position = s.rindex(' at ')
