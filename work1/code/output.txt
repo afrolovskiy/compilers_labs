@@ -1,0 +1,19 @@
+Direction 1:
+Head north from 1 E Main St
+Turn left at Jones Lane Memorial Hwy
+Continue on GA67
+Turn right at W Gentilly Rd
+Turn left at Bland Ave
+Turn left at 2357 Georgia Ave
+Arrive at 2357 Georgia Ave
+
+Direction 2:
+Head west from 154 Saint Louis St
+Turn left at N Conception St
+Continue on S Conception St
+Turn right at US98
+Continue on Government St
+Turn left at Everett St
+Turn right at 7532 Monroe St
+Arrive at 7532 Monroe St
+
