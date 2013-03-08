@@ -89,6 +89,7 @@ class TopDownParser:
 			self.compare_success(configuration, terminal)
 			if configuration.position == len(input_chain):
 				if not configuration.chain:
+					configuration.state = Configuration.TERMINAL_STATE
 					return True
 				else:
 					self.compare_failed(configuration)
