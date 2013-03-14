@@ -40,7 +40,7 @@ print "grammar:\n", grammar
 
 
 expr = [true, or_operator, true, and_operator, false, and_operator, identifier, 
-           or_operator, true, or_operator, true]
+           or_operator, true, or_operator]
 print "expr: %s\n" % ''.join([str(symbol) for symbol in expr])
 
 parser = TopDownParser(grammar)
