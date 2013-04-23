@@ -1,0 +1,7 @@
+1 MOV A,B
+2 JUMP 5
+3 LD B,10
+4 JUMP 6
+5 JUMP 3
+6 RET
+0
