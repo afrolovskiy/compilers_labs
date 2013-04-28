@@ -1,0 +1,6 @@
+1 ADD A,B
+2 JZ 4
+3 JUMP 5
+4 ADD B,C
+5 RET
+1
