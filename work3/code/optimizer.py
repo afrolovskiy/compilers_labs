@@ -1,3 +1,7 @@
+ #! /usr/bin/python
+ # -*- coding: utf-8 -*-
+import copy
+
 class Command(object):
 	UNCONDITIONAL_JUMP = ['JUMP', ]
 	CONDITIONAL_JUMPS = ['JZ', 'JNZ', 'JC', 'JNC']
@@ -78,6 +82,150 @@ class Command(object):
 			cmd.name = 'JNC'
 		elif cmd.name == 'JNC':
 			cmd.name = 'JC'
+
+class Register:
+	BITS_COUNT = 8
+	UNKNOWN_VALUE = -1
+	UNKNOWN_BITS = [UNKNOWN_VALUE for _ in range(BITS_COUNT)]
+	
+	def __init__(self, bits=None):
+		self.bits = bits or [self.UNKNOWN_VALUE for _ in range(self.BITS_COUNT)]
+
+	def set_bit(self, idx, value):
+		self.bits[idx] = value
+
+	def get_bit(self, idx):
+		return self.bits[idx]
+
+	def has(self, value):
+		for idx in range(BITS_COUNT):
+			if self.bits[idx] == value:
+				return True
+		return False
+	
+	def value(self):
+		return self.bits2number(self.bits, self.BITS_COUNT)
+
+	def __str__(self):
+		result = ''
+		for idx in range(self.BITS_COUNT):
+			if self.bits[idx] == self.UNKNOWN_VALUE:
+				result += 'unknown '
+			else:
+				result += '%s ' % str(self.bits[idx])
+		return result		
+
+	@classmethod
+	def bits2number(self, bits, count):
+		value = 0
+		for idx in range(count):
+			if bits[idx] == self.UNKNOWN_VALUE:
+				return self.UNKNOWN_VALUE
+			value += bits[idx] * 2  ** idx
+		return value
+
+	@classmethod
+	def number2bits(self, number):
+		work = number
+		bits = [0 for  _ in range(self.BITS_COUNT)]
+		idx = 0
+		while work:
+			bits[idx]  = work % 2
+			work = work / 2
+			idx = idx + 1
+		return bits
+
+	@classmethod
+	def and_bits(self, bits1, bits2):
+		bits = [self.UNKNOWN_VALUE for _ in range(self.BITS_COUNT)]
+		for idx in range(self.BITS_COUNT):
+			if bits1[idx] == self.UNKNOWN_VALUE and \
+					bits2 == self.UNKNOWN_VALUE:
+				# UNKNOWN_VALUE & UNKNOWN_VALUE = UNKNOWN_VALUE
+				bits[idx] = self.UNKNOWN_VALUE
+			else:
+				# x & 1 = x, x & 0 = 0
+				bits[idx] = bits1[idx] * bits2[idx]
+		return bits
+
+	@classmethod
+	def or_bits(self, bits1, bits2):
+		bits = [UNKNOWN_VALUE for _ in range(BITS_COUNT)]
+		for idx in range(BITS_COUNT):
+			if bits1[idx] == self.UNKNOWN_VALUE and \
+					bits2[idx] == self.UNKNOWN_VALUE:
+				# UNKNOWN_VALUE | UNKNOWN_VALUE  = UNKNOWN_VALUE
+				bits[idx] = UNKNOWN_VALUE
+			elif bits1[idx] == 1 or bits2[idx] == 1:
+				# x | 1  = 1
+				bits[idx] = 1
+			elif bits1[idx] == 0 and bits2[idx] == 0:
+				# 0 | 0 = 0
+				bits[idx] = 0
+			else:
+				# x | 0 = x
+				bits[idx] = self.UNKNOWN_VALUE
+		return bits
+
+	@classmethod
+	def xor_bits(self, bits1, bits2):
+		bits = [UNKNOWN_VALUE for _ in range(BITS_COUNT)]
+		for idx in range(BITS_COUNT):
+			if bits1[idx] == UNKNOWN_VALUE or bits2[idx] == UNKNOWN_VALUE:
+				bits[idx] = UNKNOWN_VALUE
+			else:
+				bits[idx] = bits1[idx] ^ bits2[idx]
+		return bits
+
+	@classmethod
+	def left_shift(self, bits):
+		for idx in reversed(range(self.BITS_COUNT - 1)):
+			bits[idx + 1] = bits[idx]
+		bits[0] = 0
+		return bits
+
+	@classmethod
+	def begin_known_bits(self, bits):
+		count = 0
+		for idx in range(len(bits)):
+			if bits[idx] == UNKNOWN_VALUE:
+				break
+			count = count + 1
+		return count
+
+	@classmethod
+	def sum(self, bits1, bits2):
+		bkb1 = Register.begin_known_bits(bits1)
+		bkb2 = Register.begin_known_bits(bits2)
+		bkb = min([bkb1, bkb2])
+		
+		v1 = Register.bits2number(bits1[:bkb])
+		v2 = Register.bits2number(bits2[:bkb])
+		bits = Register.number2bits(v1 + v2)
+		
+		return bits[:bkb] + Register.UNKNOWN_BITS[bkb:]
+
+	@classmethod
+	def inc_bits(self, bits1):
+		# TODO
+		pass
+
+	@classmethod
+	def dec_bits(self, bits1):
+		# TODO
+		pass
+
+
+class Flag:
+	UNKNOWN_VALUE = -1
+	
+	def __init__(self, value=None):
+		self.value = value or self.UNKNOWN_VALUE
+
+	def __str__(self):
+		if self.value == self.UNKNOWN_VALUE:
+			return 'unknown'
+		return str(self.value)
 			
 
 class Context:
@@ -86,50 +234,47 @@ class Context:
 		self.registers = {}
 		self.flags = {}
 
-	def add_register(self, name, register):
+	def set_register(self, name, register):
 		self.registers[name] = register
+
+	def set_register_bits(self, name, bits):
+		reg = self.registers.get(name)
+		if not reg:
+			reg = Register()
+			self.set_register(name, reg)
+		reg.bits = bits
 			
-	def add_flag(self, name, flag):
+	def set_flag(self, name, flag):
 		self.flags[name] = flag
 
+	def set_flag_value(self, name, value):
+		flag = self.flags.get(name)
+		if not flag:
+			flag = Flag()
+			self.set_flag(name, flag)
+		flag.value = value
+
+	def __str__(self):
+		result = 'flags:\n'
+		for fname, fvalue in self.flags.items():
+			result += '%s: %s\n' % (fname, fvalue)
+
+		result += 'registers:\n'
+		for rname, rvalue in self.registers.items():
+			result += '%s: %s\n' % (rname, rvalue)
+
+		return result
+		
 
 class Condition(Context):
 	pass
-
-
-class Register:
-	BITS_COUNT = 8
-	UNKNOWN_VALUE = -1
-	
-	def __init__(self, bits=None):
-		self.bits = bits or [UNKNOWN_VALUE for _ in range(BITS_COUNT)]
-
-	def set_bit(self, idx, value):
-		self.bits[idx] = value
-
-	@classmethod
-	def number2bits(self, number):
-		work = number
-		bits = [0 for  _ in range(BITS_COUNT)]
-		idx = 0
-		while work:
-			bits[idx]  = work % 2
-			work = work / 2
-			idx = idx + 1
-		return bits
-
-class FLAG:
-	UNKNOWN_VALUE = -1
-	
-	def __init__(self, value=None):
-		self.value = value or UNKNOWN_VALUE
 
 
 class ProgrammGraphCommand(Command):
 	
 	def __init__(self, **kwargs):
 		super(ProgrammGraphCommand, self).__init__(**kwargs)
-		self.context = None
+		self.context = Context()
 		self.condition = None
 
 	def set_context(self, context):
@@ -141,74 +286,160 @@ class ProgrammGraphCommand(Command):
 	def __str__(self):
 		return super(ProgrammGraphCommand, self).__str__()
 
-
 	def calculate_context(self, context=None):
-		# hard coded!
-		if context:
-			if self.name == 'MOV':
-				self.modify_mov_context(context)
-			elif self.name == 'LD':
-				self.modify_ld_context(context)
-			elif self.name == 'ADD':
-				self.modify_add_context(context)
-
-		else:
+		print 'calculate context'
+		if not context:
 			context = Context()
-			if self.name == 'MOV':
-				self.fill_initial_mov_context(context)
-			elif self.name == 'LD':
-				self.fill_initiali_ld_context(context)
-			elif self.name == 'ADD':
-				self.fill_initiali_add_context(context)
-			elif self.name == 'NEG':
-				self.fill_initial_neg_context(context)
-			elif self.name == 'AND':
-				self.fill_initial_and_context(context)
-			elif self.name == 'OR':
-				self.fill_initial_or_context(context)
-			elif self.name == 'XOR':
-				self.fill_initial_xor_context(context)
-			elif self.name == 'CLC':
-				self.fill_initial_clc_context(context)
-			elif self.name == 'STC':
-				self.fill_initial_stc_context(context)
+		if self.name == 'MOV':
+			self.fill_mov_context(context)
+		elif self.name == 'LD':
+			self.fill_ld_context(context)
+		elif self.name == 'ADD':
+			self.fill_add_context(context)
+		elif self.name == 'ADC':
+			self.fill_adc_context(context)
+		elif self.name == 'NEG':
+			self.fill_neg_context(context)
+		elif self.name == 'AND':
+			self.fill_and_context(context)
+		elif self.name == 'OR':
+			self.fill_or_context(context)
+		elif self.name == 'XOR':
+			self.fill_xor_context(context)
+		elif self.name == 'INC':
+			self.fill_inc_context(context)
+		elif self.name == 'DEC':
+			self.fill_dec_context(context)
+		elif self.name == 'CLC':
+			self.fill_clc_context(context)
+		elif self.name == 'STC':
+			self.fill_stc_context(context)
 
-	def modify_mov_context(self, context):
-		pass		
+	def fill_mov_context(self, context):
+		reg2 = context.registers.get(self.operands[1])
+		if not reg2:
+			reg2 = Register()
+			context.set_register(self.operands[1], reg2)
+		context.set_register(self.operands[0], reg2)
 	
-	def fill_initial_mov_context(self, context):
-		register = Register()
-		context.add_register(cmd.operands[0], register)
-		context.add_register(cmd.operands[1], register)
+	def fill_ld_context(self, context):
+		context.set_register_bits(self.operands[0], Register.number2bits(self.operands[1]))
 
-	def fill_initial_ld_context(self, context):
-		register = Register(bits=Register.number2bits(cmd.operands[1]))
-		context.add_register(cmd.operands[0], register)
+	def fill_add_context(self, context):
+		print 'calculate add context'
+		# TODO: refactoring
+		# bad code: i wanna sleep!
+		# warning: hard code!!
+		if self.operands[0] == self.operands[1]:
+			reg = context.registers.get(self.operands[0])
+			if not reg:
+				bits = Register.UNKNOWN_BITS
+			else:
+				bits = reg.bits
+			context.set_register_bits(self.operands[0], Register.left_shift(bits))
+			reg = context.registers[self.operands[0]]
+			# TODO: definition of this flag value
+			context.set_flag_value(name='CF', value=Flag.UNKNOWN_VALUE)			
+			# zf definition
+			reg_value = reg.value()
+			if reg_value == Register.UNKNOWN_VALUE:
+				context.set_flag_value(name='ZF', value=Flag.UNKNOWN_VALUE)
+			else:
+				value = 1 if reg_value == 0 else 0
+				context.set_flag_value(name='ZF', value=value)
+		else:
+			reg1 = context.registers.get(self.operands[0])
+			reg2 = context.registers.get(self.operands[1])
+			if reg1 and reg2:
+				reg1_value = reg1.value()
+				reg2_value = reg2.value()
+				if reg1_value != Register.UNKNOWN_VALUE and \
+						reg2_value != Register.UNKNOWN_VALUE:
+					v = reg1_value + reg2_value
+					context.set_flag_value(name='CF', value=v / 256)	
+					v = v % 256
+					context.set_register_value(
+						name=self.operands[0], value=Register.number2bits(v))
+					zf_value = 1 if v == 0 else 0
+					context.set_flag_value(name='ZF', value=zf_value)	
+				else:
+					# TODO: this case
+					context.set_register_value(
+						name=self.operands[0], value=Register.UNKNOWN_BITS)
+					context.set_flag_value(
+						name='CF', value=FLAG.UNKNOWN_VALUE)			
+					context.set_flag_value(
+						name='ZF', value=FLAG.UNKNOWN_VALUE)
 
-	def fill_initial_add_context(self, context):
-		if cmd.operands[0] == cmd.operands[1]:
-			register = Register()	
-				register.set_bit(idx=0, value=0)			
-			context.add_register(name=cmd.operands[0], register)
+			else:
+				context.set_register_value(
+					name=self.operands[0], value=Register.UNKNOWN_BITS)
+				context.set_flag_value(
+					name='CF', value=FLAG.UNKNOWN_VALUE)			
+				context.set_flag_value(
+					name='ZF', value=FLAG.UNKNOWN_VALUE)
 
-	def fill_initial_neg_context(self, context):
-		context.add_flag(name='CF', Flag(value=1))
+	def fill_adc_context(self, context):
+		# TODO
+		pass
 
-	def fill_initial_and_context(self, context):
-		context.add_flag(name='CF', Flag(value=0))
+	def fill_neg_context(self, context):
+		reg = context.registers.get(self.operands[0])
+		if reg:
+			for idx in range(Register.BITS_COUNT):
+				if reg.get_bit(idx) != Register.UNKNOWN_VALUE:
+					reg.set_bit(idx, 1 - reg.get_bit(idx))
 
-	def fill_initial_or_context(self, context):
-		context.add_flag(name='CF', Flag(value=0))
+			reg_value = reg.value()
+			if reg_value == Register.UNKNOWN_VALUE:
+				value = FLAG.UNKNOWN_VALUE
+			else:
+				value = 1 if reg_value == 0 else 0
+			context.set_flag_value(name='ZF', value=value)
+		else:
+			context.set_flag_value(name='ZF', value=FLAG.UNKNOWN_VALUE)
+							
+		context.set_flag_value(name='CF', value=1)
 
-	def fill_initial_xor_context(self, context):
-		context.add_flag(name='CF', Flag(value=0))
+	def fill_and_context(self, context):
+		self.fill_bitwise_operation_context(context, Register.and_bits)
 
-	def fill_initial_clc_context(self, context):
-		context.add_flag(name='CF', Flag(value=0))
+	def fill_or_context(self, context):
+		self.fill_bitwise_operation_context(context, Register.or_bits)
 
-	def fill_initial_stc_context(self, context):
-		context.add_flag(name='CF', Flag(value=0))
+	def fill_xor_context(self, context):
+		self.fill_bitwise_operation_context(context, Register.xor_bits)
 
+	def fill_bitwise_operation_context(self, context, operation):
+		reg1 = context.registers.get(self.operands[0])
+		bits1 = reg1.bits if reg1 else Register.UNKNOWN_BITS
+		reg2 = context.registers.get(self.operands[1])
+		bits2 = reg2.bits if reg2 else Register.UNKNOWN_BITS
+		context.set_register_bits(self.operands[0], operation(bits1, bits2))
+		
+		reg1 = context.registers.get(self.operands[0])
+		reg1_value = reg1.value()
+		if reg1_value == Register.UNKNOWN_VALUE:
+			context.set_flag_value(name='ZF', value=Flag.UNKNOWN_VALUE)
+		else:
+			value = 1 if reg1_value == 0 else 0
+			context.set_flag_value(name='ZF', value=value)
+		
+		context.set_flag_value(name='CF', value=0)
+
+	def fill_inc_context(self, context):
+		# TODO
+		pass
+
+	def fill_dec_context(self, context):
+		# TODO
+		pass
+
+	def fill_clc_context(self, context):
+		context.set_flag_value(name='CF', value=0)
+
+	def fill_stc_context(self, context):
+		context.set_flag_value(name='CF', value=1)
 
 
 class ProgrammGraph:
@@ -299,9 +530,11 @@ class ProgrammGraphOptimizer(object):
 		self.pg = pg
 
 	def optimize(self):
+		# 4 main cases:
 		self.remove_unused_commands()
-		self.modify_conditional_jumps()
-		self.remove_useless_jumps()
+		#self.remove_useless_conditional_jumps() TODO: !!
+		#self.modify_conditional_jumps()
+		#self.remove_useless_jumps()
 
 	def remove_useless_jumps(self):
 		useless_jump = self.find_useless_jump()
@@ -387,11 +620,46 @@ class ProgrammGraphOptimizer(object):
 		return two_parent_commands
 			
 	def remove_unused_commands(self):
-		used_commands = []
 		cmd = self.pg.commands[0]
 		cmd.calculate_context()
-		used_commands.append(cmd)
-		while cmd.name != 'RET':
+		using_commands = self.find_using_commands(cmd)
+		print [str(cmd.line_number) for cmd in using_commands]
+
+
+	def find_using_commands(self, cmd):
+		# it is not optimal way for using commands seraching!!!
+		commands = set([])
+		while True:
+			print cmd.context
+			if cmd.name in ['JZ', 'JNZ', 'JC', 'JNC']:
+				commands.add(cmd)
+				zf = cmd.context.flags.get('ZF')
+				cf = cmd.context.flags.get('CF')
+				if cmd.name == 'ZF' and zf and zf.value == 1:
+					commands.update(
+						self.find_using_commands(copy.deepcopy(cmd.childs[0])))
+				elif cmd.name == 'ZF' and zf and zf.value == 0:
+					commands.update(
+						self.find_using_commands(copy.deepcopy(cmd.childs[1])))
+				elif cmd.name == 'CF' and cf and cf.value == 1:
+					commands.update(
+						self.find_using_commands(copy.deepcopy(cmd.childs[0])))
+				elif cmd.name == 'CF' and cf and cf.value == 0:
+					commands.update(
+						self.find_using_commands(copy.deepcopy(cmd.childs[1])))
+				else:
+					commands.update(self.find_using_commands(
+						copy.deepcopy(cmd.childs[0])))
+					commands.update(self.find_using_commands(
+						copy.deepcopy(cmd.childs[1])))
+				return commands
+			else:
+				commands.add(cmd)
+				if cmd.name == 'RET':
+					break
+				cmd.childs[0].calculate_context(cmd.context)				
+				cmd = cmd.childs[0]
+		return commands
 			
 	
 		
@@ -401,7 +669,7 @@ class ProgrammGraphOptimizer(object):
 		
 
 
-pg = ProgrammGraphReader().read('input2.txt')
+pg = ProgrammGraphReader().read('input1.txt')
 print str(pg)
 
 ProgrammGraphOptimizer(pg).optimize()
