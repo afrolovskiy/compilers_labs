@@ -346,9 +346,9 @@ class ProgrammGraphCommand(Command):
 			context.set_flag_value(name='CF', value=self.UNKNOWN_VALUE)
 			# TODO: apply others!
 			
-		if reg1.value() == 0:
+		if reg1 and reg1.value() == 0:
 			context.set_flag_value(name='ZF', value=1)
-		elif reg1.value() == 1:
+		elif reg1 and reg1.value() == 1:
 			context.set_flag_value(name='ZF', value=0)
 		else:
 			context.set_flag_value(name='ZF', value=self.UNKNOWN_VALUE)
@@ -429,9 +429,10 @@ class ProgrammGraph:
 
 	def remove_command(self, removed_cmd):
 		for idx in range(len(self.commands)):
-			# renumber
 			if idx != removed_cmd.line_number - 1:
 				cmd = self.commands[idx]
+
+				# renumber
 				if cmd.line_number > removed_cmd.line_number:
 					cmd.line_number = cmd.line_number - 1
 				if (cmd.name in Command.UNCONDITIONAL_JUMP or 
@@ -439,11 +440,13 @@ class ProgrammGraph:
 						cmd.operands[0] > removed_cmd.line_number:
 					cmd.operands[0] = cmd.operands[0] - 1
 
+				# clear parents
 				try:
 					cmd.parents.remove(removed_cmd)
 				except:
 					pass
 
+				# clear childs
 				try:
 					cmd.childs.remove(removed_cmd)
 				except:
@@ -529,21 +532,13 @@ class ProgrammGraphOptimizer(object):
 		# 4 main cases:
 		self.remove_unused_commands()
 		self.remove_useless_conditional_jumps()
-		#self.modify_conditional_jumps()
+		self.modify_conditional_jumps()
 		self.remove_useless_jumps()
 
 	def remove_useless_jumps(self):
 		useless_jump = self.find_useless_jump()
 		print 'useless jumps:', useless_jump
 		while useless_jump:
-			# renumber commands
-			for cmd in self.pg.commands:				
-				if cmd.line_number != useless_jump.line_number:
-					if cmd.line_number > useless_jump.line_number:
-						cmd.line_number = cmd.line_number - 1
-					if cmd.name in Command.UNCONDITIONAL_JUMP and \
-							cmd.operands[0] > useless_jump.line_number:
-						cmd.operands[0] = cmd.operands[0] - 1
 			# remove
 			self.pg.remove_command(useless_jump)
 			# find next
@@ -579,7 +574,7 @@ class ProgrammGraphOptimizer(object):
 			old_child = conditional_jump.childs[1]
 			conditional_jump.childs[1] = conditional_jump.childs[0]
 			conditional_jump.childs[0] = connection_cmd
-			pg.remove_command(old_child.line_number - 1)						
+			del pg.commands[old_child.line_number - 1]
 			# find next
 			conditional_jump, connection_cmd = self.find_special_conditional_jump()
 			
@@ -690,7 +685,7 @@ class ProgrammGraphOptimizer(object):
 
 
 
-pg = ProgrammGraphReader().read('input1.txt')
+pg = ProgrammGraphReader().read('input.txt')
 print str(pg)
 
 ProgrammGraphOptimizer(pg).optimize()
