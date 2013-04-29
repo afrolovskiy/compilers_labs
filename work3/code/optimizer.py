@@ -424,9 +424,6 @@ class ProgrammGraph:
 	def add_command(self, command):
 		self.commands.append(command)
 
-	def remove_command(self, idx):
-		del self.commands[idx]
-
 	def __str__(self):
 		return ''.join(['%s\n' % str(cmd) for cmd in self.commands])
 
@@ -441,6 +438,17 @@ class ProgrammGraph:
 						cmd.name in Command.CONDITIONAL_JUMPS) and \
 						cmd.operands[0] > removed_cmd.line_number:
 					cmd.operands[0] = cmd.operands[0] - 1
+
+				try:
+					cmd.parents.remove(removed_cmd)
+				except:
+					pass
+
+				try:
+					cmd.childs.remove(removed_cmd)
+				except:
+					pass
+
 		# shift
 		self.commands.remove(removed_cmd)
 
@@ -526,6 +534,7 @@ class ProgrammGraphOptimizer(object):
 
 	def remove_useless_jumps(self):
 		useless_jump = self.find_useless_jump()
+		print 'useless jumps:', useless_jump
 		while useless_jump:
 			# renumber commands
 			for cmd in self.pg.commands:				
@@ -536,7 +545,7 @@ class ProgrammGraphOptimizer(object):
 							cmd.operands[0] > useless_jump.line_number:
 						cmd.operands[0] = cmd.operands[0] - 1
 			# remove
-			self.pg.remove_command(useless_jump.line_number - 1)
+			self.pg.remove_command(useless_jump)
 			# find next
 			useless_jump = self.find_useless_jump()
 
@@ -635,23 +644,25 @@ class ProgrammGraphOptimizer(object):
 				if (cmd.name == 'JZ' and zf and zf.value == 1) or \
 						(cmd.name == 'JNZ' and zf and zf.value == 0):
 					commands.update(
-						self.find_using_commands(copy.deepcopy(cmd.childs[0])))
+						self.find_using_commands(cmd.childs[0]))
 					
 				elif (cmd.name == 'JZ' and zf and zf.value == 0) or \
 						(cmd.name == 'JNZ' and zf and zf.value == 1):
 					commands.update(
-						self.find_using_commands(copy.deepcopy(cmd.childs[1])))
+						self.find_using_commands(cmd.childs[1]))
 				elif (cmd.name == 'JC' and cf and cf.value == 1) or \
 						(cmd.name == 'JNC' and cf and cf.value == 0):
 					commands.update(
-						self.find_using_commands(copy.deepcopy(cmd.childs[0])))
+						self.find_using_commands(cmd.childs[0]))
 				elif (cmd.name == 'JC' and cf and cf.value == 0) or \
 						(cmd.name == 'JNC' and cf and cf.value == 1):
 					commands.update(
-						self.find_using_commands(copy.deepcopy(cmd.childs[1])))
+						self.find_using_commands(cmd.childs[1]))
 				else:
+					context = copy.deepcopy(cmd.context)
 					commands.update(self.find_using_commands(
 						copy.deepcopy(cmd.childs[0])))
+					cmd.context = context
 					commands.update(self.find_using_commands(
 						copy.deepcopy(cmd.childs[1])))
 				print 'return 1'
