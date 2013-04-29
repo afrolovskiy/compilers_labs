@@ -3,6 +3,8 @@
 import copy
 
 class Command(object):
+	UNKNOWN_VALUE = -1
+
 	UNCONDITIONAL_JUMP = ['JUMP', ]
 	CONDITIONAL_JUMPS = ['JZ', 'JNZ', 'JC', 'JNC']
 	TWO_OPERAND_ARITHMETIC_CMDS = ['ADD', 'ADC', 'AND', 'OR', 'XOR']
@@ -287,7 +289,6 @@ class ProgrammGraphCommand(Command):
 		return super(ProgrammGraphCommand, self).__str__()
 
 	def calculate_context(self, context=None):
-		print 'calculate context'
 		if not context:
 			context = Context()
 		if self.name == 'MOV':
@@ -314,6 +315,7 @@ class ProgrammGraphCommand(Command):
 			self.fill_clc_context(context)
 		elif self.name == 'STC':
 			self.fill_stc_context(context)
+		self.context = context
 
 	def fill_mov_context(self, context):
 		reg2 = context.registers.get(self.operands[1])
@@ -326,58 +328,30 @@ class ProgrammGraphCommand(Command):
 		context.set_register_bits(self.operands[0], Register.number2bits(self.operands[1]))
 
 	def fill_add_context(self, context):
-		print 'calculate add context'
-		# TODO: refactoring
-		# bad code: i wanna sleep!
-		# warning: hard code!!
-		if self.operands[0] == self.operands[1]:
-			reg = context.registers.get(self.operands[0])
-			if not reg:
-				bits = Register.UNKNOWN_BITS
-			else:
-				bits = reg.bits
-			context.set_register_bits(self.operands[0], Register.left_shift(bits))
-			reg = context.registers[self.operands[0]]
-			# TODO: definition of this flag value
-			context.set_flag_value(name='CF', value=Flag.UNKNOWN_VALUE)			
-			# zf definition
-			reg_value = reg.value()
-			if reg_value == Register.UNKNOWN_VALUE:
-				context.set_flag_value(name='ZF', value=Flag.UNKNOWN_VALUE)
-			else:
-				value = 1 if reg_value == 0 else 0
-				context.set_flag_value(name='ZF', value=value)
+		reg1 = context.registers.get(self.operands[0])
+		reg2 = context.registers.get(self.operands[1])
+		if reg1 and reg2 and reg1.value(0) != self.UNKNOWN_VALUE and \
+				reg2.value() != self.UNKNOWN_VALUE:
+			result = reg1.value() + reg2.value()
+			context.set_flag_value(name='CF', value=result % 256)
+			context.set_register_bits(name=self.operands[0], 
+							     bits=Register.number2bits(result / 256))
 		else:
-			reg1 = context.registers.get(self.operands[0])
-			reg2 = context.registers.get(self.operands[1])
-			if reg1 and reg2:
-				reg1_value = reg1.value()
-				reg2_value = reg2.value()
-				if reg1_value != Register.UNKNOWN_VALUE and \
-						reg2_value != Register.UNKNOWN_VALUE:
-					v = reg1_value + reg2_value
-					context.set_flag_value(name='CF', value=v / 256)	
-					v = v % 256
-					context.set_register_value(
-						name=self.operands[0], value=Register.number2bits(v))
-					zf_value = 1 if v == 0 else 0
-					context.set_flag_value(name='ZF', value=zf_value)	
-				else:
-					# TODO: this case
-					context.set_register_value(
-						name=self.operands[0], value=Register.UNKNOWN_BITS)
-					context.set_flag_value(
-						name='CF', value=FLAG.UNKNOWN_VALUE)			
-					context.set_flag_value(
-						name='ZF', value=FLAG.UNKNOWN_VALUE)
-
-			else:
-				context.set_register_value(
-					name=self.operands[0], value=Register.UNKNOWN_BITS)
-				context.set_flag_value(
-					name='CF', value=FLAG.UNKNOWN_VALUE)			
-				context.set_flag_value(
-					name='ZF', value=FLAG.UNKNOWN_VALUE)
+			# try to apply heuristics
+			if self.operands[0] == self.operands[1]:
+				if not reg1:
+					reg1 = Register()
+				context.set_register_bits(name=self.operands[0],
+								     bits=Register.left_shift(reg1.bits))
+			context.set_flag_value(name='CF', value=self.UNKNOWN_VALUE)
+			# TODO: apply others!
+			
+		if reg1.value() == 0:
+			context.set_flag_value(name='ZF', value=1)
+		elif reg1.value() == 1:
+			context.set_flag_value(name='ZF', value=0)
+		else:
+			context.set_flag_value(name='ZF', value=self.UNKNOWN_VALUE)
 
 	def fill_adc_context(self, context):
 		# TODO
@@ -456,6 +430,20 @@ class ProgrammGraph:
 	def __str__(self):
 		return ''.join(['%s\n' % str(cmd) for cmd in self.commands])
 
+	def remove_command(self, removed_cmd):
+		for idx in range(len(self.commands)):
+			# renumber
+			if idx != removed_cmd.line_number - 1:
+				cmd = self.commands[idx]
+				if cmd.line_number > removed_cmd.line_number:
+					cmd.line_number = cmd.line_number - 1
+				if (cmd.name in Command.UNCONDITIONAL_JUMP or 
+						cmd.name in Command.CONDITIONAL_JUMPS) and \
+						cmd.operands[0] > removed_cmd.line_number:
+					cmd.operands[0] = cmd.operands[0] - 1
+		# shift
+		self.commands.remove(removed_cmd)
+
 
 class ProgrammGraphReader:
 
@@ -532,9 +520,9 @@ class ProgrammGraphOptimizer(object):
 	def optimize(self):
 		# 4 main cases:
 		self.remove_unused_commands()
-		#self.remove_useless_conditional_jumps() TODO: !!
+		self.remove_useless_conditional_jumps()
 		#self.modify_conditional_jumps()
-		#self.remove_useless_jumps()
+		self.remove_useless_jumps()
 
 	def remove_useless_jumps(self):
 		useless_jump = self.find_useless_jump()
@@ -622,29 +610,43 @@ class ProgrammGraphOptimizer(object):
 	def remove_unused_commands(self):
 		cmd = self.pg.commands[0]
 		cmd.calculate_context()
+	
 		using_commands = self.find_using_commands(cmd)
-		print [str(cmd.line_number) for cmd in using_commands]
+		print 'using commands: ', [str(cmd.line_number) for cmd in using_commands]
 
+		unusing_commands= filter(
+			lambda x: x.line_number not in [cmd.line_number for cmd in using_commands], 
+			self.pg.commands)
+		print 'unusing commands: ', [cmd.line_number for cmd in unusing_commands]
+		for removed_cmd in unusing_commands:
+			self.pg.remove_command(removed_cmd)
 
 	def find_using_commands(self, cmd):
 		# it is not optimal way for using commands seraching!!!
 		commands = set([])
 		while True:
+			commands.add(cmd)
+			print [str(command.line_number) for command in commands]
+			print cmd
 			print cmd.context
-			if cmd.name in ['JZ', 'JNZ', 'JC', 'JNC']:
-				commands.add(cmd)
+			if cmd.name in ['JZ', 'JNZ', 'JC', 'JNC']:				
 				zf = cmd.context.flags.get('ZF')
 				cf = cmd.context.flags.get('CF')
-				if cmd.name == 'ZF' and zf and zf.value == 1:
+				if (cmd.name == 'JZ' and zf and zf.value == 1) or \
+						(cmd.name == 'JNZ' and zf and zf.value == 0):
 					commands.update(
 						self.find_using_commands(copy.deepcopy(cmd.childs[0])))
-				elif cmd.name == 'ZF' and zf and zf.value == 0:
+					
+				elif (cmd.name == 'JZ' and zf and zf.value == 0) or \
+						(cmd.name == 'JNZ' and zf and zf.value == 1):
 					commands.update(
 						self.find_using_commands(copy.deepcopy(cmd.childs[1])))
-				elif cmd.name == 'CF' and cf and cf.value == 1:
+				elif (cmd.name == 'JC' and cf and cf.value == 1) or \
+						(cmd.name == 'JNC' and cf and cf.value == 0):
 					commands.update(
 						self.find_using_commands(copy.deepcopy(cmd.childs[0])))
-				elif cmd.name == 'CF' and cf and cf.value == 0:
+				elif (cmd.name == 'JC' and cf and cf.value == 0) or \
+						(cmd.name == 'JNC' and cf and cf.value == 1):
 					commands.update(
 						self.find_using_commands(copy.deepcopy(cmd.childs[1])))
 				else:
@@ -652,21 +654,29 @@ class ProgrammGraphOptimizer(object):
 						copy.deepcopy(cmd.childs[0])))
 					commands.update(self.find_using_commands(
 						copy.deepcopy(cmd.childs[1])))
+				print 'return 1'
+				print 'commands: ', [str(command.line_number) for command in commands]
 				return commands
 			else:
-				commands.add(cmd)
 				if cmd.name == 'RET':
 					break
 				cmd.childs[0].calculate_context(cmd.context)				
 				cmd = cmd.childs[0]
+		print 'return 2'
+		print 'commands: ', [str(command.line_number) for command in commands]
 		return commands
 			
+	def remove_useless_conditional_jumps(self):
+		useless_jumps = []
+		for cmd in self.pg.commands:
+			if cmd.name in Command.CONDITIONAL_JUMPS and \
+					cmd.childs[0].line_number == cmd.line_number + 1:
+				useless_jumps.append(cmd)
+		print "useless conditional jumps:" , [cmd.line_number for cmd in useless_jumps]
 	
-		
-			
-		
-				
-		
+		for removed_cmd in  useless_jumps:
+			self.pg.remove_command(removed_cmd)
+
 
 
 pg = ProgrammGraphReader().read('input1.txt')
