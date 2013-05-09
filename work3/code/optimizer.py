@@ -19,18 +19,10 @@ class Command(object):
 	TWO_OPERAND_CMDS = TWO_OPERAND_ARITHMETIC_CMDS + \
 		MOVE_DATA_CMDS
 
-	def __init__(self, name=None, line_number=None):
+	def __init__(self, name=None):
 		self.name = name
-		self.line_number = line_number
 		self.operands = []
-		self.parents = []
-		self.childs = []
-	
-	def add_parent(self, command):
-		self.parents.append(command)
 
-	def add_child(self, command):
-		self.childs.append(command)
 
 	def add_operand(self, operand):
 		self.operands.append(operand)
@@ -46,33 +38,10 @@ class Command(object):
 			return '%s %s %s,%s' % \
 				(self.line_number, self.name, self.operands[0], self.operands[1])
 		return '%s %s' % (self.line_number, self.name)
-
-	@classmethod
-	def get_success_condition(self, cmd):
-		condition = Condition()
-		if cmd == 'JZ':
-			condition.add_flag(Flag(name='ZF', value=1))
-		elif cmd == 'JNZ':
-			condition.add_flag(Flag(name='ZF', value=0))
-		elif cmd == 'JC':
-			condition.add_flag(Flag(name='CF', value=1))
-		elif cmd == 'JNC':
-			condition.add_flag(Flag(name='CF', value=0))
-		return condition
-
-	@classmethod
-	def get_failure_condition(self, cmd):
-		condition = Condition()
-		if cmd == 'JZ':
-			condition.add_flag(Flag(name='ZF', value=0))
-		elif cmd == 'JNZ':
-			condition.add_flag(Flag(name='ZF', value=1))
-		elif cmd == 'JC':
-			condition.add_flag(Flag(name='CF', value=0))
-		elif cmd == 'JNC':
-			condition.add_flag(Flag(name='CF', value=1))
-		return condition
-
+	
+	def print2str(self):
+		return str(self)
+		
 	@classmethod
 	def revert_command(self, cmd):
 		# hard coded!
@@ -118,9 +87,9 @@ class Register:
 		return result		
 
 	@classmethod
-	def bits2number(self, bits, count):
+	def bits2number(self, bits):
 		value = 0
-		for idx in range(count):
+		for idx in range(len(bits)):
 			if bits[idx] == self.UNKNOWN_VALUE:
 				return self.UNKNOWN_VALUE
 			value += bits[idx] * 2  ** idx
@@ -129,12 +98,10 @@ class Register:
 	@classmethod
 	def number2bits(self, number):
 		work = number
-		bits = [0 for  _ in range(self.BITS_COUNT)]
-		idx = 0
+		bits = []
 		while work:
-			bits[idx]  = work % 2
+			bits.appen(work % 2)
 			work = work / 2
-			idx = idx + 1
 		return bits
 
 	@classmethod
@@ -266,27 +233,56 @@ class Context:
 			result += '%s: %s\n' % (rname, rvalue)
 
 		return result
-		
-
-class Condition(Context):
-	pass
 
 
 class ProgrammGraphCommand(Command):
 	
-	def __init__(self, **kwargs):
-		super(ProgrammGraphCommand, self).__init__(**kwargs)
+	def __init__(self, name=None, line_number=None):
+		super(ProgrammGraphCommand, self).__init__(name)
 		self.context = Context()
-		self.condition = None
+		self.line_number = line_number
+		self.parents = []
+		self.childs = []
 
 	def set_context(self, context):
 		self.context = context
+	
+	def clean_parents(self):
+		self.parents = []	
 
-	def add_condition(self, condition):
-		self.condition = condition
+	def add_parent(self, command):
+		self.parents.append(command)
+
+	def clean_childs(self):
+		self.childs = []
+
+	def add_child(self, command):
+		self.childs.append(command)
 
 	def __str__(self):
 		return super(ProgrammGraphCommand, self).__str__()
+
+	def print2str(self):
+		result = super(ProgrammGraphCommand, self).print2str()
+		if self.childs:
+			result += '\nchilds:\n'
+			result += self.childs2str()
+		if self.parents:
+			result += '\nparents:\n'
+			result += self.parents2str()
+		return result
+
+	def childs2str(self):
+		result = ''
+		for child in self.childs:
+			result += '\t%s\n' % str(child)
+		return result
+
+	def parents2str(self):
+		result = ''
+		for parent in self.parents:
+			result += '\t%s\n' % str(parent)
+		return result
 
 	def calculate_context(self, context=None):
 		if not context:
@@ -427,39 +423,53 @@ class ProgrammGraph:
 	def __str__(self):
 		return ''.join(['%s\n' % str(cmd) for cmd in self.commands])
 
+	def print2str(self):
+		result = ''
+		for cmd in self.commands:
+			result += '%s\n' % cmd.print2str()
+		return result
+
 	def remove_command(self, removed_cmd):
-		for idx in range(len(self.commands)):
-			if idx != removed_cmd.line_number - 1:
-				cmd = self.commands[idx]
+		print "removed command: %s" % removed_cmd.print2str()
+		self.renumber_cmds(removed_cmd)
+		print "+++++++++++++++++++++++++++++++++"
+		print self.print2str()
+		print str(self)
+		print "removed command: %s" % removed_cmd.print2str()
+		self.exclude_cmd(removed_cmd)
+		print "-----------------------------------------------------------------"
+		print self.print2str()
+		print str(self)
+		print "removed command: %s" % removed_cmd.print2str()
+		print '****************************************************'
+		print str(self)
 
-				# renumber
-				if cmd.line_number > removed_cmd.line_number:
-					cmd.line_number = cmd.line_number - 1
-				if (cmd.name in Command.UNCONDITIONAL_JUMP or 
-						cmd.name in Command.CONDITIONAL_JUMPS) and \
-						cmd.operands[0] > removed_cmd.line_number:
-					cmd.operands[0] = cmd.operands[0] - 1
+	def renumber_cmds(self, removed_cmd):
+		for cmd in self.commands:
+			#if cmd.line_number != removed_cmd.childs[0].line_number:
+			self.renumber(cmd, removed_cmd.childs[0])
 
-				# clear parents
-				try:
-					cmd.parents.remove(removed_cmd)
-				except:
-					pass
+	def renumber(self, cmd, removed_cmd):
+		if cmd.line_number > removed_cmd.line_number:
+			cmd.line_number = cmd.line_number - 1
+		if (cmd.name in Command.UNCONDITIONAL_JUMP or 
+				cmd.name in Command.CONDITIONAL_JUMPS) and \
+				cmd.operands[0] > removed_cmd.line_number:
+			cmd.operands[0] = cmd.operands[0] - 1
 
-				# clear childs
-				try:
-					cmd.childs.remove(removed_cmd)
-				except:
-					pass
-
-		# shift
+	def exclude_cmd(self, removed_cmd):
+		removed_cmd.parents[0].childs[0] = removed_cmd.childs[0]
+		removed_cmd.childs[0].parents[0] = removed_cmd.parents[0]
 		self.commands.remove(removed_cmd)
+		self.commands.remove(removed_cmd.childs[0])
+		self.commands.insert(removed_cmd.line_number - 1, removed_cmd.childs[0])
+		removed_cmd.childs[0].line_number = removed_cmd.line_number
 
 
 class ProgrammGraphReader:
 
-	def __init__(self):
-		self.pg = None
+	def __init__(self, pg=None):
+		self.pg = pg
 
 	def read(self, filename):
 		with open(filename, 'r') as fin:
@@ -508,13 +518,11 @@ class ProgrammGraphReader:
 		child_cmd = self.pg.commands[success_child_cmd_idx]
 		cmd.add_child(child_cmd)
 		child_cmd.add_parent(cmd)
-		child_cmd.add_condition(Command.get_success_condition(cmd))
 
 		failure_child_cmd_idx = cmd.line_number
 		child_cmd = self.pg.commands[failure_child_cmd_idx]
 		cmd.add_child(child_cmd)
 		child_cmd.add_parent(cmd)
-		child_cmd.add_condition(Command.get_failure_condition(cmd))
 
 	def connect_ordinary_command(self, cmd):
 		child_cmd_idx = cmd.line_number
@@ -522,38 +530,131 @@ class ProgrammGraphReader:
 		cmd.add_child(child_cmd)
 		child_cmd.add_parent(cmd)
 	
-					
-class ProgrammGraphOptimizer(object):
+
+class Optimizer(object):
 	
 	def __init__(self, pg):
 		self.pg = pg
 
-	def optimize(self):
-		# 4 main cases:
-		self.remove_unused_commands()
-		self.remove_useless_conditional_jumps()
-		self.modify_conditional_jumps()
-		self.remove_useless_jumps()
+	def execute(self):
+		raise NotImplementedError()
 
-	def remove_useless_jumps(self):
+
+class UselessUnconditionalJumpRemover(Optimizer):
+
+	def execute(self):
 		useless_jump = self.find_useless_jump()
-		print 'useless jumps:', useless_jump
 		while useless_jump:
-			# remove
 			self.pg.remove_command(useless_jump)
-			# find next
 			useless_jump = self.find_useless_jump()
 
 	def find_useless_jump(self):
 		for cmd in self.pg.commands:
-			if cmd.name in Command.UNCONDITIONAL_JUMP and \
-					len(cmd.childs[0].parents) == 1:
+			if self.is_useless_jump(cmd):
 				return cmd
 		return None
 
+	def is_useless_jump(self, cmd):
+		return cmd.name in Command.UNCONDITIONAL_JUMP and \
+			len(cmd.childs) == 1 and len(cmd.childs[0].parents) == 1 and \
+			len(cmd.parents) == 1 and cmd.parents[0] not in Command.CONDITIONAL_JUMPS
+
+
+class UnusedCommandsRemover(Optimizer):
+
+	def execute(self):
+		cmd = self.pg.commands[0]
+		cmd.calculate_context()
+	
+		using_commands = self.find_using_commands(cmd)
+		print 'using commands: ', [str(cmd.line_number) for cmd in using_commands]
+
+		unusing_commands= filter(
+			lambda x: x.line_number not in [cmd.line_number for cmd in using_commands], 
+			self.pg.commands)
+		print 'unusing commands: ', [cmd.line_number for cmd in unusing_commands]
+		for removed_cmd in unusing_commands:
+			self.pg.remove_command(removed_cmd)
+
+	def find_using_commands(self, cmd):
+		# it is not optimal way for using commands seraching!!!
+		commands = set([])
+		while True:
+			commands.add(cmd)
+			print [str(command.line_number) for command in commands]
+			print cmd
+			print cmd.context
+			if cmd.name in ['JZ', 'JNZ', 'JC', 'JNC']:				
+				zf = cmd.context.flags.get('ZF')
+				cf = cmd.context.flags.get('CF')
+				if (cmd.name == 'JZ' and zf and zf.value == 1) or \
+						(cmd.name == 'JNZ' and zf and zf.value == 0):
+					commands.update(
+						self.find_using_commands(cmd.childs[0]))
+					
+				elif (cmd.name == 'JZ' and zf and zf.value == 0) or \
+						(cmd.name == 'JNZ' and zf and zf.value == 1):
+					commands.update(
+						self.find_using_commands(cmd.childs[1]))
+				elif (cmd.name == 'JC' and cf and cf.value == 1) or \
+						(cmd.name == 'JNC' and cf and cf.value == 0):
+					commands.update(
+						self.find_using_commands(cmd.childs[0]))
+				elif (cmd.name == 'JC' and cf and cf.value == 0) or \
+						(cmd.name == 'JNC' and cf and cf.value == 1):
+					commands.update(
+						self.find_using_commands(cmd.childs[1]))
+				else:
+					context = copy.deepcopy(cmd.context)
+					commands.update(self.find_using_commands(
+						copy.deepcopy(cmd.childs[0])))
+					cmd.context = context
+					commands.update(self.find_using_commands(
+						copy.deepcopy(cmd.childs[1])))
+				print 'return 1'
+				print 'commands: ', [str(command.line_number) for command in commands]
+				return commands
+			else:
+				if cmd.name == 'RET':
+					break
+				print cmd.name
+				print cmd.childs[0]
+				cmd.childs[0].calculate_context(cmd.context)				
+				cmd = cmd.childs[0]
+		print 'return 2'
+		print 'commands: ', [str(command.line_number) for command in commands]
+		return commands
+
+
+
+
+
+
+
+
+class Temp:
+	def optimize(self):
+		self.pg.full_print()
+
+		cmd_count = len(self.pg.commands)
+		while True:
+			# 4 main cases:
+			#self.remove_unused_commands()
+			#self.remove_useless_conditional_jumps()
+			self.modify_conditional_jumps()
+			#self.remove_useless_jumps()
+			break
+			if len(self.pg.commands) == cmd_count:
+				break
+			print str(self.pg)
+			cmd_count = len(self.pg.commands)
+
+
 	def modify_conditional_jumps(self):
+		print 'modify conditional jumps'
 		conditional_jump, connection_cmd = self.find_special_conditional_jump()
 		while conditional_jump:
+			print 'modified conditional jump:', str(conditional_jump)
 			# renumber commands
 			for cmd in self.pg.commands:				
 				if cmd.line_number != conditional_jump.childs[1].line_number:
@@ -579,36 +680,62 @@ class ProgrammGraphOptimizer(object):
 			conditional_jump, connection_cmd = self.find_special_conditional_jump()
 			
 	def find_special_conditional_jump(self):
+		print 'find modified conditional jump'
+		print 'programm graph:'
+		print self.pg.full_print()
 		for cmd in self.pg.commands:
 			if cmd.name in  Command.CONDITIONAL_JUMPS and \
 					cmd.childs[1].name in Command.UNCONDITIONAL_JUMP:
+				print 'cmd:', str(cmd)
 				connection_cmd = self.find_connection_command(cmd)
-				if cmd.childs[1].childs[0].line_number == connection_cmd.line_number:
+				print 'connection cmd:', str(connection_cmd)
+				if connection_cmd and \
+						cmd.childs[1].childs[0].line_number == connection_cmd.line_number:
+					print 'modified conditional jump:', str(cmd)
+					print 'connection command: ', str(connection_cmd)
 					return cmd, connection_cmd
 		return None, None
 
 	def find_connection_command(self, cmd):
+		print 'find connection command'
+		print 'cmd:', str(cmd)
+		#print 'childs: ', [str(cmd) for cmd in cmd.childs]
 		left_two_parent_commands = self.find_two_parent_commands(cmd.childs[0])
-		rigth_two_parent_commands = self.find_two_parent_commands(cmd.childs[1])
+		print 'left_cmds: ', [str(cmd) for cmd in left_two_parent_commands]
+		print 'cmd:', str(cmd)
+		#print 'childs: ', [str(cmd) for cmd in cmd.childs]
+		right_two_parent_commands = self.find_two_parent_commands(cmd.childs[1])
+		print 'right_cmds: ', [str(cmd) for cmd in right_two_parent_commands]
+		print 'cmd:', str(cmd)
+		#print 'childs: ', [str(cmd) for cmd in cmd.childs]
 		for left_cmd in left_two_parent_commands:
-			for right_cmd in rigth_two_parent_commands:
+			for right_cmd in right_two_parent_commands:
 				if left_cmd.line_number == right_cmd.line_number:
 					return left_cmd
-		raise Exception()			
+		return None
 
 	def find_two_parent_commands(self, cmd):
-		two_parent_commands = []
+		print 'find two parent commands'
+		print 'cmd:', str(cmd)
+		two_parent_commands = set([])
 		child_cmd = cmd
-		while len(child_cmd.childs) > 0:
+		while True:
+			#print 456
+			print 'child cmd:'
+			child_cmd.full_print()
+			if len(child_cmd.parents) >= 2:
+				two_parent_commands.add(child_cmd)
 			if len(child_cmd.childs) == 2:
-				two_parent_commands.extend(
+				two_parent_commands.update(
 					self.find_two_parent_commands(child_cmd.childs[0]))
-				two_parent_commands.extend(
+				two_parent_commands.update(
 					self.find_two_parent_commands(child_cmd.childs[1]))
 				return two_parent_commands
+			if len(child_cmd.childs) == 0:
+				break
 			child_cmd = child_cmd.childs[0]
-			if len(child_cmd.parents) >= 2:
-				two_parent_commands.append(child_cmd)
+		#print 132
+		#print str(cmd)
 		return two_parent_commands
 			
 	def remove_unused_commands(self):
@@ -666,6 +793,8 @@ class ProgrammGraphOptimizer(object):
 			else:
 				if cmd.name == 'RET':
 					break
+				print cmd.name
+				print cmd.childs[0]
 				cmd.childs[0].calculate_context(cmd.context)				
 				cmd = cmd.childs[0]
 		print 'return 2'
@@ -685,10 +814,16 @@ class ProgrammGraphOptimizer(object):
 
 
 
-pg = ProgrammGraphReader().read('input.txt')
+pg = ProgrammGraphReader().read('input15.txt')
 print str(pg)
 
-ProgrammGraphOptimizer(pg).optimize()
+#ProgrammGraphOptimizer(pg).optimize()
+UselessUnconditionalJumpRemover(pg).execute()
 print "optimized graph:"
 print str(pg)
+
+with  open("output.txt", "w") as fout:
+	fout.write(str(pg))
+
+
 	
