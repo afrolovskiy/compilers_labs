@@ -30,6 +30,15 @@ class Command(object):
 	def add_operands(self, operands):
 		self.operands.extend(operands)
 
+	def is_conditional_jump(self):
+		return self.name in self.CONDITIONAL_JUMPS
+
+	def is_unconditional_jump(self):
+		return self.name in self.UNCONDITIONAL_JUMP
+
+	def is_jump(self):
+		return self.is_unconditional_jump() or self.is_conditional_jump()
+
 	def __str__(self):
 		# hard coded!
 		if len(self.operands) == 1:
@@ -559,6 +568,35 @@ class UselessUnconditionalJumpRemover(Optimizer):
 			len(cmd.childs) == 1 and len(cmd.childs[0].parents) == 1 and \
 			len(cmd.parents) == 1 and cmd.parents[0] not in Command.CONDITIONAL_JUMPS
 
+class ConditionalJumpModifier(Optimizer):
+
+	def execute(self):
+		conditional_jump = self.find_special_conditional_jump()
+		while conditional_jump:
+			self.remove_useless_jump(conditional_jump)
+			conditional_jump = self.find_special_conditional_jump()
+			
+	def find_special_conditional_jump(self):
+		for cmd in self.pg.commands:
+			if cmd.is_conditional_jump() and cmd.childs[1].is_unconditional_jump():
+				return cmd
+		return None
+
+	def remove_useless_jump(self, conditional_jump):
+		removed_cmd = conditional_jump.childs[1]
+		for cmd in self.pg.commands:
+			if cmd.line_number > removed_cmd.line_number:
+				cmd.line_number = cmd.line_number - 1
+			if cmd.is_jump() and cmd.operands[0] > removed_cmd.line_number:
+				cmd.operands[0] = cmd.operands[0] - 1
+			
+		conditional_jump.childs[1] = conditional_jump.childs[1].childs[0]
+		conditional_jump.operands[0] = conditional_jump.childs[1].line_number
+		conditional_jump.childs[0], conditional_jump.childs[1] = \
+			conditional_jump.childs[1], conditional_jump.childs[0]
+		Command.revert_command(conditional_jump)
+		self.pg.commands.remove(removed_cmd)
+
 
 class UnusedCommandsRemover(Optimizer):
 
@@ -650,93 +688,7 @@ class Temp:
 			cmd_count = len(self.pg.commands)
 
 
-	def modify_conditional_jumps(self):
-		print 'modify conditional jumps'
-		conditional_jump, connection_cmd = self.find_special_conditional_jump()
-		while conditional_jump:
-			print 'modified conditional jump:', str(conditional_jump)
-			# renumber commands
-			for cmd in self.pg.commands:				
-				if cmd.line_number != conditional_jump.childs[1].line_number:
-					if cmd.line_number > conditional_jump.line_number:
-						cmd.line_number = cmd.line_number - 1
-					if cmd.name in Command.UNCONDITIONAL_JUMP and \
-							cmd.operands[0] > conditional_jump.line_number:
-						cmd.operands[0] = cmd.operands[0] - 1
-					if cmd.name in Command.CONDITIONAL_JUMPS and \
-							cmd != conditional_jump and \
-							cmd.operands[0] > conditional_jump.line_number:
-						cmd.operands[0] = cmd.operands[0] - 1
-			# remove useless jump
-			conditional_jump.operands[0] = connection_cmd.line_number
-			# change command
-			Command.revert_command(conditional_jump)
-			conditional_jump.line_number = connection_cmd.line_number
-			old_child = conditional_jump.childs[1]
-			conditional_jump.childs[1] = conditional_jump.childs[0]
-			conditional_jump.childs[0] = connection_cmd
-			del pg.commands[old_child.line_number - 1]
-			# find next
-			conditional_jump, connection_cmd = self.find_special_conditional_jump()
-			
-	def find_special_conditional_jump(self):
-		print 'find modified conditional jump'
-		print 'programm graph:'
-		print self.pg.full_print()
-		for cmd in self.pg.commands:
-			if cmd.name in  Command.CONDITIONAL_JUMPS and \
-					cmd.childs[1].name in Command.UNCONDITIONAL_JUMP:
-				print 'cmd:', str(cmd)
-				connection_cmd = self.find_connection_command(cmd)
-				print 'connection cmd:', str(connection_cmd)
-				if connection_cmd and \
-						cmd.childs[1].childs[0].line_number == connection_cmd.line_number:
-					print 'modified conditional jump:', str(cmd)
-					print 'connection command: ', str(connection_cmd)
-					return cmd, connection_cmd
-		return None, None
 
-	def find_connection_command(self, cmd):
-		print 'find connection command'
-		print 'cmd:', str(cmd)
-		#print 'childs: ', [str(cmd) for cmd in cmd.childs]
-		left_two_parent_commands = self.find_two_parent_commands(cmd.childs[0])
-		print 'left_cmds: ', [str(cmd) for cmd in left_two_parent_commands]
-		print 'cmd:', str(cmd)
-		#print 'childs: ', [str(cmd) for cmd in cmd.childs]
-		right_two_parent_commands = self.find_two_parent_commands(cmd.childs[1])
-		print 'right_cmds: ', [str(cmd) for cmd in right_two_parent_commands]
-		print 'cmd:', str(cmd)
-		#print 'childs: ', [str(cmd) for cmd in cmd.childs]
-		for left_cmd in left_two_parent_commands:
-			for right_cmd in right_two_parent_commands:
-				if left_cmd.line_number == right_cmd.line_number:
-					return left_cmd
-		return None
-
-	def find_two_parent_commands(self, cmd):
-		print 'find two parent commands'
-		print 'cmd:', str(cmd)
-		two_parent_commands = set([])
-		child_cmd = cmd
-		while True:
-			#print 456
-			print 'child cmd:'
-			child_cmd.full_print()
-			if len(child_cmd.parents) >= 2:
-				two_parent_commands.add(child_cmd)
-			if len(child_cmd.childs) == 2:
-				two_parent_commands.update(
-					self.find_two_parent_commands(child_cmd.childs[0]))
-				two_parent_commands.update(
-					self.find_two_parent_commands(child_cmd.childs[1]))
-				return two_parent_commands
-			if len(child_cmd.childs) == 0:
-				break
-			child_cmd = child_cmd.childs[0]
-		#print 132
-		#print str(cmd)
-		return two_parent_commands
 			
 	def remove_unused_commands(self):
 		cmd = self.pg.commands[0]
@@ -814,11 +766,12 @@ class Temp:
 
 
 
-pg = ProgrammGraphReader().read('input15.txt')
+pg = ProgrammGraphReader().read('input22.txt')
 print str(pg)
 
 #ProgrammGraphOptimizer(pg).optimize()
-UselessUnconditionalJumpRemover(pg).execute()
+#UselessUnconditionalJumpRemover(pg).execute()
+ConditionalJumpModifier(pg).execute()
 print "optimized graph:"
 print str(pg)
 
