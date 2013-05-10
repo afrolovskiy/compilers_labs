@@ -84,7 +84,7 @@ class Register:
 		return False
 	
 	def value(self):
-		return self.bits2number(self.bits, self.BITS_COUNT)
+		return self.bits2number(self.bits)
 
 	def __str__(self):
 		result = ''
@@ -107,10 +107,12 @@ class Register:
 	@classmethod
 	def number2bits(self, number):
 		work = number
-		bits = []
+		bits = [0 for _ in range(self.BITS_COUNT)]
+		idx = 0
 		while work:
-			bits.appen(work % 2)
+			bits[idx] = work % 2
 			work = work / 2
+			idx = idx + 1
 		return bits
 
 	@classmethod
@@ -235,11 +237,11 @@ class Context:
 	def __str__(self):
 		result = 'flags:\n'
 		for fname, fvalue in self.flags.items():
-			result += '%s: %s\n' % (fname, fvalue)
+			result += '%s: %s\n' % (fname, str(fvalue))
 
 		result += 'registers:\n'
 		for rname, rvalue in self.registers.items():
-			result += '%s: %s\n' % (rname, rvalue)
+			result += '%s: %s\n' % (rname, str(rvalue))
 
 		return result
 
@@ -598,6 +600,18 @@ class ConditionalJumpModifier(Optimizer):
 		self.pg.commands.remove(removed_cmd)
 
 
+class UselessConditionalJumpRemover(Optimizer):
+
+	def execute(self):
+		for cmd in self.pg.commands:
+			if self.is_useless_conditional_jump(cmd):
+				self.pg.remove_command(cmd)
+
+	def is_useless_conditional_jump(self, cmd):
+		return  cmd.is_conditional_jump() and \
+			cmd.childs[0].line_number == cmd.line_number + 1
+
+
 class UnusedCommandsRemover(Optimizer):
 
 	def execute(self):
@@ -619,9 +633,9 @@ class UnusedCommandsRemover(Optimizer):
 		commands = set([])
 		while True:
 			commands.add(cmd)
-			print [str(command.line_number) for command in commands]
-			print cmd
-			print cmd.context
+			print 'using commands:', [str(command.line_number) for command in commands]
+			print 'current command:', cmd
+			print 'context:\n', cmd.context
 			if cmd.name in ['JZ', 'JNZ', 'JC', 'JNC']:				
 				zf = cmd.context.flags.get('ZF')
 				cf = cmd.context.flags.get('CF')
@@ -664,114 +678,14 @@ class UnusedCommandsRemover(Optimizer):
 		return commands
 
 
-
-
-
-
-
-
-class Temp:
-	def optimize(self):
-		self.pg.full_print()
-
-		cmd_count = len(self.pg.commands)
-		while True:
-			# 4 main cases:
-			#self.remove_unused_commands()
-			#self.remove_useless_conditional_jumps()
-			self.modify_conditional_jumps()
-			#self.remove_useless_jumps()
-			break
-			if len(self.pg.commands) == cmd_count:
-				break
-			print str(self.pg)
-			cmd_count = len(self.pg.commands)
-
-
-
-			
-	def remove_unused_commands(self):
-		cmd = self.pg.commands[0]
-		cmd.calculate_context()
-	
-		using_commands = self.find_using_commands(cmd)
-		print 'using commands: ', [str(cmd.line_number) for cmd in using_commands]
-
-		unusing_commands= filter(
-			lambda x: x.line_number not in [cmd.line_number for cmd in using_commands], 
-			self.pg.commands)
-		print 'unusing commands: ', [cmd.line_number for cmd in unusing_commands]
-		for removed_cmd in unusing_commands:
-			self.pg.remove_command(removed_cmd)
-
-	def find_using_commands(self, cmd):
-		# it is not optimal way for using commands seraching!!!
-		commands = set([])
-		while True:
-			commands.add(cmd)
-			print [str(command.line_number) for command in commands]
-			print cmd
-			print cmd.context
-			if cmd.name in ['JZ', 'JNZ', 'JC', 'JNC']:				
-				zf = cmd.context.flags.get('ZF')
-				cf = cmd.context.flags.get('CF')
-				if (cmd.name == 'JZ' and zf and zf.value == 1) or \
-						(cmd.name == 'JNZ' and zf and zf.value == 0):
-					commands.update(
-						self.find_using_commands(cmd.childs[0]))
-					
-				elif (cmd.name == 'JZ' and zf and zf.value == 0) or \
-						(cmd.name == 'JNZ' and zf and zf.value == 1):
-					commands.update(
-						self.find_using_commands(cmd.childs[1]))
-				elif (cmd.name == 'JC' and cf and cf.value == 1) or \
-						(cmd.name == 'JNC' and cf and cf.value == 0):
-					commands.update(
-						self.find_using_commands(cmd.childs[0]))
-				elif (cmd.name == 'JC' and cf and cf.value == 0) or \
-						(cmd.name == 'JNC' and cf and cf.value == 1):
-					commands.update(
-						self.find_using_commands(cmd.childs[1]))
-				else:
-					context = copy.deepcopy(cmd.context)
-					commands.update(self.find_using_commands(
-						copy.deepcopy(cmd.childs[0])))
-					cmd.context = context
-					commands.update(self.find_using_commands(
-						copy.deepcopy(cmd.childs[1])))
-				print 'return 1'
-				print 'commands: ', [str(command.line_number) for command in commands]
-				return commands
-			else:
-				if cmd.name == 'RET':
-					break
-				print cmd.name
-				print cmd.childs[0]
-				cmd.childs[0].calculate_context(cmd.context)				
-				cmd = cmd.childs[0]
-		print 'return 2'
-		print 'commands: ', [str(command.line_number) for command in commands]
-		return commands
-			
-	def remove_useless_conditional_jumps(self):
-		useless_jumps = []
-		for cmd in self.pg.commands:
-			if cmd.name in Command.CONDITIONAL_JUMPS and \
-					cmd.childs[0].line_number == cmd.line_number + 1:
-				useless_jumps.append(cmd)
-		print "useless conditional jumps:" , [cmd.line_number for cmd in useless_jumps]
-	
-		for removed_cmd in  useless_jumps:
-			self.pg.remove_command(removed_cmd)
-
-
-
-pg = ProgrammGraphReader().read('input22.txt')
+pg = ProgrammGraphReader().read('input41.txt')
 print str(pg)
 
 #ProgrammGraphOptimizer(pg).optimize()
 #UselessUnconditionalJumpRemover(pg).execute()
-ConditionalJumpModifier(pg).execute()
+#ConditionalJumpModifier(pg).execute()
+#UselessConditionalJumpRemover(pg).execute()
+UnusedCommandsRemover(pg).execute()
 print "optimized graph:"
 print str(pg)
 

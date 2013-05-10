@@ -1,0 +1,7 @@
+1 ADD A,B
+2 MOV A,C
+3 JZ 4
+4 ADD B,C
+5 MOV D,C
+6 RET
+1
