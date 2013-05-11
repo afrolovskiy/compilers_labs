@@ -50,6 +50,19 @@ class Command(object):
 	
 	def print2str(self):
 		return str(self)
+
+	def __eq__(self, other):
+		if self.name != other.name:
+			return False
+		
+		if len(self.operands) != len(other.operands):
+			return False
+
+		for idx in range(len(self.operands)):
+			if self.operands[idx] != other.operands[idx]:
+				return False
+
+		return True
 		
 	@classmethod
 	def revert_command(self, cmd):
@@ -295,6 +308,15 @@ class ProgrammGraphCommand(Command):
 			result += '\t%s\n' % str(parent)
 		return result
 
+	def __eq__(self, other):
+		if not super(ProgrammGraphCommand, self).__eq__(other):
+			return False
+
+		if self.line_number != other.line_number:
+			return False
+
+		return True
+
 	def calculate_context(self, context=None):
 		if not context:
 			context = Context()
@@ -451,8 +473,11 @@ class ProgrammGraph:
 				cmd.line_number = cmd.line_number - 1
 
 	def exclude_cmd(self, removed_cmd):
-		removed_cmd.parents[0].childs[0] = removed_cmd.childs[0]
-		removed_cmd.childs[0].parents[0] = removed_cmd.parents[0]
+		if removed_cmd.childs and removed_cmd.parents:
+			if removed_cmd.parents[0].childs:
+				removed_cmd.parents[0].childs[0] = removed_cmd.childs[0]
+			if removed_cmd.childs[0].parents:
+				removed_cmd.childs[0].parents[0] = removed_cmd.parents[0]
 		self.commands.remove(removed_cmd)
 		
 	def renumber_jumps(self):
@@ -526,7 +551,7 @@ class ProgrammGraphReader:
 		child_cmd.add_parent(cmd)
 	
 
-class Optimizer(object):
+class BaseOptimizer(object):
 	
 	def __init__(self, pg):
 		self.pg = pg
@@ -535,7 +560,7 @@ class Optimizer(object):
 		raise NotImplementedError()
 
 
-class UselessUnconditionalJumpRemover(Optimizer):
+class UselessUnconditionalJumpRemover(BaseOptimizer):
 
 	def execute(self):
 		useless_jump = self.find_useless_jump()
@@ -550,11 +575,11 @@ class UselessUnconditionalJumpRemover(Optimizer):
 		return None
 
 	def is_useless_jump(self, cmd):
-		return cmd.name in Command.UNCONDITIONAL_JUMP and \
-			len(cmd.childs) == 1 and len(cmd.childs[0].parents) == 1 and \
-			len(cmd.parents) == 1 and cmd.parents[0] not in Command.CONDITIONAL_JUMPS
+		return cmd.is_unconditional_jump() and len(cmd.childs) == 1 and \
+			len(cmd.childs[0].parents) == 1 and len(cmd.parents) == 1 and \
+			not cmd.parents[0].is_conditional_jump()
 
-class ConditionalJumpModifier(Optimizer):
+class ConditionalJumpModifier(BaseOptimizer):
 
 	def execute(self):
 		conditional_jump = self.find_special_conditional_jump()
@@ -584,7 +609,7 @@ class ConditionalJumpModifier(Optimizer):
 		self.pg.commands.remove(removed_cmd)
 
 
-class UselessConditionalJumpRemover(Optimizer):
+class UselessConditionalJumpRemover(BaseOptimizer):
 
 	def execute(self):
 		for cmd in self.pg.commands:
@@ -596,38 +621,35 @@ class UselessConditionalJumpRemover(Optimizer):
 			cmd.childs[0].line_number == cmd.line_number + 1
 
 
-class UnusedCommandsRemover(Optimizer):
+class UnusedCommandsRemover(BaseOptimizer):
 
 	def execute(self):
 		cmd = self.pg.commands[0]
 		cmd.calculate_context()
 	
+		unusing_cmds= self.find_unusing_commands(cmd)
+		self.modify_jumps(unusing_cmds)
+		for cmd in unusing_cmds:
+			self.pg.remove_command(cmd)
+		
+	def find_unusing_commands(self, cmd):
 		using_commands = self.find_using_commands(cmd)
-		print 'using commands: ', [str(cmd.line_number) for cmd in using_commands]
-
-		unusing_commands= filter(
+		return filter(
 			lambda x: x.line_number not in [cmd.line_number for cmd in using_commands], 
 			self.pg.commands)
-		print 'unusing commands: ', [cmd.line_number for cmd in unusing_commands]
-		for removed_cmd in unusing_commands:
-			self.pg.remove_command(removed_cmd)
-
+		
 	def find_using_commands(self, cmd):
 		# it is not optimal way for using commands seraching!!!
 		commands = set([])
 		while True:
 			commands.add(cmd)
-			print 'using commands:', [str(command.line_number) for command in commands]
-			print 'current command:', cmd
-			print 'context:\n', cmd.context
-			if cmd.name in ['JZ', 'JNZ', 'JC', 'JNC']:				
+			if cmd.is_conditional_jump():				
 				zf = cmd.context.flags.get('ZF')
 				cf = cmd.context.flags.get('CF')
 				if (cmd.name == 'JZ' and zf and zf.value == 1) or \
 						(cmd.name == 'JNZ' and zf and zf.value == 0):
 					commands.update(
-						self.find_using_commands(cmd.childs[0]))
-					
+						self.find_using_commands(cmd.childs[0]))					
 				elif (cmd.name == 'JZ' and zf and zf.value == 0) or \
 						(cmd.name == 'JNZ' and zf and zf.value == 1):
 					commands.update(
@@ -647,34 +669,45 @@ class UnusedCommandsRemover(Optimizer):
 					cmd.context = context
 					commands.update(self.find_using_commands(
 						copy.deepcopy(cmd.childs[1])))
-				print 'return 1'
-				print 'commands: ', [str(command.line_number) for command in commands]
 				return commands
 			else:
 				if cmd.name == 'RET':
 					break
-				print cmd.name
-				print cmd.childs[0]
 				cmd.childs[0].calculate_context(cmd.context)				
 				cmd = cmd.childs[0]
-		print 'return 2'
-		print 'commands: ', [str(command.line_number) for command in commands]
 		return commands
+
+	def modify_jumps(self, unusing_cmds):
+		for cmd in self.pg.commands:
+			if cmd.is_conditional_jump():
+				if cmd.childs[0] in unusing_cmds:
+					cmd.name = 'JUMP'
+					cmd.operands[0] = cmd.childs[1].line_number
+					cmd.childs[0].parents.remove(cmd)
+					cmd.childs.remove(cmd.childs[0])
+				elif cmd.childs[1] in unusing_cmds:
+					cmd.name = 'JUMP'
+					cmd.operands[0] = cmd.childs[0].line_number
+					cmd.childs[1].parents.remove(cmd)
+					cmd.childs.remove(cmd.childs[1])
+
+
+class Optimizer(BaseOptimizer):
+	
+	def execute(self):
+		UnusedCommandsRemover(self.pg).execute()
+		ConditionalJumpModifier(self.pg).execute()
+		UselessUnconditionalJumpRemover(self.pg).execute()
+		UselessConditionalJumpRemover(self.pg).execute()
 
 
 pg = ProgrammGraphReader().read('input41.txt')
 print str(pg)
 
-#ProgrammGraphOptimizer(pg).optimize()
-#UselessUnconditionalJumpRemover(pg).execute()
-#ConditionalJumpModifier(pg).execute()
-#UselessConditionalJumpRemover(pg).execute()
-UnusedCommandsRemover(pg).execute()
-print "optimized graph:"
-print str(pg)
+Optimizer(pg).execute()
+print "optimized graph:\n", str(pg)
+print pg.print2str()
 
 with  open("output.txt", "w") as fout:
 	fout.write(str(pg))
 
-
-	
