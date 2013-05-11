@@ -712,7 +712,7 @@ class Optimizer(BaseOptimizer):
 		UselessConditionalJumpRemover(self.pg).execute()
 
 
-pg = ProgrammGraphReader().read('input21.txt')
+pg = ProgrammGraphReader().read('input.txt')
 print str(pg)
 
 Optimizer(pg).execute()
