@@ -441,40 +441,24 @@ class ProgrammGraph:
 		return result
 
 	def remove_command(self, removed_cmd):
-		print "removed command: %s" % removed_cmd.print2str()
-		self.renumber_cmds(removed_cmd)
-		print "+++++++++++++++++++++++++++++++++"
-		print self.print2str()
-		print str(self)
-		print "removed command: %s" % removed_cmd.print2str()
+		self.renumber_lines(removed_cmd)
 		self.exclude_cmd(removed_cmd)
-		print "-----------------------------------------------------------------"
-		print self.print2str()
-		print str(self)
-		print "removed command: %s" % removed_cmd.print2str()
-		print '****************************************************'
-		print str(self)
+		self.renumber_jumps()
 
-	def renumber_cmds(self, removed_cmd):
+	def renumber_lines(self, removed_cmd):
 		for cmd in self.commands:
-			#if cmd.line_number != removed_cmd.childs[0].line_number:
-			self.renumber(cmd, removed_cmd.childs[0])
-
-	def renumber(self, cmd, removed_cmd):
-		if cmd.line_number > removed_cmd.line_number:
-			cmd.line_number = cmd.line_number - 1
-		if (cmd.name in Command.UNCONDITIONAL_JUMP or 
-				cmd.name in Command.CONDITIONAL_JUMPS) and \
-				cmd.operands[0] > removed_cmd.line_number:
-			cmd.operands[0] = cmd.operands[0] - 1
+			if cmd.line_number > removed_cmd.line_number:
+				cmd.line_number = cmd.line_number - 1
 
 	def exclude_cmd(self, removed_cmd):
 		removed_cmd.parents[0].childs[0] = removed_cmd.childs[0]
 		removed_cmd.childs[0].parents[0] = removed_cmd.parents[0]
 		self.commands.remove(removed_cmd)
-		self.commands.remove(removed_cmd.childs[0])
-		self.commands.insert(removed_cmd.line_number - 1, removed_cmd.childs[0])
-		removed_cmd.childs[0].line_number = removed_cmd.line_number
+		
+	def renumber_jumps(self):
+		for cmd in self.commands:
+			if cmd.is_jump():
+				cmd.operands[0] = cmd.childs[0].line_number
 
 
 class ProgrammGraphReader:
