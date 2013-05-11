@@ -462,6 +462,12 @@ class ProgrammGraph:
 			result += '%s\n' % cmd.print2str()
 		return result
 
+	def __eq__(self,  other):
+		# stub
+		if len(self.commands) != len(other.commands):
+			return False
+		return True
+
 	def remove_command(self, removed_cmd):
 		self.renumber_lines(removed_cmd)
 		self.exclude_cmd(removed_cmd)
@@ -476,8 +482,12 @@ class ProgrammGraph:
 		if removed_cmd.childs and removed_cmd.parents:
 			if removed_cmd.parents[0].childs:
 				removed_cmd.parents[0].childs[0] = removed_cmd.childs[0]
+			else:
+				removed_cmd.parents[0].childs.append(removed_cmd.childs[0])
 			if removed_cmd.childs[0].parents:
 				removed_cmd.childs[0].parents[0] = removed_cmd.parents[0]
+			else:
+				removed_cmd.childs[0].parents.append(removed_cmd.parents[0])
 		
 		if removed_cmd.childs:
 			for child in removed_cmd.childs:
@@ -589,6 +599,7 @@ class UselessUnconditionalJumpRemover(BaseOptimizer):
 		return cmd.is_unconditional_jump() and len(cmd.childs) == 1 and \
 			len(cmd.childs[0].parents) == 1 and len(cmd.parents) == 1 and \
 			not cmd.parents[0].is_conditional_jump()
+
 
 class ConditionalJumpModifier(BaseOptimizer):
 
@@ -706,10 +717,16 @@ class UnusedCommandsRemover(BaseOptimizer):
 class Optimizer(BaseOptimizer):
 	
 	def execute(self):
-		UnusedCommandsRemover(self.pg).execute()
-		ConditionalJumpModifier(self.pg).execute()
-		UselessUnconditionalJumpRemover(self.pg).execute()
-		UselessConditionalJumpRemover(self.pg).execute()
+		cur_len = len(pg.commands)
+		while True:
+			old_len = cur_len
+			UnusedCommandsRemover(self.pg).execute()
+			ConditionalJumpModifier(self.pg).execute()
+			UselessUnconditionalJumpRemover(self.pg).execute()
+			UselessConditionalJumpRemover(self.pg).execute()
+			cur_len = len(self.pg.commands)
+			if old_len == cur_len:
+				break
 
 
 pg = ProgrammGraphReader().read('input.txt')
