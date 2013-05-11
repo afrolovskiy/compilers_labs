@@ -463,9 +463,18 @@ class ProgrammGraph:
 		return result
 
 	def remove_command(self, removed_cmd):
+		print "removed cmd:", str(removed_cmd)
 		self.renumber_lines(removed_cmd)
+		print "----------------------------------------------"
+		print self.print2str()
+
 		self.exclude_cmd(removed_cmd)
+		print "----------------------------------------------"
+		print self.print2str()
+
 		self.renumber_jumps()
+		print "----------------------------------------------"
+		print self.print2str()
 
 	def renumber_lines(self, removed_cmd):
 		for cmd in self.commands:
@@ -478,6 +487,17 @@ class ProgrammGraph:
 				removed_cmd.parents[0].childs[0] = removed_cmd.childs[0]
 			if removed_cmd.childs[0].parents:
 				removed_cmd.childs[0].parents[0] = removed_cmd.parents[0]
+		
+		if removed_cmd.childs:
+			for child in removed_cmd.childs:
+				if removed_cmd in child.parents:
+					child.parents.remove(removed_cmd)
+
+		if removed_cmd.parents:
+			for parent in removed_cmd.parents:
+				if removed_cmd in parent.childs:
+					parent.childs.remove(removed_cmd)		
+
 		self.commands.remove(removed_cmd)
 		
 	def renumber_jumps(self):
@@ -701,7 +721,7 @@ class Optimizer(BaseOptimizer):
 		UselessConditionalJumpRemover(self.pg).execute()
 
 
-pg = ProgrammGraphReader().read('input41.txt')
+pg = ProgrammGraphReader().read('input11.txt')
 print str(pg)
 
 Optimizer(pg).execute()

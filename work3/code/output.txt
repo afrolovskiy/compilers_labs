@@ -1,6 +1,3 @@
-1 ADD A,A
-2 LD B,1
-3 AND A,B
-4 LD C,5
-5 JUMP 6
-6 RET
+1 MOV A,B
+2 LD B,10
+3 RET
