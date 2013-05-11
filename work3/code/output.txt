@@ -1,3 +1,4 @@
-1 MOV A,B
-2 LD B,10
-3 RET
+1 ADD A,B
+2 JNZ 4
+3 ADD B,C
+4 RET
