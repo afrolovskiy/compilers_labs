@@ -3,7 +3,7 @@ from lexer import MiniJavaLexer
 
 
 tokens = MiniJavaLexer.tokens
-lexer = MiniJavaLexer()
+# lexer = MiniJavaLexer()
 start = 'goal'
 
 def p_goal(p):
@@ -191,5 +191,7 @@ if __name__ == '__main__':
 		}
 	"""
 	parser = yacc.yacc()
+	lexer = MiniJavaLexer()
+	lexer.build()
 	result = parser.parse(s)
 	print result
