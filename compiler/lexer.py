@@ -88,6 +88,8 @@ def t_newline(t):
 	r'\n+'
 	t.lexer.lineno += len(t.value)
 
+t_ignore_COMMENT = r'//.*'
+
 t_ignore  = ' \t'
 
 def t_error(t):

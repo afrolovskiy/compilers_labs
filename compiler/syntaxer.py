@@ -406,14 +406,14 @@ def p_null_expression(p):
     p[0] = NullExpression()
 
 def p_error(p):
-	print "Syntax error in input!"
+	print "Syntax error in input! %s" % p
 
 precedence = (
+    ('right', 'ASSIGNMENT'),
     #('left', 'RIGHT_BRACE'),
     #('right', 'LEFT_BRACE'),
    # ('left', 'SEMICOLON'),
     ('left', 'COMMA'),
-    ('right', 'ASSIGNMENT'),
     ('left', 'OR', 'AND'),
     ('nonassoc', 'LESS', 'GREATER', 'EQUAL', 'NOT_EQUAL'),
     ('left', 'PLUS', 'MINUS'),
