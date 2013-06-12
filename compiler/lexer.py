@@ -15,17 +15,19 @@ reserved = {
 	'if': 'IF',
 	'else': 'ELSE',
 	'while': 'WHILE',
-	'lenght': 'LENGTH',
 	'true': 'TRUE',
 	'false': 'FALSE',
 	'this': 'THIS',
+	'null': 'NULL',
 	'new': 'NEW',
 	'System': 'SYSTEM',
 	'out': 'OUT',
 	'println': 'PRINTLN',
 }
 
-tokens = [
+tokens = list(reserved.values()) + [
+	'INTEGER_LITERAL',
+	'IDENTIFIER',		
 	'LEFT_PARENTHESIS',
 	'RIGHT_PARENTHESIS',
 	'LEFT_BRACKET',
@@ -35,12 +37,19 @@ tokens = [
 	'POINT',
 	'COMMA',
 	'SEMICOLON',
-	'NOT',
+	'OR',
+	'AND',
+	'EQUAL',
+	'NOT_EQUAL',
+	'GREATER',
+	'LESS',
+	'PLUS',
+	'MINUS',
+	'MULTIPLY',
+	'DIVIDE',
 	'ASSIGNMENT',
-	'BINARY_OPERATOR',
-	'INTEGER_LITERAL',
-	'IDENTIFIER',		
-] + list(reserved.values())
+	'NOT',
+]
 
 def t_IDENTIFIER(t):
 	r'[A-Za-z][\d\w]*'
@@ -61,9 +70,18 @@ t_RIGHT_BRACE = r'}'
 t_POINT = r'\.'
 t_COMMA = r','
 t_SEMICOLON = r';'
-t_NOT = r'!'
+t_OR = r'\|\|'
+t_AND = r'&&'
+t_EQUAL = r'=='
+t_NOT_EQUAL = r'!='
+t_GREATER = r'>'
+t_LESS = r'<'
+t_PLUS = r'\+'
+t_MINUS = r'-'
+t_MULTIPLY = r'\*'
+t_DIVIDE = r'/'
 t_ASSIGNMENT = r'='
-t_BINARY_OPERATOR = r'&&|<|\+|-|\*'
+t_NOT = r'!'
 
 def t_newline(t):
 	r'\n+'
