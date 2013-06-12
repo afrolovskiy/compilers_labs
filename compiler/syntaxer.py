@@ -1,9 +1,7 @@
-import ply.yacc as yacc
-from lexer import MiniJavaLexer
+from ply import yacc
+from lexer import tokens
 
 
-tokens = MiniJavaLexer.tokens
-# lexer = MiniJavaLexer()
 start = 'goal'
 
 def p_goal(p):
@@ -16,7 +14,7 @@ def p_class_declaration_list(p):
 
 def p_main_class(p):
 	'''
-	main_class : 	CLASS IDENTIFIER LEFT_BRACE PUBLIC STATIC VOID MAIN LEFT_PARENTHESIS STRING LEFT_BRACKET RIGHT_BRACKET IDENTIFIER RIGHT_PARENTHESIS LEFT_BRACE 	statement RIGHT_BRACE RIGHT_BRACE
+	main_class : 	CLASS IDENTIFIER LEFT_BRACE PUBLIC STATIC VOID MAIN LEFT_PARENTHESIS STRING LEFT_BRACKET RIGHT_BRACKET IDENTIFIER RIGHT_PARENTHESIS LEFT_BRACE 	statement RIGHT_BRACE
 	'''
 
 def p_class_declaration(p):
@@ -172,26 +170,7 @@ def p_error(p):
 
 
 if __name__ == '__main__':
-	s = """
-		class Factorial {
-			public static void main(String[] a) {
-				System.out.println(new Fac().ComputeFac(10));
-			}
-		}
-
-		class Fac {
-			public int ComputeFac(int num) {
-				int num_aux;
-			if (num < 1)
-				num_aux = 1;
-			else
-				num_aux = num * (this.ComputeFac(num - 1));
-			return num_aux;
-			}
-		}
-	"""
 	parser = yacc.yacc()
-	lexer = MiniJavaLexer()
-	lexer.build()
-	result = parser.parse(s)
-	print result
+	with open('test.java') as fin:
+		result = parser.parse(fin.read())
+		print result

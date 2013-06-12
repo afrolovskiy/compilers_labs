@@ -6,7 +6,7 @@ Rule 0     S' -> goal
 Rule 1     goal -> main_class class_declaration_list
 Rule 2     class_declaration_list -> <empty>
 Rule 3     class_declaration_list -> class_declaration class_declaration_list
-Rule 4     main_class -> CLASS IDENTIFIER LEFT_BRACE PUBLIC STATIC VOID MAIN LEFT_PARENTHESIS STRING LEFT_BRACKET RIGHT_BRACKET IDENTIFIER RIGHT_PARENTHESIS LEFT_BRACE statement RIGHT_BRACE RIGHT_BRACE
+Rule 4     main_class -> CLASS IDENTIFIER LEFT_BRACE PUBLIC STATIC VOID MAIN LEFT_PARENTHESIS STRING LEFT_BRACKET RIGHT_BRACKET IDENTIFIER RIGHT_PARENTHESIS LEFT_BRACE statement RIGHT_BRACE
 Rule 5     class_declaration -> CLASS IDENTIFIER extends_list LEFT_BRACE var_declaration_list method_declaration_list RIGHT_BRACE
 Rule 6     extends_list -> <empty>
 Rule 7     extends_list -> EXTENDS IDENTIFIER
@@ -95,7 +95,7 @@ POINT                : 35 35 53 54
 PRINTLN              : 35
 PUBLIC               : 4 13
 RETURN               : 13
-RIGHT_BRACE          : 4 4 5 13 32
+RIGHT_BRACE          : 4 5 13 32
 RIGHT_BRACKET        : 4 22 37 52 62
 RIGHT_PARENTHESIS    : 4 13 33 34 35 54 63 65
 SEMICOLON            : 12 13 35 36 37
@@ -155,7 +155,7 @@ state 0
 
     (0) S' -> . goal
     (1) goal -> . main_class class_declaration_list
-    (4) main_class -> . CLASS IDENTIFIER LEFT_BRACE PUBLIC STATIC VOID MAIN LEFT_PARENTHESIS STRING LEFT_BRACKET RIGHT_BRACKET IDENTIFIER RIGHT_PARENTHESIS LEFT_BRACE statement RIGHT_BRACE RIGHT_BRACE
+    (4) main_class -> . CLASS IDENTIFIER LEFT_BRACE PUBLIC STATIC VOID MAIN LEFT_PARENTHESIS STRING LEFT_BRACKET RIGHT_BRACKET IDENTIFIER RIGHT_PARENTHESIS LEFT_BRACE statement RIGHT_BRACE
 
     CLASS           shift and go to state 3
 
@@ -183,7 +183,7 @@ state 2
 
 state 3
 
-    (4) main_class -> CLASS . IDENTIFIER LEFT_BRACE PUBLIC STATIC VOID MAIN LEFT_PARENTHESIS STRING LEFT_BRACKET RIGHT_BRACKET IDENTIFIER RIGHT_PARENTHESIS LEFT_BRACE statement RIGHT_BRACE RIGHT_BRACE
+    (4) main_class -> CLASS . IDENTIFIER LEFT_BRACE PUBLIC STATIC VOID MAIN LEFT_PARENTHESIS STRING LEFT_BRACKET RIGHT_BRACKET IDENTIFIER RIGHT_PARENTHESIS LEFT_BRACE statement RIGHT_BRACE
 
     IDENTIFIER      shift and go to state 7
 
@@ -217,7 +217,7 @@ state 6
 
 state 7
 
-    (4) main_class -> CLASS IDENTIFIER . LEFT_BRACE PUBLIC STATIC VOID MAIN LEFT_PARENTHESIS STRING LEFT_BRACKET RIGHT_BRACKET IDENTIFIER RIGHT_PARENTHESIS LEFT_BRACE statement RIGHT_BRACE RIGHT_BRACE
+    (4) main_class -> CLASS IDENTIFIER . LEFT_BRACE PUBLIC STATIC VOID MAIN LEFT_PARENTHESIS STRING LEFT_BRACKET RIGHT_BRACKET IDENTIFIER RIGHT_PARENTHESIS LEFT_BRACE statement RIGHT_BRACE
 
     LEFT_BRACE      shift and go to state 10
 
@@ -242,7 +242,7 @@ state 9
 
 state 10
 
-    (4) main_class -> CLASS IDENTIFIER LEFT_BRACE . PUBLIC STATIC VOID MAIN LEFT_PARENTHESIS STRING LEFT_BRACKET RIGHT_BRACKET IDENTIFIER RIGHT_PARENTHESIS LEFT_BRACE statement RIGHT_BRACE RIGHT_BRACE
+    (4) main_class -> CLASS IDENTIFIER LEFT_BRACE . PUBLIC STATIC VOID MAIN LEFT_PARENTHESIS STRING LEFT_BRACKET RIGHT_BRACKET IDENTIFIER RIGHT_PARENTHESIS LEFT_BRACE statement RIGHT_BRACE
 
     PUBLIC          shift and go to state 13
 
@@ -263,7 +263,7 @@ state 12
 
 state 13
 
-    (4) main_class -> CLASS IDENTIFIER LEFT_BRACE PUBLIC . STATIC VOID MAIN LEFT_PARENTHESIS STRING LEFT_BRACKET RIGHT_BRACKET IDENTIFIER RIGHT_PARENTHESIS LEFT_BRACE statement RIGHT_BRACE RIGHT_BRACE
+    (4) main_class -> CLASS IDENTIFIER LEFT_BRACE PUBLIC . STATIC VOID MAIN LEFT_PARENTHESIS STRING LEFT_BRACKET RIGHT_BRACKET IDENTIFIER RIGHT_PARENTHESIS LEFT_BRACE statement RIGHT_BRACE
 
     STATIC          shift and go to state 16
 
@@ -306,7 +306,7 @@ state 15
 
 state 16
 
-    (4) main_class -> CLASS IDENTIFIER LEFT_BRACE PUBLIC STATIC . VOID MAIN LEFT_PARENTHESIS STRING LEFT_BRACKET RIGHT_BRACKET IDENTIFIER RIGHT_PARENTHESIS LEFT_BRACE statement RIGHT_BRACE RIGHT_BRACE
+    (4) main_class -> CLASS IDENTIFIER LEFT_BRACE PUBLIC STATIC . VOID MAIN LEFT_PARENTHESIS STRING LEFT_BRACKET RIGHT_BRACKET IDENTIFIER RIGHT_PARENTHESIS LEFT_BRACE statement RIGHT_BRACE
 
     VOID            shift and go to state 27
 
@@ -421,7 +421,7 @@ state 26
 
 state 27
 
-    (4) main_class -> CLASS IDENTIFIER LEFT_BRACE PUBLIC STATIC VOID . MAIN LEFT_PARENTHESIS STRING LEFT_BRACKET RIGHT_BRACKET IDENTIFIER RIGHT_PARENTHESIS LEFT_BRACE statement RIGHT_BRACE RIGHT_BRACE
+    (4) main_class -> CLASS IDENTIFIER LEFT_BRACE PUBLIC STATIC VOID . MAIN LEFT_PARENTHESIS STRING LEFT_BRACKET RIGHT_BRACKET IDENTIFIER RIGHT_PARENTHESIS LEFT_BRACE statement RIGHT_BRACE
 
     MAIN            shift and go to state 34
 
@@ -498,7 +498,7 @@ state 33
 
 state 34
 
-    (4) main_class -> CLASS IDENTIFIER LEFT_BRACE PUBLIC STATIC VOID MAIN . LEFT_PARENTHESIS STRING LEFT_BRACKET RIGHT_BRACKET IDENTIFIER RIGHT_PARENTHESIS LEFT_BRACE statement RIGHT_BRACE RIGHT_BRACE
+    (4) main_class -> CLASS IDENTIFIER LEFT_BRACE PUBLIC STATIC VOID MAIN . LEFT_PARENTHESIS STRING LEFT_BRACKET RIGHT_BRACKET IDENTIFIER RIGHT_PARENTHESIS LEFT_BRACE statement RIGHT_BRACE
 
     LEFT_PARENTHESIS shift and go to state 40
 
@@ -550,7 +550,7 @@ state 39
 
 state 40
 
-    (4) main_class -> CLASS IDENTIFIER LEFT_BRACE PUBLIC STATIC VOID MAIN LEFT_PARENTHESIS . STRING LEFT_BRACKET RIGHT_BRACKET IDENTIFIER RIGHT_PARENTHESIS LEFT_BRACE statement RIGHT_BRACE RIGHT_BRACE
+    (4) main_class -> CLASS IDENTIFIER LEFT_BRACE PUBLIC STATIC VOID MAIN LEFT_PARENTHESIS . STRING LEFT_BRACKET RIGHT_BRACKET IDENTIFIER RIGHT_PARENTHESIS LEFT_BRACE statement RIGHT_BRACE
 
     STRING          shift and go to state 42
 
@@ -564,7 +564,7 @@ state 41
 
 state 42
 
-    (4) main_class -> CLASS IDENTIFIER LEFT_BRACE PUBLIC STATIC VOID MAIN LEFT_PARENTHESIS STRING . LEFT_BRACKET RIGHT_BRACKET IDENTIFIER RIGHT_PARENTHESIS LEFT_BRACE statement RIGHT_BRACE RIGHT_BRACE
+    (4) main_class -> CLASS IDENTIFIER LEFT_BRACE PUBLIC STATIC VOID MAIN LEFT_PARENTHESIS STRING . LEFT_BRACKET RIGHT_BRACKET IDENTIFIER RIGHT_PARENTHESIS LEFT_BRACE statement RIGHT_BRACE
 
     LEFT_BRACKET    shift and go to state 44
 
@@ -596,7 +596,7 @@ state 43
 
 state 44
 
-    (4) main_class -> CLASS IDENTIFIER LEFT_BRACE PUBLIC STATIC VOID MAIN LEFT_PARENTHESIS STRING LEFT_BRACKET . RIGHT_BRACKET IDENTIFIER RIGHT_PARENTHESIS LEFT_BRACE statement RIGHT_BRACE RIGHT_BRACE
+    (4) main_class -> CLASS IDENTIFIER LEFT_BRACE PUBLIC STATIC VOID MAIN LEFT_PARENTHESIS STRING LEFT_BRACKET . RIGHT_BRACKET IDENTIFIER RIGHT_PARENTHESIS LEFT_BRACE statement RIGHT_BRACE
 
     RIGHT_BRACKET   shift and go to state 47
 
@@ -618,7 +618,7 @@ state 46
 
 state 47
 
-    (4) main_class -> CLASS IDENTIFIER LEFT_BRACE PUBLIC STATIC VOID MAIN LEFT_PARENTHESIS STRING LEFT_BRACKET RIGHT_BRACKET . IDENTIFIER RIGHT_PARENTHESIS LEFT_BRACE statement RIGHT_BRACE RIGHT_BRACE
+    (4) main_class -> CLASS IDENTIFIER LEFT_BRACE PUBLIC STATIC VOID MAIN LEFT_PARENTHESIS STRING LEFT_BRACKET RIGHT_BRACKET . IDENTIFIER RIGHT_PARENTHESIS LEFT_BRACE statement RIGHT_BRACE
 
     IDENTIFIER      shift and go to state 50
 
@@ -641,7 +641,7 @@ state 49
 
 state 50
 
-    (4) main_class -> CLASS IDENTIFIER LEFT_BRACE PUBLIC STATIC VOID MAIN LEFT_PARENTHESIS STRING LEFT_BRACKET RIGHT_BRACKET IDENTIFIER . RIGHT_PARENTHESIS LEFT_BRACE statement RIGHT_BRACE RIGHT_BRACE
+    (4) main_class -> CLASS IDENTIFIER LEFT_BRACE PUBLIC STATIC VOID MAIN LEFT_PARENTHESIS STRING LEFT_BRACKET RIGHT_BRACKET IDENTIFIER . RIGHT_PARENTHESIS LEFT_BRACE statement RIGHT_BRACE
 
     RIGHT_PARENTHESIS shift and go to state 53
 
@@ -708,7 +708,7 @@ state 52
 
 state 53
 
-    (4) main_class -> CLASS IDENTIFIER LEFT_BRACE PUBLIC STATIC VOID MAIN LEFT_PARENTHESIS STRING LEFT_BRACKET RIGHT_BRACKET IDENTIFIER RIGHT_PARENTHESIS . LEFT_BRACE statement RIGHT_BRACE RIGHT_BRACE
+    (4) main_class -> CLASS IDENTIFIER LEFT_BRACE PUBLIC STATIC VOID MAIN LEFT_PARENTHESIS STRING LEFT_BRACKET RIGHT_BRACKET IDENTIFIER RIGHT_PARENTHESIS . LEFT_BRACE statement RIGHT_BRACE
 
     LEFT_BRACE      shift and go to state 56
 
@@ -756,7 +756,7 @@ state 55
 
 state 56
 
-    (4) main_class -> CLASS IDENTIFIER LEFT_BRACE PUBLIC STATIC VOID MAIN LEFT_PARENTHESIS STRING LEFT_BRACKET RIGHT_BRACKET IDENTIFIER RIGHT_PARENTHESIS LEFT_BRACE . statement RIGHT_BRACE RIGHT_BRACE
+    (4) main_class -> CLASS IDENTIFIER LEFT_BRACE PUBLIC STATIC VOID MAIN LEFT_PARENTHESIS STRING LEFT_BRACKET RIGHT_BRACKET IDENTIFIER RIGHT_PARENTHESIS LEFT_BRACE . statement RIGHT_BRACE
     (26) statement -> . block_statement
     (27) statement -> . if_statement
     (28) statement -> . while_statement
@@ -796,13 +796,13 @@ state 58
     (31) statement -> array_element_assignment_statement .
 
     ELSE            reduce using rule 31 (statement -> array_element_assignment_statement .)
-    RIGHT_BRACE     reduce using rule 31 (statement -> array_element_assignment_statement .)
     LEFT_BRACE      reduce using rule 31 (statement -> array_element_assignment_statement .)
     IF              reduce using rule 31 (statement -> array_element_assignment_statement .)
     WHILE           reduce using rule 31 (statement -> array_element_assignment_statement .)
     SYSTEM          reduce using rule 31 (statement -> array_element_assignment_statement .)
     IDENTIFIER      reduce using rule 31 (statement -> array_element_assignment_statement .)
     RETURN          reduce using rule 31 (statement -> array_element_assignment_statement .)
+    RIGHT_BRACE     reduce using rule 31 (statement -> array_element_assignment_statement .)
 
 
 state 59
@@ -810,13 +810,13 @@ state 59
     (29) statement -> print_statement .
 
     ELSE            reduce using rule 29 (statement -> print_statement .)
-    RIGHT_BRACE     reduce using rule 29 (statement -> print_statement .)
     LEFT_BRACE      reduce using rule 29 (statement -> print_statement .)
     IF              reduce using rule 29 (statement -> print_statement .)
     WHILE           reduce using rule 29 (statement -> print_statement .)
     SYSTEM          reduce using rule 29 (statement -> print_statement .)
     IDENTIFIER      reduce using rule 29 (statement -> print_statement .)
     RETURN          reduce using rule 29 (statement -> print_statement .)
+    RIGHT_BRACE     reduce using rule 29 (statement -> print_statement .)
 
 
 state 60
@@ -824,13 +824,13 @@ state 60
     (30) statement -> assignment_statement .
 
     ELSE            reduce using rule 30 (statement -> assignment_statement .)
-    RIGHT_BRACE     reduce using rule 30 (statement -> assignment_statement .)
     LEFT_BRACE      reduce using rule 30 (statement -> assignment_statement .)
     IF              reduce using rule 30 (statement -> assignment_statement .)
     WHILE           reduce using rule 30 (statement -> assignment_statement .)
     SYSTEM          reduce using rule 30 (statement -> assignment_statement .)
     IDENTIFIER      reduce using rule 30 (statement -> assignment_statement .)
     RETURN          reduce using rule 30 (statement -> assignment_statement .)
+    RIGHT_BRACE     reduce using rule 30 (statement -> assignment_statement .)
 
 
 state 61
@@ -838,13 +838,13 @@ state 61
     (26) statement -> block_statement .
 
     ELSE            reduce using rule 26 (statement -> block_statement .)
-    RIGHT_BRACE     reduce using rule 26 (statement -> block_statement .)
     LEFT_BRACE      reduce using rule 26 (statement -> block_statement .)
     IF              reduce using rule 26 (statement -> block_statement .)
     WHILE           reduce using rule 26 (statement -> block_statement .)
     SYSTEM          reduce using rule 26 (statement -> block_statement .)
     IDENTIFIER      reduce using rule 26 (statement -> block_statement .)
     RETURN          reduce using rule 26 (statement -> block_statement .)
+    RIGHT_BRACE     reduce using rule 26 (statement -> block_statement .)
 
 
 state 62
@@ -852,13 +852,13 @@ state 62
     (28) statement -> while_statement .
 
     ELSE            reduce using rule 28 (statement -> while_statement .)
-    RIGHT_BRACE     reduce using rule 28 (statement -> while_statement .)
     LEFT_BRACE      reduce using rule 28 (statement -> while_statement .)
     IF              reduce using rule 28 (statement -> while_statement .)
     WHILE           reduce using rule 28 (statement -> while_statement .)
     SYSTEM          reduce using rule 28 (statement -> while_statement .)
     IDENTIFIER      reduce using rule 28 (statement -> while_statement .)
     RETURN          reduce using rule 28 (statement -> while_statement .)
+    RIGHT_BRACE     reduce using rule 28 (statement -> while_statement .)
 
 
 state 63
@@ -901,13 +901,13 @@ state 64
     (27) statement -> if_statement .
 
     ELSE            reduce using rule 27 (statement -> if_statement .)
-    RIGHT_BRACE     reduce using rule 27 (statement -> if_statement .)
     LEFT_BRACE      reduce using rule 27 (statement -> if_statement .)
     IF              reduce using rule 27 (statement -> if_statement .)
     WHILE           reduce using rule 27 (statement -> if_statement .)
     SYSTEM          reduce using rule 27 (statement -> if_statement .)
     IDENTIFIER      reduce using rule 27 (statement -> if_statement .)
     RETURN          reduce using rule 27 (statement -> if_statement .)
+    RIGHT_BRACE     reduce using rule 27 (statement -> if_statement .)
 
 
 state 65
@@ -976,7 +976,7 @@ state 69
 
 state 70
 
-    (4) main_class -> CLASS IDENTIFIER LEFT_BRACE PUBLIC STATIC VOID MAIN LEFT_PARENTHESIS STRING LEFT_BRACKET RIGHT_BRACKET IDENTIFIER RIGHT_PARENTHESIS LEFT_BRACE statement . RIGHT_BRACE RIGHT_BRACE
+    (4) main_class -> CLASS IDENTIFIER LEFT_BRACE PUBLIC STATIC VOID MAIN LEFT_PARENTHESIS STRING LEFT_BRACKET RIGHT_BRACKET IDENTIFIER RIGHT_PARENTHESIS LEFT_BRACE statement . RIGHT_BRACE
 
     RIGHT_BRACE     shift and go to state 79
 
@@ -1275,74 +1275,75 @@ state 78
 
 state 79
 
-    (4) main_class -> CLASS IDENTIFIER LEFT_BRACE PUBLIC STATIC VOID MAIN LEFT_PARENTHESIS STRING LEFT_BRACKET RIGHT_BRACKET IDENTIFIER RIGHT_PARENTHESIS LEFT_BRACE statement RIGHT_BRACE . RIGHT_BRACE
+    (4) main_class -> CLASS IDENTIFIER LEFT_BRACE PUBLIC STATIC VOID MAIN LEFT_PARENTHESIS STRING LEFT_BRACKET RIGHT_BRACKET IDENTIFIER RIGHT_PARENTHESIS LEFT_BRACE statement RIGHT_BRACE .
 
-    RIGHT_BRACE     shift and go to state 108
+    CLASS           reduce using rule 4 (main_class -> CLASS IDENTIFIER LEFT_BRACE PUBLIC STATIC VOID MAIN LEFT_PARENTHESIS STRING LEFT_BRACKET RIGHT_BRACKET IDENTIFIER RIGHT_PARENTHESIS LEFT_BRACE statement RIGHT_BRACE .)
+    $end            reduce using rule 4 (main_class -> CLASS IDENTIFIER LEFT_BRACE PUBLIC STATIC VOID MAIN LEFT_PARENTHESIS STRING LEFT_BRACKET RIGHT_BRACKET IDENTIFIER RIGHT_PARENTHESIS LEFT_BRACE statement RIGHT_BRACE .)
 
 
 state 80
 
     (38) expression -> operator_expression .
 
-    RIGHT_PARENTHESIS reduce using rule 38 (expression -> operator_expression .)
+    SEMICOLON       reduce using rule 38 (expression -> operator_expression .)
     BINARY_OPERATOR reduce using rule 38 (expression -> operator_expression .)
     LEFT_BRACKET    reduce using rule 38 (expression -> operator_expression .)
     POINT           reduce using rule 38 (expression -> operator_expression .)
-    COMMA           reduce using rule 38 (expression -> operator_expression .)
-    SEMICOLON       reduce using rule 38 (expression -> operator_expression .)
+    RIGHT_PARENTHESIS reduce using rule 38 (expression -> operator_expression .)
     RIGHT_BRACKET   reduce using rule 38 (expression -> operator_expression .)
+    COMMA           reduce using rule 38 (expression -> operator_expression .)
 
 
 state 81
 
     (40) expression -> length_expression .
 
-    RIGHT_PARENTHESIS reduce using rule 40 (expression -> length_expression .)
+    SEMICOLON       reduce using rule 40 (expression -> length_expression .)
     BINARY_OPERATOR reduce using rule 40 (expression -> length_expression .)
     LEFT_BRACKET    reduce using rule 40 (expression -> length_expression .)
     POINT           reduce using rule 40 (expression -> length_expression .)
-    COMMA           reduce using rule 40 (expression -> length_expression .)
-    SEMICOLON       reduce using rule 40 (expression -> length_expression .)
+    RIGHT_PARENTHESIS reduce using rule 40 (expression -> length_expression .)
     RIGHT_BRACKET   reduce using rule 40 (expression -> length_expression .)
+    COMMA           reduce using rule 40 (expression -> length_expression .)
 
 
 state 82
 
     (45) expression -> identifier_expression .
 
-    RIGHT_PARENTHESIS reduce using rule 45 (expression -> identifier_expression .)
+    SEMICOLON       reduce using rule 45 (expression -> identifier_expression .)
     BINARY_OPERATOR reduce using rule 45 (expression -> identifier_expression .)
     LEFT_BRACKET    reduce using rule 45 (expression -> identifier_expression .)
     POINT           reduce using rule 45 (expression -> identifier_expression .)
-    COMMA           reduce using rule 45 (expression -> identifier_expression .)
-    SEMICOLON       reduce using rule 45 (expression -> identifier_expression .)
+    RIGHT_PARENTHESIS reduce using rule 45 (expression -> identifier_expression .)
     RIGHT_BRACKET   reduce using rule 45 (expression -> identifier_expression .)
+    COMMA           reduce using rule 45 (expression -> identifier_expression .)
 
 
 state 83
 
     (42) expression -> integer_literal_expression .
 
-    RIGHT_PARENTHESIS reduce using rule 42 (expression -> integer_literal_expression .)
+    SEMICOLON       reduce using rule 42 (expression -> integer_literal_expression .)
     BINARY_OPERATOR reduce using rule 42 (expression -> integer_literal_expression .)
     LEFT_BRACKET    reduce using rule 42 (expression -> integer_literal_expression .)
     POINT           reduce using rule 42 (expression -> integer_literal_expression .)
-    COMMA           reduce using rule 42 (expression -> integer_literal_expression .)
-    SEMICOLON       reduce using rule 42 (expression -> integer_literal_expression .)
+    RIGHT_PARENTHESIS reduce using rule 42 (expression -> integer_literal_expression .)
     RIGHT_BRACKET   reduce using rule 42 (expression -> integer_literal_expression .)
+    COMMA           reduce using rule 42 (expression -> integer_literal_expression .)
 
 
 state 84
 
     (43) expression -> true_expression .
 
-    RIGHT_PARENTHESIS reduce using rule 43 (expression -> true_expression .)
+    SEMICOLON       reduce using rule 43 (expression -> true_expression .)
     BINARY_OPERATOR reduce using rule 43 (expression -> true_expression .)
     LEFT_BRACKET    reduce using rule 43 (expression -> true_expression .)
     POINT           reduce using rule 43 (expression -> true_expression .)
-    COMMA           reduce using rule 43 (expression -> true_expression .)
-    SEMICOLON       reduce using rule 43 (expression -> true_expression .)
+    RIGHT_PARENTHESIS reduce using rule 43 (expression -> true_expression .)
     RIGHT_BRACKET   reduce using rule 43 (expression -> true_expression .)
+    COMMA           reduce using rule 43 (expression -> true_expression .)
 
 
 state 85
@@ -1350,21 +1351,21 @@ state 85
     (62) new_array_expression -> NEW . INT LEFT_BRACKET expression RIGHT_BRACKET
     (63) new_expression -> NEW . IDENTIFIER LEFT_PARENTHESIS RIGHT_PARENTHESIS
 
-    INT             shift and go to state 109
-    IDENTIFIER      shift and go to state 110
+    INT             shift and go to state 108
+    IDENTIFIER      shift and go to state 109
 
 
 state 86
 
     (48) expression -> new_expression .
 
-    RIGHT_PARENTHESIS reduce using rule 48 (expression -> new_expression .)
+    SEMICOLON       reduce using rule 48 (expression -> new_expression .)
     BINARY_OPERATOR reduce using rule 48 (expression -> new_expression .)
     LEFT_BRACKET    reduce using rule 48 (expression -> new_expression .)
     POINT           reduce using rule 48 (expression -> new_expression .)
-    COMMA           reduce using rule 48 (expression -> new_expression .)
-    SEMICOLON       reduce using rule 48 (expression -> new_expression .)
+    RIGHT_PARENTHESIS reduce using rule 48 (expression -> new_expression .)
     RIGHT_BRACKET   reduce using rule 48 (expression -> new_expression .)
+    COMMA           reduce using rule 48 (expression -> new_expression .)
 
 
 state 87
@@ -1384,52 +1385,52 @@ state 88
 
     (50) expression -> parenthesis_expression .
 
-    RIGHT_PARENTHESIS reduce using rule 50 (expression -> parenthesis_expression .)
+    SEMICOLON       reduce using rule 50 (expression -> parenthesis_expression .)
     BINARY_OPERATOR reduce using rule 50 (expression -> parenthesis_expression .)
     LEFT_BRACKET    reduce using rule 50 (expression -> parenthesis_expression .)
     POINT           reduce using rule 50 (expression -> parenthesis_expression .)
-    COMMA           reduce using rule 50 (expression -> parenthesis_expression .)
-    SEMICOLON       reduce using rule 50 (expression -> parenthesis_expression .)
+    RIGHT_PARENTHESIS reduce using rule 50 (expression -> parenthesis_expression .)
     RIGHT_BRACKET   reduce using rule 50 (expression -> parenthesis_expression .)
+    COMMA           reduce using rule 50 (expression -> parenthesis_expression .)
 
 
 state 89
 
     (39) expression -> array_element_expression .
 
-    RIGHT_PARENTHESIS reduce using rule 39 (expression -> array_element_expression .)
+    SEMICOLON       reduce using rule 39 (expression -> array_element_expression .)
     BINARY_OPERATOR reduce using rule 39 (expression -> array_element_expression .)
     LEFT_BRACKET    reduce using rule 39 (expression -> array_element_expression .)
     POINT           reduce using rule 39 (expression -> array_element_expression .)
-    COMMA           reduce using rule 39 (expression -> array_element_expression .)
-    SEMICOLON       reduce using rule 39 (expression -> array_element_expression .)
+    RIGHT_PARENTHESIS reduce using rule 39 (expression -> array_element_expression .)
     RIGHT_BRACKET   reduce using rule 39 (expression -> array_element_expression .)
+    COMMA           reduce using rule 39 (expression -> array_element_expression .)
 
 
 state 90
 
     (60) identifier_expression -> IDENTIFIER .
 
-    RIGHT_BRACKET   reduce using rule 60 (identifier_expression -> IDENTIFIER .)
+    COMMA           reduce using rule 60 (identifier_expression -> IDENTIFIER .)
     BINARY_OPERATOR reduce using rule 60 (identifier_expression -> IDENTIFIER .)
     LEFT_BRACKET    reduce using rule 60 (identifier_expression -> IDENTIFIER .)
     POINT           reduce using rule 60 (identifier_expression -> IDENTIFIER .)
     RIGHT_PARENTHESIS reduce using rule 60 (identifier_expression -> IDENTIFIER .)
     SEMICOLON       reduce using rule 60 (identifier_expression -> IDENTIFIER .)
-    COMMA           reduce using rule 60 (identifier_expression -> IDENTIFIER .)
+    RIGHT_BRACKET   reduce using rule 60 (identifier_expression -> IDENTIFIER .)
 
 
 state 91
 
     (47) expression -> new_array_expression .
 
-    RIGHT_PARENTHESIS reduce using rule 47 (expression -> new_array_expression .)
+    SEMICOLON       reduce using rule 47 (expression -> new_array_expression .)
     BINARY_OPERATOR reduce using rule 47 (expression -> new_array_expression .)
     LEFT_BRACKET    reduce using rule 47 (expression -> new_array_expression .)
     POINT           reduce using rule 47 (expression -> new_array_expression .)
-    COMMA           reduce using rule 47 (expression -> new_array_expression .)
-    SEMICOLON       reduce using rule 47 (expression -> new_array_expression .)
+    RIGHT_PARENTHESIS reduce using rule 47 (expression -> new_array_expression .)
     RIGHT_BRACKET   reduce using rule 47 (expression -> new_array_expression .)
+    COMMA           reduce using rule 47 (expression -> new_array_expression .)
 
 
 state 92
@@ -1482,7 +1483,7 @@ state 92
     integer_literal_expression     shift and go to state 83
     true_expression                shift and go to state 84
     new_expression                 shift and go to state 86
-    expression                     shift and go to state 111
+    expression                     shift and go to state 110
     new_array_expression           shift and go to state 91
     call_expression                shift and go to state 101
 
@@ -1490,26 +1491,26 @@ state 93
 
     (46) expression -> this_expression .
 
-    RIGHT_PARENTHESIS reduce using rule 46 (expression -> this_expression .)
+    SEMICOLON       reduce using rule 46 (expression -> this_expression .)
     BINARY_OPERATOR reduce using rule 46 (expression -> this_expression .)
     LEFT_BRACKET    reduce using rule 46 (expression -> this_expression .)
     POINT           reduce using rule 46 (expression -> this_expression .)
-    COMMA           reduce using rule 46 (expression -> this_expression .)
-    SEMICOLON       reduce using rule 46 (expression -> this_expression .)
+    RIGHT_PARENTHESIS reduce using rule 46 (expression -> this_expression .)
     RIGHT_BRACKET   reduce using rule 46 (expression -> this_expression .)
+    COMMA           reduce using rule 46 (expression -> this_expression .)
 
 
 state 94
 
     (44) expression -> false_expression .
 
-    RIGHT_PARENTHESIS reduce using rule 44 (expression -> false_expression .)
+    SEMICOLON       reduce using rule 44 (expression -> false_expression .)
     BINARY_OPERATOR reduce using rule 44 (expression -> false_expression .)
     LEFT_BRACKET    reduce using rule 44 (expression -> false_expression .)
     POINT           reduce using rule 44 (expression -> false_expression .)
-    COMMA           reduce using rule 44 (expression -> false_expression .)
-    SEMICOLON       reduce using rule 44 (expression -> false_expression .)
+    RIGHT_PARENTHESIS reduce using rule 44 (expression -> false_expression .)
     RIGHT_BRACKET   reduce using rule 44 (expression -> false_expression .)
+    COMMA           reduce using rule 44 (expression -> false_expression .)
 
 
 state 95
@@ -1520,8 +1521,8 @@ state 95
     BINARY_OPERATOR reduce using rule 57 (integer_literal_expression -> INTEGER_LITERAL .)
     LEFT_BRACKET    reduce using rule 57 (integer_literal_expression -> INTEGER_LITERAL .)
     POINT           reduce using rule 57 (integer_literal_expression -> INTEGER_LITERAL .)
-    RIGHT_PARENTHESIS reduce using rule 57 (integer_literal_expression -> INTEGER_LITERAL .)
     COMMA           reduce using rule 57 (integer_literal_expression -> INTEGER_LITERAL .)
+    RIGHT_PARENTHESIS reduce using rule 57 (integer_literal_expression -> INTEGER_LITERAL .)
     SEMICOLON       reduce using rule 57 (integer_literal_expression -> INTEGER_LITERAL .)
 
 
@@ -1529,12 +1530,12 @@ state 96
 
     (59) false_expression -> FALSE .
 
-    RIGHT_BRACKET   reduce using rule 59 (false_expression -> FALSE .)
+    SEMICOLON       reduce using rule 59 (false_expression -> FALSE .)
     BINARY_OPERATOR reduce using rule 59 (false_expression -> FALSE .)
     LEFT_BRACKET    reduce using rule 59 (false_expression -> FALSE .)
     POINT           reduce using rule 59 (false_expression -> FALSE .)
+    RIGHT_BRACKET   reduce using rule 59 (false_expression -> FALSE .)
     RIGHT_PARENTHESIS reduce using rule 59 (false_expression -> FALSE .)
-    SEMICOLON       reduce using rule 59 (false_expression -> FALSE .)
     COMMA           reduce using rule 59 (false_expression -> FALSE .)
 
 
@@ -1542,26 +1543,26 @@ state 97
 
     (49) expression -> not_expression .
 
-    RIGHT_PARENTHESIS reduce using rule 49 (expression -> not_expression .)
+    SEMICOLON       reduce using rule 49 (expression -> not_expression .)
     BINARY_OPERATOR reduce using rule 49 (expression -> not_expression .)
     LEFT_BRACKET    reduce using rule 49 (expression -> not_expression .)
     POINT           reduce using rule 49 (expression -> not_expression .)
-    COMMA           reduce using rule 49 (expression -> not_expression .)
-    SEMICOLON       reduce using rule 49 (expression -> not_expression .)
+    RIGHT_PARENTHESIS reduce using rule 49 (expression -> not_expression .)
     RIGHT_BRACKET   reduce using rule 49 (expression -> not_expression .)
+    COMMA           reduce using rule 49 (expression -> not_expression .)
 
 
 state 98
 
     (61) this_expression -> THIS .
 
-    COMMA           reduce using rule 61 (this_expression -> THIS .)
+    SEMICOLON       reduce using rule 61 (this_expression -> THIS .)
     BINARY_OPERATOR reduce using rule 61 (this_expression -> THIS .)
     LEFT_BRACKET    reduce using rule 61 (this_expression -> THIS .)
     POINT           reduce using rule 61 (this_expression -> THIS .)
-    SEMICOLON       reduce using rule 61 (this_expression -> THIS .)
     RIGHT_PARENTHESIS reduce using rule 61 (this_expression -> THIS .)
     RIGHT_BRACKET   reduce using rule 61 (this_expression -> THIS .)
+    COMMA           reduce using rule 61 (this_expression -> THIS .)
 
 
 state 99
@@ -1614,7 +1615,7 @@ state 99
     integer_literal_expression     shift and go to state 83
     true_expression                shift and go to state 84
     new_expression                 shift and go to state 86
-    expression                     shift and go to state 112
+    expression                     shift and go to state 111
     new_array_expression           shift and go to state 91
     call_expression                shift and go to state 101
 
@@ -1626,23 +1627,23 @@ state 100
     (53) length_expression -> expression . POINT LENGTH
     (54) call_expression -> expression . POINT IDENTIFIER LEFT_PARENTHESIS expression_list RIGHT_PARENTHESIS
 
-    RIGHT_PARENTHESIS shift and go to state 115
-    BINARY_OPERATOR shift and go to state 114
-    LEFT_BRACKET    shift and go to state 116
-    POINT           shift and go to state 113
+    RIGHT_PARENTHESIS shift and go to state 114
+    BINARY_OPERATOR shift and go to state 113
+    LEFT_BRACKET    shift and go to state 115
+    POINT           shift and go to state 112
 
 
 state 101
 
     (41) expression -> call_expression .
 
-    RIGHT_PARENTHESIS reduce using rule 41 (expression -> call_expression .)
+    SEMICOLON       reduce using rule 41 (expression -> call_expression .)
     BINARY_OPERATOR reduce using rule 41 (expression -> call_expression .)
     LEFT_BRACKET    reduce using rule 41 (expression -> call_expression .)
     POINT           reduce using rule 41 (expression -> call_expression .)
-    COMMA           reduce using rule 41 (expression -> call_expression .)
-    SEMICOLON       reduce using rule 41 (expression -> call_expression .)
+    RIGHT_PARENTHESIS reduce using rule 41 (expression -> call_expression .)
     RIGHT_BRACKET   reduce using rule 41 (expression -> call_expression .)
+    COMMA           reduce using rule 41 (expression -> call_expression .)
 
 
 state 102
@@ -1653,10 +1654,10 @@ state 102
     (53) length_expression -> expression . POINT LENGTH
     (54) call_expression -> expression . POINT IDENTIFIER LEFT_PARENTHESIS expression_list RIGHT_PARENTHESIS
 
-    RIGHT_PARENTHESIS shift and go to state 117
-    BINARY_OPERATOR shift and go to state 114
-    LEFT_BRACKET    shift and go to state 116
-    POINT           shift and go to state 113
+    RIGHT_PARENTHESIS shift and go to state 116
+    BINARY_OPERATOR shift and go to state 113
+    LEFT_BRACKET    shift and go to state 115
+    POINT           shift and go to state 112
 
 
 state 103
@@ -1667,10 +1668,10 @@ state 103
     (53) length_expression -> expression . POINT LENGTH
     (54) call_expression -> expression . POINT IDENTIFIER LEFT_PARENTHESIS expression_list RIGHT_PARENTHESIS
 
-    SEMICOLON       shift and go to state 118
-    BINARY_OPERATOR shift and go to state 114
-    LEFT_BRACKET    shift and go to state 116
-    POINT           shift and go to state 113
+    SEMICOLON       shift and go to state 117
+    BINARY_OPERATOR shift and go to state 113
+    LEFT_BRACKET    shift and go to state 115
+    POINT           shift and go to state 112
 
 
 state 104
@@ -1681,17 +1682,17 @@ state 104
     (53) length_expression -> expression . POINT LENGTH
     (54) call_expression -> expression . POINT IDENTIFIER LEFT_PARENTHESIS expression_list RIGHT_PARENTHESIS
 
-    RIGHT_BRACKET   shift and go to state 119
-    BINARY_OPERATOR shift and go to state 114
-    LEFT_BRACKET    shift and go to state 116
-    POINT           shift and go to state 113
+    RIGHT_BRACKET   shift and go to state 118
+    BINARY_OPERATOR shift and go to state 113
+    LEFT_BRACKET    shift and go to state 115
+    POINT           shift and go to state 112
 
 
 state 105
 
     (35) print_statement -> SYSTEM POINT OUT . POINT PRINTLN LEFT_PARENTHESIS expression RIGHT_PARENTHESIS SEMICOLON
 
-    POINT           shift and go to state 120
+    POINT           shift and go to state 119
 
 
 state 106
@@ -1702,10 +1703,10 @@ state 106
     (53) length_expression -> expression . POINT LENGTH
     (54) call_expression -> expression . POINT IDENTIFIER LEFT_PARENTHESIS expression_list RIGHT_PARENTHESIS
 
-    SEMICOLON       shift and go to state 121
-    BINARY_OPERATOR shift and go to state 114
-    LEFT_BRACKET    shift and go to state 116
-    POINT           shift and go to state 113
+    SEMICOLON       shift and go to state 120
+    BINARY_OPERATOR shift and go to state 113
+    LEFT_BRACKET    shift and go to state 115
+    POINT           shift and go to state 112
 
 
 state 107
@@ -1724,27 +1725,19 @@ state 107
 
 state 108
 
-    (4) main_class -> CLASS IDENTIFIER LEFT_BRACE PUBLIC STATIC VOID MAIN LEFT_PARENTHESIS STRING LEFT_BRACKET RIGHT_BRACKET IDENTIFIER RIGHT_PARENTHESIS LEFT_BRACE statement RIGHT_BRACE RIGHT_BRACE .
+    (62) new_array_expression -> NEW INT . LEFT_BRACKET expression RIGHT_BRACKET
 
-    CLASS           reduce using rule 4 (main_class -> CLASS IDENTIFIER LEFT_BRACE PUBLIC STATIC VOID MAIN LEFT_PARENTHESIS STRING LEFT_BRACKET RIGHT_BRACKET IDENTIFIER RIGHT_PARENTHESIS LEFT_BRACE statement RIGHT_BRACE RIGHT_BRACE .)
-    $end            reduce using rule 4 (main_class -> CLASS IDENTIFIER LEFT_BRACE PUBLIC STATIC VOID MAIN LEFT_PARENTHESIS STRING LEFT_BRACKET RIGHT_BRACKET IDENTIFIER RIGHT_PARENTHESIS LEFT_BRACE statement RIGHT_BRACE RIGHT_BRACE .)
+    LEFT_BRACKET    shift and go to state 121
 
 
 state 109
 
-    (62) new_array_expression -> NEW INT . LEFT_BRACKET expression RIGHT_BRACKET
+    (63) new_expression -> NEW IDENTIFIER . LEFT_PARENTHESIS RIGHT_PARENTHESIS
 
-    LEFT_BRACKET    shift and go to state 122
+    LEFT_PARENTHESIS shift and go to state 122
 
 
 state 110
-
-    (63) new_expression -> NEW IDENTIFIER . LEFT_PARENTHESIS RIGHT_PARENTHESIS
-
-    LEFT_PARENTHESIS shift and go to state 123
-
-
-state 111
 
     (65) parenthesis_expression -> LEFT_PARENTHESIS expression . RIGHT_PARENTHESIS
     (51) operator_expression -> expression . BINARY_OPERATOR expression
@@ -1752,13 +1745,13 @@ state 111
     (53) length_expression -> expression . POINT LENGTH
     (54) call_expression -> expression . POINT IDENTIFIER LEFT_PARENTHESIS expression_list RIGHT_PARENTHESIS
 
-    RIGHT_PARENTHESIS shift and go to state 124
-    BINARY_OPERATOR shift and go to state 114
-    LEFT_BRACKET    shift and go to state 116
-    POINT           shift and go to state 113
+    RIGHT_PARENTHESIS shift and go to state 123
+    BINARY_OPERATOR shift and go to state 113
+    LEFT_BRACKET    shift and go to state 115
+    POINT           shift and go to state 112
 
 
-state 112
+state 111
 
     (64) not_expression -> NOT expression .
     (51) operator_expression -> expression . BINARY_OPERATOR expression
@@ -1769,29 +1762,29 @@ state 112
   ! shift/reduce conflict for BINARY_OPERATOR resolved as shift
   ! shift/reduce conflict for LEFT_BRACKET resolved as shift
   ! shift/reduce conflict for POINT resolved as shift
-    RIGHT_PARENTHESIS reduce using rule 64 (not_expression -> NOT expression .)
-    SEMICOLON       reduce using rule 64 (not_expression -> NOT expression .)
     RIGHT_BRACKET   reduce using rule 64 (not_expression -> NOT expression .)
+    RIGHT_PARENTHESIS reduce using rule 64 (not_expression -> NOT expression .)
     COMMA           reduce using rule 64 (not_expression -> NOT expression .)
-    BINARY_OPERATOR shift and go to state 114
-    LEFT_BRACKET    shift and go to state 116
-    POINT           shift and go to state 113
+    SEMICOLON       reduce using rule 64 (not_expression -> NOT expression .)
+    BINARY_OPERATOR shift and go to state 113
+    LEFT_BRACKET    shift and go to state 115
+    POINT           shift and go to state 112
 
   ! BINARY_OPERATOR [ reduce using rule 64 (not_expression -> NOT expression .) ]
   ! LEFT_BRACKET    [ reduce using rule 64 (not_expression -> NOT expression .) ]
   ! POINT           [ reduce using rule 64 (not_expression -> NOT expression .) ]
 
 
-state 113
+state 112
 
     (53) length_expression -> expression POINT . LENGTH
     (54) call_expression -> expression POINT . IDENTIFIER LEFT_PARENTHESIS expression_list RIGHT_PARENTHESIS
 
-    LENGTH          shift and go to state 125
-    IDENTIFIER      shift and go to state 126
+    LENGTH          shift and go to state 124
+    IDENTIFIER      shift and go to state 125
 
 
-state 114
+state 113
 
     (51) operator_expression -> expression BINARY_OPERATOR . expression
     (38) expression -> . operator_expression
@@ -1841,11 +1834,11 @@ state 114
     integer_literal_expression     shift and go to state 83
     true_expression                shift and go to state 84
     new_expression                 shift and go to state 86
-    expression                     shift and go to state 127
+    expression                     shift and go to state 126
     new_array_expression           shift and go to state 91
     call_expression                shift and go to state 101
 
-state 115
+state 114
 
     (34) while_statement -> WHILE LEFT_PARENTHESIS expression RIGHT_PARENTHESIS . statement
     (26) statement -> . block_statement
@@ -1871,11 +1864,11 @@ state 115
     block_statement                shift and go to state 61
     while_statement                shift and go to state 62
     array_element_assignment_statement shift and go to state 58
-    statement                      shift and go to state 128
+    statement                      shift and go to state 127
     print_statement                shift and go to state 59
     if_statement                   shift and go to state 64
 
-state 116
+state 115
 
     (52) array_element_expression -> expression LEFT_BRACKET . expression RIGHT_BRACKET
     (38) expression -> . operator_expression
@@ -1925,11 +1918,11 @@ state 116
     integer_literal_expression     shift and go to state 83
     true_expression                shift and go to state 84
     new_expression                 shift and go to state 86
-    expression                     shift and go to state 129
+    expression                     shift and go to state 128
     new_array_expression           shift and go to state 91
     call_expression                shift and go to state 101
 
-state 117
+state 116
 
     (33) if_statement -> IF LEFT_PARENTHESIS expression RIGHT_PARENTHESIS . statement ELSE statement
     (26) statement -> . block_statement
@@ -1955,11 +1948,11 @@ state 117
     block_statement                shift and go to state 61
     while_statement                shift and go to state 62
     array_element_assignment_statement shift and go to state 58
-    statement                      shift and go to state 130
+    statement                      shift and go to state 129
     print_statement                shift and go to state 59
     if_statement                   shift and go to state 64
 
-state 118
+state 117
 
     (36) assignment_statement -> IDENTIFIER ASSIGNMENT expression SEMICOLON .
 
@@ -1969,32 +1962,32 @@ state 118
     SYSTEM          reduce using rule 36 (assignment_statement -> IDENTIFIER ASSIGNMENT expression SEMICOLON .)
     IDENTIFIER      reduce using rule 36 (assignment_statement -> IDENTIFIER ASSIGNMENT expression SEMICOLON .)
     RETURN          reduce using rule 36 (assignment_statement -> IDENTIFIER ASSIGNMENT expression SEMICOLON .)
-    RIGHT_BRACE     reduce using rule 36 (assignment_statement -> IDENTIFIER ASSIGNMENT expression SEMICOLON .)
     ELSE            reduce using rule 36 (assignment_statement -> IDENTIFIER ASSIGNMENT expression SEMICOLON .)
+    RIGHT_BRACE     reduce using rule 36 (assignment_statement -> IDENTIFIER ASSIGNMENT expression SEMICOLON .)
+
+
+state 118
+
+    (37) array_element_assignment_statement -> IDENTIFIER LEFT_BRACKET expression RIGHT_BRACKET . ASSIGNMENT expression SEMICOLON
+
+    ASSIGNMENT      shift and go to state 130
 
 
 state 119
 
-    (37) array_element_assignment_statement -> IDENTIFIER LEFT_BRACKET expression RIGHT_BRACKET . ASSIGNMENT expression SEMICOLON
+    (35) print_statement -> SYSTEM POINT OUT POINT . PRINTLN LEFT_PARENTHESIS expression RIGHT_PARENTHESIS SEMICOLON
 
-    ASSIGNMENT      shift and go to state 131
+    PRINTLN         shift and go to state 131
 
 
 state 120
 
-    (35) print_statement -> SYSTEM POINT OUT POINT . PRINTLN LEFT_PARENTHESIS expression RIGHT_PARENTHESIS SEMICOLON
+    (13) method_declaration -> PUBLIC type IDENTIFIER LEFT_PARENTHESIS params_list RIGHT_PARENTHESIS LEFT_BRACE var_declaration_list statement_list RETURN expression SEMICOLON . RIGHT_BRACE
 
-    PRINTLN         shift and go to state 132
+    RIGHT_BRACE     shift and go to state 132
 
 
 state 121
-
-    (13) method_declaration -> PUBLIC type IDENTIFIER LEFT_PARENTHESIS params_list RIGHT_PARENTHESIS LEFT_BRACE var_declaration_list statement_list RETURN expression SEMICOLON . RIGHT_BRACE
-
-    RIGHT_BRACE     shift and go to state 133
-
-
-state 122
 
     (62) new_array_expression -> NEW INT LEFT_BRACKET . expression RIGHT_BRACKET
     (38) expression -> . operator_expression
@@ -2044,51 +2037,51 @@ state 122
     integer_literal_expression     shift and go to state 83
     true_expression                shift and go to state 84
     new_expression                 shift and go to state 86
-    expression                     shift and go to state 134
+    expression                     shift and go to state 133
     new_array_expression           shift and go to state 91
     call_expression                shift and go to state 101
 
-state 123
+state 122
 
     (63) new_expression -> NEW IDENTIFIER LEFT_PARENTHESIS . RIGHT_PARENTHESIS
 
-    RIGHT_PARENTHESIS shift and go to state 135
+    RIGHT_PARENTHESIS shift and go to state 134
+
+
+state 123
+
+    (65) parenthesis_expression -> LEFT_PARENTHESIS expression RIGHT_PARENTHESIS .
+
+    SEMICOLON       reduce using rule 65 (parenthesis_expression -> LEFT_PARENTHESIS expression RIGHT_PARENTHESIS .)
+    BINARY_OPERATOR reduce using rule 65 (parenthesis_expression -> LEFT_PARENTHESIS expression RIGHT_PARENTHESIS .)
+    LEFT_BRACKET    reduce using rule 65 (parenthesis_expression -> LEFT_PARENTHESIS expression RIGHT_PARENTHESIS .)
+    POINT           reduce using rule 65 (parenthesis_expression -> LEFT_PARENTHESIS expression RIGHT_PARENTHESIS .)
+    RIGHT_BRACKET   reduce using rule 65 (parenthesis_expression -> LEFT_PARENTHESIS expression RIGHT_PARENTHESIS .)
+    COMMA           reduce using rule 65 (parenthesis_expression -> LEFT_PARENTHESIS expression RIGHT_PARENTHESIS .)
+    RIGHT_PARENTHESIS reduce using rule 65 (parenthesis_expression -> LEFT_PARENTHESIS expression RIGHT_PARENTHESIS .)
 
 
 state 124
 
-    (65) parenthesis_expression -> LEFT_PARENTHESIS expression RIGHT_PARENTHESIS .
+    (53) length_expression -> expression POINT LENGTH .
 
-    RIGHT_BRACKET   reduce using rule 65 (parenthesis_expression -> LEFT_PARENTHESIS expression RIGHT_PARENTHESIS .)
-    BINARY_OPERATOR reduce using rule 65 (parenthesis_expression -> LEFT_PARENTHESIS expression RIGHT_PARENTHESIS .)
-    LEFT_BRACKET    reduce using rule 65 (parenthesis_expression -> LEFT_PARENTHESIS expression RIGHT_PARENTHESIS .)
-    POINT           reduce using rule 65 (parenthesis_expression -> LEFT_PARENTHESIS expression RIGHT_PARENTHESIS .)
-    SEMICOLON       reduce using rule 65 (parenthesis_expression -> LEFT_PARENTHESIS expression RIGHT_PARENTHESIS .)
-    RIGHT_PARENTHESIS reduce using rule 65 (parenthesis_expression -> LEFT_PARENTHESIS expression RIGHT_PARENTHESIS .)
-    COMMA           reduce using rule 65 (parenthesis_expression -> LEFT_PARENTHESIS expression RIGHT_PARENTHESIS .)
+    RIGHT_BRACKET   reduce using rule 53 (length_expression -> expression POINT LENGTH .)
+    BINARY_OPERATOR reduce using rule 53 (length_expression -> expression POINT LENGTH .)
+    LEFT_BRACKET    reduce using rule 53 (length_expression -> expression POINT LENGTH .)
+    POINT           reduce using rule 53 (length_expression -> expression POINT LENGTH .)
+    COMMA           reduce using rule 53 (length_expression -> expression POINT LENGTH .)
+    RIGHT_PARENTHESIS reduce using rule 53 (length_expression -> expression POINT LENGTH .)
+    SEMICOLON       reduce using rule 53 (length_expression -> expression POINT LENGTH .)
 
 
 state 125
 
-    (53) length_expression -> expression POINT LENGTH .
+    (54) call_expression -> expression POINT IDENTIFIER . LEFT_PARENTHESIS expression_list RIGHT_PARENTHESIS
 
-    COMMA           reduce using rule 53 (length_expression -> expression POINT LENGTH .)
-    BINARY_OPERATOR reduce using rule 53 (length_expression -> expression POINT LENGTH .)
-    LEFT_BRACKET    reduce using rule 53 (length_expression -> expression POINT LENGTH .)
-    POINT           reduce using rule 53 (length_expression -> expression POINT LENGTH .)
-    RIGHT_PARENTHESIS reduce using rule 53 (length_expression -> expression POINT LENGTH .)
-    SEMICOLON       reduce using rule 53 (length_expression -> expression POINT LENGTH .)
-    RIGHT_BRACKET   reduce using rule 53 (length_expression -> expression POINT LENGTH .)
+    LEFT_PARENTHESIS shift and go to state 135
 
 
 state 126
-
-    (54) call_expression -> expression POINT IDENTIFIER . LEFT_PARENTHESIS expression_list RIGHT_PARENTHESIS
-
-    LEFT_PARENTHESIS shift and go to state 136
-
-
-state 127
 
     (51) operator_expression -> expression BINARY_OPERATOR expression .
     (51) operator_expression -> expression . BINARY_OPERATOR expression
@@ -2100,23 +2093,22 @@ state 127
   ! shift/reduce conflict for LEFT_BRACKET resolved as shift
   ! shift/reduce conflict for POINT resolved as shift
     SEMICOLON       reduce using rule 51 (operator_expression -> expression BINARY_OPERATOR expression .)
-    RIGHT_PARENTHESIS reduce using rule 51 (operator_expression -> expression BINARY_OPERATOR expression .)
     RIGHT_BRACKET   reduce using rule 51 (operator_expression -> expression BINARY_OPERATOR expression .)
+    RIGHT_PARENTHESIS reduce using rule 51 (operator_expression -> expression BINARY_OPERATOR expression .)
     COMMA           reduce using rule 51 (operator_expression -> expression BINARY_OPERATOR expression .)
-    BINARY_OPERATOR shift and go to state 114
-    LEFT_BRACKET    shift and go to state 116
-    POINT           shift and go to state 113
+    BINARY_OPERATOR shift and go to state 113
+    LEFT_BRACKET    shift and go to state 115
+    POINT           shift and go to state 112
 
   ! BINARY_OPERATOR [ reduce using rule 51 (operator_expression -> expression BINARY_OPERATOR expression .) ]
   ! LEFT_BRACKET    [ reduce using rule 51 (operator_expression -> expression BINARY_OPERATOR expression .) ]
   ! POINT           [ reduce using rule 51 (operator_expression -> expression BINARY_OPERATOR expression .) ]
 
 
-state 128
+state 127
 
     (34) while_statement -> WHILE LEFT_PARENTHESIS expression RIGHT_PARENTHESIS statement .
 
-    ELSE            reduce using rule 34 (while_statement -> WHILE LEFT_PARENTHESIS expression RIGHT_PARENTHESIS statement .)
     LEFT_BRACE      reduce using rule 34 (while_statement -> WHILE LEFT_PARENTHESIS expression RIGHT_PARENTHESIS statement .)
     IF              reduce using rule 34 (while_statement -> WHILE LEFT_PARENTHESIS expression RIGHT_PARENTHESIS statement .)
     WHILE           reduce using rule 34 (while_statement -> WHILE LEFT_PARENTHESIS expression RIGHT_PARENTHESIS statement .)
@@ -2124,9 +2116,10 @@ state 128
     IDENTIFIER      reduce using rule 34 (while_statement -> WHILE LEFT_PARENTHESIS expression RIGHT_PARENTHESIS statement .)
     RETURN          reduce using rule 34 (while_statement -> WHILE LEFT_PARENTHESIS expression RIGHT_PARENTHESIS statement .)
     RIGHT_BRACE     reduce using rule 34 (while_statement -> WHILE LEFT_PARENTHESIS expression RIGHT_PARENTHESIS statement .)
+    ELSE            reduce using rule 34 (while_statement -> WHILE LEFT_PARENTHESIS expression RIGHT_PARENTHESIS statement .)
 
 
-state 129
+state 128
 
     (52) array_element_expression -> expression LEFT_BRACKET expression . RIGHT_BRACKET
     (51) operator_expression -> expression . BINARY_OPERATOR expression
@@ -2134,20 +2127,20 @@ state 129
     (53) length_expression -> expression . POINT LENGTH
     (54) call_expression -> expression . POINT IDENTIFIER LEFT_PARENTHESIS expression_list RIGHT_PARENTHESIS
 
-    RIGHT_BRACKET   shift and go to state 137
-    BINARY_OPERATOR shift and go to state 114
-    LEFT_BRACKET    shift and go to state 116
-    POINT           shift and go to state 113
+    RIGHT_BRACKET   shift and go to state 136
+    BINARY_OPERATOR shift and go to state 113
+    LEFT_BRACKET    shift and go to state 115
+    POINT           shift and go to state 112
 
 
-state 130
+state 129
 
     (33) if_statement -> IF LEFT_PARENTHESIS expression RIGHT_PARENTHESIS statement . ELSE statement
 
-    ELSE            shift and go to state 138
+    ELSE            shift and go to state 137
 
 
-state 131
+state 130
 
     (37) array_element_assignment_statement -> IDENTIFIER LEFT_BRACKET expression RIGHT_BRACKET ASSIGNMENT . expression SEMICOLON
     (38) expression -> . operator_expression
@@ -2197,18 +2190,18 @@ state 131
     integer_literal_expression     shift and go to state 83
     true_expression                shift and go to state 84
     new_expression                 shift and go to state 86
-    expression                     shift and go to state 139
+    expression                     shift and go to state 138
     new_array_expression           shift and go to state 91
     call_expression                shift and go to state 101
 
-state 132
+state 131
 
     (35) print_statement -> SYSTEM POINT OUT POINT PRINTLN . LEFT_PARENTHESIS expression RIGHT_PARENTHESIS SEMICOLON
 
-    LEFT_PARENTHESIS shift and go to state 140
+    LEFT_PARENTHESIS shift and go to state 139
 
 
-state 133
+state 132
 
     (13) method_declaration -> PUBLIC type IDENTIFIER LEFT_PARENTHESIS params_list RIGHT_PARENTHESIS LEFT_BRACE var_declaration_list statement_list RETURN expression SEMICOLON RIGHT_BRACE .
 
@@ -2216,7 +2209,7 @@ state 133
     RIGHT_BRACE     reduce using rule 13 (method_declaration -> PUBLIC type IDENTIFIER LEFT_PARENTHESIS params_list RIGHT_PARENTHESIS LEFT_BRACE var_declaration_list statement_list RETURN expression SEMICOLON RIGHT_BRACE .)
 
 
-state 134
+state 133
 
     (62) new_array_expression -> NEW INT LEFT_BRACKET expression . RIGHT_BRACKET
     (51) operator_expression -> expression . BINARY_OPERATOR expression
@@ -2224,13 +2217,13 @@ state 134
     (53) length_expression -> expression . POINT LENGTH
     (54) call_expression -> expression . POINT IDENTIFIER LEFT_PARENTHESIS expression_list RIGHT_PARENTHESIS
 
-    RIGHT_BRACKET   shift and go to state 141
-    BINARY_OPERATOR shift and go to state 114
-    LEFT_BRACKET    shift and go to state 116
-    POINT           shift and go to state 113
+    RIGHT_BRACKET   shift and go to state 140
+    BINARY_OPERATOR shift and go to state 113
+    LEFT_BRACKET    shift and go to state 115
+    POINT           shift and go to state 112
 
 
-state 135
+state 134
 
     (63) new_expression -> NEW IDENTIFIER LEFT_PARENTHESIS RIGHT_PARENTHESIS .
 
@@ -2238,12 +2231,12 @@ state 135
     BINARY_OPERATOR reduce using rule 63 (new_expression -> NEW IDENTIFIER LEFT_PARENTHESIS RIGHT_PARENTHESIS .)
     LEFT_BRACKET    reduce using rule 63 (new_expression -> NEW IDENTIFIER LEFT_PARENTHESIS RIGHT_PARENTHESIS .)
     POINT           reduce using rule 63 (new_expression -> NEW IDENTIFIER LEFT_PARENTHESIS RIGHT_PARENTHESIS .)
-    RIGHT_BRACKET   reduce using rule 63 (new_expression -> NEW IDENTIFIER LEFT_PARENTHESIS RIGHT_PARENTHESIS .)
     COMMA           reduce using rule 63 (new_expression -> NEW IDENTIFIER LEFT_PARENTHESIS RIGHT_PARENTHESIS .)
     RIGHT_PARENTHESIS reduce using rule 63 (new_expression -> NEW IDENTIFIER LEFT_PARENTHESIS RIGHT_PARENTHESIS .)
+    RIGHT_BRACKET   reduce using rule 63 (new_expression -> NEW IDENTIFIER LEFT_PARENTHESIS RIGHT_PARENTHESIS .)
 
 
-state 136
+state 135
 
     (54) call_expression -> expression POINT IDENTIFIER LEFT_PARENTHESIS . expression_list RIGHT_PARENTHESIS
     (55) expression_list -> .
@@ -2289,7 +2282,7 @@ state 136
     length_expression              shift and go to state 81
     not_expression                 shift and go to state 97
     identifier_expression          shift and go to state 82
-    expression_list                shift and go to state 142
+    expression_list                shift and go to state 141
     parenthesis_expression         shift and go to state 88
     this_expression                shift and go to state 93
     array_element_expression       shift and go to state 89
@@ -2297,11 +2290,11 @@ state 136
     integer_literal_expression     shift and go to state 83
     true_expression                shift and go to state 84
     new_expression                 shift and go to state 86
-    expression                     shift and go to state 143
+    expression                     shift and go to state 142
     new_array_expression           shift and go to state 91
     call_expression                shift and go to state 101
 
-state 137
+state 136
 
     (52) array_element_expression -> expression LEFT_BRACKET expression RIGHT_BRACKET .
 
@@ -2314,7 +2307,7 @@ state 137
     COMMA           reduce using rule 52 (array_element_expression -> expression LEFT_BRACKET expression RIGHT_BRACKET .)
 
 
-state 138
+state 137
 
     (33) if_statement -> IF LEFT_PARENTHESIS expression RIGHT_PARENTHESIS statement ELSE . statement
     (26) statement -> . block_statement
@@ -2340,11 +2333,11 @@ state 138
     block_statement                shift and go to state 61
     while_statement                shift and go to state 62
     array_element_assignment_statement shift and go to state 58
-    statement                      shift and go to state 144
+    statement                      shift and go to state 143
     print_statement                shift and go to state 59
     if_statement                   shift and go to state 64
 
-state 139
+state 138
 
     (37) array_element_assignment_statement -> IDENTIFIER LEFT_BRACKET expression RIGHT_BRACKET ASSIGNMENT expression . SEMICOLON
     (51) operator_expression -> expression . BINARY_OPERATOR expression
@@ -2352,13 +2345,13 @@ state 139
     (53) length_expression -> expression . POINT LENGTH
     (54) call_expression -> expression . POINT IDENTIFIER LEFT_PARENTHESIS expression_list RIGHT_PARENTHESIS
 
-    SEMICOLON       shift and go to state 145
-    BINARY_OPERATOR shift and go to state 114
-    LEFT_BRACKET    shift and go to state 116
-    POINT           shift and go to state 113
+    SEMICOLON       shift and go to state 144
+    BINARY_OPERATOR shift and go to state 113
+    LEFT_BRACKET    shift and go to state 115
+    POINT           shift and go to state 112
 
 
-state 140
+state 139
 
     (35) print_statement -> SYSTEM POINT OUT POINT PRINTLN LEFT_PARENTHESIS . expression RIGHT_PARENTHESIS SEMICOLON
     (38) expression -> . operator_expression
@@ -2408,31 +2401,31 @@ state 140
     integer_literal_expression     shift and go to state 83
     true_expression                shift and go to state 84
     new_expression                 shift and go to state 86
-    expression                     shift and go to state 146
+    expression                     shift and go to state 145
     new_array_expression           shift and go to state 91
     call_expression                shift and go to state 101
 
-state 141
+state 140
 
     (62) new_array_expression -> NEW INT LEFT_BRACKET expression RIGHT_BRACKET .
 
-    RIGHT_BRACKET   reduce using rule 62 (new_array_expression -> NEW INT LEFT_BRACKET expression RIGHT_BRACKET .)
+    SEMICOLON       reduce using rule 62 (new_array_expression -> NEW INT LEFT_BRACKET expression RIGHT_BRACKET .)
     BINARY_OPERATOR reduce using rule 62 (new_array_expression -> NEW INT LEFT_BRACKET expression RIGHT_BRACKET .)
     LEFT_BRACKET    reduce using rule 62 (new_array_expression -> NEW INT LEFT_BRACKET expression RIGHT_BRACKET .)
     POINT           reduce using rule 62 (new_array_expression -> NEW INT LEFT_BRACKET expression RIGHT_BRACKET .)
-    RIGHT_PARENTHESIS reduce using rule 62 (new_array_expression -> NEW INT LEFT_BRACKET expression RIGHT_BRACKET .)
+    RIGHT_BRACKET   reduce using rule 62 (new_array_expression -> NEW INT LEFT_BRACKET expression RIGHT_BRACKET .)
     COMMA           reduce using rule 62 (new_array_expression -> NEW INT LEFT_BRACKET expression RIGHT_BRACKET .)
-    SEMICOLON       reduce using rule 62 (new_array_expression -> NEW INT LEFT_BRACKET expression RIGHT_BRACKET .)
+    RIGHT_PARENTHESIS reduce using rule 62 (new_array_expression -> NEW INT LEFT_BRACKET expression RIGHT_BRACKET .)
 
 
-state 142
+state 141
 
     (54) call_expression -> expression POINT IDENTIFIER LEFT_PARENTHESIS expression_list . RIGHT_PARENTHESIS
 
-    RIGHT_PARENTHESIS shift and go to state 147
+    RIGHT_PARENTHESIS shift and go to state 146
 
 
-state 143
+state 142
 
     (56) expression_list -> expression . COMMA expression_list
     (51) operator_expression -> expression . BINARY_OPERATOR expression
@@ -2440,13 +2433,13 @@ state 143
     (53) length_expression -> expression . POINT LENGTH
     (54) call_expression -> expression . POINT IDENTIFIER LEFT_PARENTHESIS expression_list RIGHT_PARENTHESIS
 
-    COMMA           shift and go to state 148
-    BINARY_OPERATOR shift and go to state 114
-    LEFT_BRACKET    shift and go to state 116
-    POINT           shift and go to state 113
+    COMMA           shift and go to state 147
+    BINARY_OPERATOR shift and go to state 113
+    LEFT_BRACKET    shift and go to state 115
+    POINT           shift and go to state 112
 
 
-state 144
+state 143
 
     (33) if_statement -> IF LEFT_PARENTHESIS expression RIGHT_PARENTHESIS statement ELSE statement .
 
@@ -2460,7 +2453,7 @@ state 144
     ELSE            reduce using rule 33 (if_statement -> IF LEFT_PARENTHESIS expression RIGHT_PARENTHESIS statement ELSE statement .)
 
 
-state 145
+state 144
 
     (37) array_element_assignment_statement -> IDENTIFIER LEFT_BRACKET expression RIGHT_BRACKET ASSIGNMENT expression SEMICOLON .
 
@@ -2474,7 +2467,7 @@ state 145
     ELSE            reduce using rule 37 (array_element_assignment_statement -> IDENTIFIER LEFT_BRACKET expression RIGHT_BRACKET ASSIGNMENT expression SEMICOLON .)
 
 
-state 146
+state 145
 
     (35) print_statement -> SYSTEM POINT OUT POINT PRINTLN LEFT_PARENTHESIS expression . RIGHT_PARENTHESIS SEMICOLON
     (51) operator_expression -> expression . BINARY_OPERATOR expression
@@ -2482,26 +2475,26 @@ state 146
     (53) length_expression -> expression . POINT LENGTH
     (54) call_expression -> expression . POINT IDENTIFIER LEFT_PARENTHESIS expression_list RIGHT_PARENTHESIS
 
-    RIGHT_PARENTHESIS shift and go to state 149
-    BINARY_OPERATOR shift and go to state 114
-    LEFT_BRACKET    shift and go to state 116
-    POINT           shift and go to state 113
+    RIGHT_PARENTHESIS shift and go to state 148
+    BINARY_OPERATOR shift and go to state 113
+    LEFT_BRACKET    shift and go to state 115
+    POINT           shift and go to state 112
 
 
-state 147
+state 146
 
     (54) call_expression -> expression POINT IDENTIFIER LEFT_PARENTHESIS expression_list RIGHT_PARENTHESIS .
 
-    RIGHT_BRACKET   reduce using rule 54 (call_expression -> expression POINT IDENTIFIER LEFT_PARENTHESIS expression_list RIGHT_PARENTHESIS .)
+    COMMA           reduce using rule 54 (call_expression -> expression POINT IDENTIFIER LEFT_PARENTHESIS expression_list RIGHT_PARENTHESIS .)
     BINARY_OPERATOR reduce using rule 54 (call_expression -> expression POINT IDENTIFIER LEFT_PARENTHESIS expression_list RIGHT_PARENTHESIS .)
     LEFT_BRACKET    reduce using rule 54 (call_expression -> expression POINT IDENTIFIER LEFT_PARENTHESIS expression_list RIGHT_PARENTHESIS .)
     POINT           reduce using rule 54 (call_expression -> expression POINT IDENTIFIER LEFT_PARENTHESIS expression_list RIGHT_PARENTHESIS .)
-    SEMICOLON       reduce using rule 54 (call_expression -> expression POINT IDENTIFIER LEFT_PARENTHESIS expression_list RIGHT_PARENTHESIS .)
     RIGHT_PARENTHESIS reduce using rule 54 (call_expression -> expression POINT IDENTIFIER LEFT_PARENTHESIS expression_list RIGHT_PARENTHESIS .)
-    COMMA           reduce using rule 54 (call_expression -> expression POINT IDENTIFIER LEFT_PARENTHESIS expression_list RIGHT_PARENTHESIS .)
+    SEMICOLON       reduce using rule 54 (call_expression -> expression POINT IDENTIFIER LEFT_PARENTHESIS expression_list RIGHT_PARENTHESIS .)
+    RIGHT_BRACKET   reduce using rule 54 (call_expression -> expression POINT IDENTIFIER LEFT_PARENTHESIS expression_list RIGHT_PARENTHESIS .)
 
 
-state 148
+state 147
 
     (56) expression_list -> expression COMMA . expression_list
     (55) expression_list -> .
@@ -2547,7 +2540,7 @@ state 148
     length_expression              shift and go to state 81
     not_expression                 shift and go to state 97
     identifier_expression          shift and go to state 82
-    expression_list                shift and go to state 150
+    expression_list                shift and go to state 149
     parenthesis_expression         shift and go to state 88
     this_expression                shift and go to state 93
     array_element_expression       shift and go to state 89
@@ -2555,35 +2548,35 @@ state 148
     integer_literal_expression     shift and go to state 83
     true_expression                shift and go to state 84
     new_expression                 shift and go to state 86
-    expression                     shift and go to state 143
+    expression                     shift and go to state 142
     new_array_expression           shift and go to state 91
     call_expression                shift and go to state 101
 
-state 149
+state 148
 
     (35) print_statement -> SYSTEM POINT OUT POINT PRINTLN LEFT_PARENTHESIS expression RIGHT_PARENTHESIS . SEMICOLON
 
-    SEMICOLON       shift and go to state 151
+    SEMICOLON       shift and go to state 150
 
 
-state 150
+state 149
 
     (56) expression_list -> expression COMMA expression_list .
 
     RIGHT_PARENTHESIS reduce using rule 56 (expression_list -> expression COMMA expression_list .)
 
 
-state 151
+state 150
 
     (35) print_statement -> SYSTEM POINT OUT POINT PRINTLN LEFT_PARENTHESIS expression RIGHT_PARENTHESIS SEMICOLON .
 
-    RIGHT_BRACE     reduce using rule 35 (print_statement -> SYSTEM POINT OUT POINT PRINTLN LEFT_PARENTHESIS expression RIGHT_PARENTHESIS SEMICOLON .)
     LEFT_BRACE      reduce using rule 35 (print_statement -> SYSTEM POINT OUT POINT PRINTLN LEFT_PARENTHESIS expression RIGHT_PARENTHESIS SEMICOLON .)
     IF              reduce using rule 35 (print_statement -> SYSTEM POINT OUT POINT PRINTLN LEFT_PARENTHESIS expression RIGHT_PARENTHESIS SEMICOLON .)
     WHILE           reduce using rule 35 (print_statement -> SYSTEM POINT OUT POINT PRINTLN LEFT_PARENTHESIS expression RIGHT_PARENTHESIS SEMICOLON .)
     SYSTEM          reduce using rule 35 (print_statement -> SYSTEM POINT OUT POINT PRINTLN LEFT_PARENTHESIS expression RIGHT_PARENTHESIS SEMICOLON .)
     IDENTIFIER      reduce using rule 35 (print_statement -> SYSTEM POINT OUT POINT PRINTLN LEFT_PARENTHESIS expression RIGHT_PARENTHESIS SEMICOLON .)
     RETURN          reduce using rule 35 (print_statement -> SYSTEM POINT OUT POINT PRINTLN LEFT_PARENTHESIS expression RIGHT_PARENTHESIS SEMICOLON .)
+    RIGHT_BRACE     reduce using rule 35 (print_statement -> SYSTEM POINT OUT POINT PRINTLN LEFT_PARENTHESIS expression RIGHT_PARENTHESIS SEMICOLON .)
     ELSE            reduce using rule 35 (print_statement -> SYSTEM POINT OUT POINT PRINTLN LEFT_PARENTHESIS expression RIGHT_PARENTHESIS SEMICOLON .)
 
 WARNING: 
@@ -2591,9 +2584,9 @@ WARNING: Conflicts:
 WARNING: 
 WARNING: shift/reduce conflict for IDENTIFIER in state 21 resolved as shift
 WARNING: shift/reduce conflict for IDENTIFIER in state 52 resolved as shift
-WARNING: shift/reduce conflict for BINARY_OPERATOR in state 112 resolved as shift
-WARNING: shift/reduce conflict for LEFT_BRACKET in state 112 resolved as shift
-WARNING: shift/reduce conflict for POINT in state 112 resolved as shift
-WARNING: shift/reduce conflict for BINARY_OPERATOR in state 127 resolved as shift
-WARNING: shift/reduce conflict for LEFT_BRACKET in state 127 resolved as shift
-WARNING: shift/reduce conflict for POINT in state 127 resolved as shift
+WARNING: shift/reduce conflict for BINARY_OPERATOR in state 111 resolved as shift
+WARNING: shift/reduce conflict for LEFT_BRACKET in state 111 resolved as shift
+WARNING: shift/reduce conflict for POINT in state 111 resolved as shift
+WARNING: shift/reduce conflict for BINARY_OPERATOR in state 126 resolved as shift
+WARNING: shift/reduce conflict for LEFT_BRACKET in state 126 resolved as shift
+WARNING: shift/reduce conflict for POINT in state 126 resolved as shift
