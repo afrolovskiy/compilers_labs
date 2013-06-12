@@ -23,6 +23,7 @@ reserved = {
 	'System': 'SYSTEM',
 	'out': 'OUT',
 	'println': 'PRINTLN',
+	'length': 'LENGTH',
 }
 
 tokens = list(reserved.values()) + [
@@ -45,7 +46,7 @@ tokens = list(reserved.values()) + [
 	'LESS',
 	'PLUS',
 	'MINUS',
-	'MULTIPLY',
+	'TIMES',
 	'DIVIDE',
 	'ASSIGNMENT',
 	'NOT',
@@ -78,7 +79,7 @@ t_GREATER = r'>'
 t_LESS = r'<'
 t_PLUS = r'\+'
 t_MINUS = r'-'
-t_MULTIPLY = r'\*'
+t_TIMES = r'\*'
 t_DIVIDE = r'/'
 t_ASSIGNMENT = r'='
 t_NOT = r'!'
