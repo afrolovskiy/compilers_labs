@@ -338,7 +338,7 @@ def p_binary_expression(p):
     p[0] = BinaryArithmeticExpression()
     p[0].operator = p[2]
     p[0].operand1 = p[1]
-    p[0].operand2 = p[2]
+    p[0].operand2 = p[3]
 
 def p_parenthesis_expression(p):
     '''
@@ -376,7 +376,7 @@ def p_identifier_expression(p):
     identifier_expression : IDENTIFIER
     '''
     p[0] = IdentifierExpression()
-    p[0].value = p[1]
+    p[0].name = p[1]
 
 def p_integer_literal_expression(p):
     '''

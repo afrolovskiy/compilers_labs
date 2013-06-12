@@ -180,10 +180,10 @@ class ThisExpression(Expression):
         self.exemplar = 'this-expression'
 
 
-class IdentifierExpression(ValueExpression):
+class IdentifierExpression(Expression):
     def __init__(self):
-        super(IdentifierExpression, self).__init__()
         self.exemplar = 'identifier-expression'
+        self.name = None
 
 
 class IntegerExpression(ValueExpression):
