@@ -3,8 +3,8 @@ from ply import yacc
 from lexer import tokens
 #import ipdb
 from models import (
-    JSONEncoder, Programm, Class, Method, Variable, Type, ArrayType, Argument, 
-    IFStatement, WhileStatement, PrintStatement, AssignmentStatement,
+    JSONEncoder, Programm, Class, Method, Variable, Type, ArrayType,
+    Argument, IFStatement, WhileStatement, PrintStatement, AssignmentStatement,
     ArrayElementExpression, LengthExpression, CallMethodExpression,
     BinaryArithmeticExpression, ParenthesisExpression, UnaryArithmeticExpression,
     NewExpression, NewArrayExpression, IdentifierExpression, IntegerExpression,
@@ -37,16 +37,28 @@ def p_class_list(p):
 
 def p_main_class(p):
     '''
-    main_class : CLASS IDENTIFIER LEFT_BRACE PUBLIC STATIC VOID MAIN LEFT_PARENTHESIS STRING LEFT_BRACKET RIGHT_BRACKET IDENTIFIER RIGHT_PARENTHESIS LEFT_BRACE var_list statement_list RIGHT_BRACE RIGHT_BRACE
+    main_class : CLASS IDENTIFIER LEFT_BRACE main_method RIGHT_BRACE
     '''
-    method = Method()
-    method.name = p[7]
-    method.variables = p[15]
-    method.statements = p[16]
-
     p[0] = Class()
     p[0].name = p[2]
-    p[0].methods.append(method)
+    p[0].methods.append(p[4])
+
+def p_main_method(p):
+    '''
+    main_method : PUBLIC STATIC VOID MAIN LEFT_PARENTHESIS STRING LEFT_BRACKET RIGHT_BRACKET IDENTIFIER RIGHT_PARENTHESIS LEFT_BRACE var_list statement_list RIGHT_BRACE
+    '''
+    arg = Argument()
+    arg.type = ArrayType()
+    arg.type.name = 'String'
+    arg.name = p[9]
+
+    p[0] = Method()
+    p[0].name = p[4]
+    p[0].args.append(arg)
+    p[0].variables = p[12]
+    p[0].statements = p[13]
+    p[0].return_type = Type()
+    p[0].return_type.name = 'void'
 
 def p_class(p):
     '''
@@ -286,14 +298,14 @@ def p_lenght_expression(p):
     length_expression : expression POINT LENGTH
     '''
     p[0] = LengthExpression()
-    p[0].class_name = p[1]
+    p[0].expression = p[1]
 
 def p_call_method_expression(p):
     '''
     call_method_expression : expression POINT IDENTIFIER LEFT_PARENTHESIS expression_list RIGHT_PARENTHESIS
     '''
     p[0] = CallMethodExpression()
-    p[0].class_name = p[1]
+    p[0].expression = p[1]
     p[0].method_name = p[3]
     p[0].args = p[5]
 

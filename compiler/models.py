@@ -66,12 +66,12 @@ class ArrayType(Type):
 
 class Statement(Cornerstone):
     def __init__(self):
-        self.type = 'statement'
+        self.exemplar = 'statement'
 
 
 class IFStatement(Statement):
         def __init__(self):
-            self.type = 'if-statement'
+            self.exemplar = 'if-statement'
             self.condition = None
             self.success_expression = None
             self.failed_expression = None
@@ -79,53 +79,53 @@ class IFStatement(Statement):
 
 class WhileStatement(Statement):
         def __init__(self):
-            self.type = 'while-statement'
+            self.exemplar = 'while-statement'
             self.condition = None
             self.expression = None
 
 
 class PrintStatement(Statement):
     def __init__(self): 
-        self.type = 'print-statement'
+        self.exemplar = 'print-statement'
         self.expression = None
 
 
 class AssignmentStatement(Statement):
     def __init__(self):
-        self.type = 'assignment-statement'
+        self.exemplar = 'assignment-statement'
         self.left_part = None
         self.right_part = None
 
 
 class Expression(Cornerstone):
     def __init__(self):
-        self.type = 'expression'
+        self.exemplar = 'expression'
 
 
 class ArrayElementExpression(Expression):
     def __init__(self):
-        self.type = 'array-element-expression'
+        self.exemplar = 'array-element-expression'
         self.array = None
         self.index = None
 
 
 class LengthExpression(Expression):
     def __init__(self):
-        self.type = 'length-expression'
-        self.class_name = None
+        self.exemplar = 'length-expression'
+        self.expression = None
 
 
 class CallMethodExpression(Expression):
     def __init__(self):
-        self.type = 'call-expression'
-        self.class_name = None
+        self.exemplar = 'call-expression'
+        self.expression = None
         self.method_name = None
         self.args = []
 
 
 class BinaryArithmeticExpression(Expression):
     def __init__(self):
-        self.type = 'binary-arithmetic-expression'
+        self.exemplar = 'binary-arithmetic-expression'
         self.operator = None
         self.operand1 = None
         self.operand2 = None
@@ -133,63 +133,63 @@ class BinaryArithmeticExpression(Expression):
 
 class ParenthesisExpression(Expression):
     def __init__(self):
-        self.type = 'parenthesis-expression'
+        self.exemplar = 'parenthesis-expression'
         self.operand = None
 
 
 class UnaryArithmeticExpression(Expression):
     def __init__(self):
-        self.type = 'unary-arithmetic-expression'
+        self.exemplar = 'unary-arithmetic-expression'
         self.operator = None
         self.operand = None
 
 
 class NewExpression(Expression):
     def __init__(self): 
-        self.type = 'new-expression'
+        self.exemplar = 'new-expression'
         self.type_name = None
 
 
 class NewArrayExpression(NewExpression):
     def __init__(self): 
         super(NewExpression, self).__init__()
-        self.type = 'new-array-expression'
+        self.exemplar = 'new-array-expression'
 
 
 class ValueExpression(Expression):
     def __init__(self):
-        self.type = 'value-expression'
+        self.exemplar = 'value-expression'
         self.value = None
 
 
 class BooleanExpression(ValueExpression):
     def __init__(self):
         super(BooleanExpression, self).__init__()
-        self.type = 'boolean-expression'
+        self.exemplar = 'boolean-expression'
 
 
 class NullExpression(ValueExpression):
     def __init__(self):
         super(NullExpression, self).__init__()
-        self.type = 'value-expression'
+        self.exemplar = 'value-expression'
 
 
 class ThisExpression(Expression):
     def __init__(self):
         super(ThisExpression, self).__init__()
-        self.type = 'this-expression'
+        self.exemplar = 'this-expression'
 
 
 class IdentifierExpression(ValueExpression):
     def __init__(self):
         super(IdentifierExpression, self).__init__()
-        self.type = 'identifier-expression'
+        self.exemplar = 'identifier-expression'
 
 
 class IntegerExpression(ValueExpression):
     def __init__(self):
         super(IntegerExpression, self).__init__()
-        self.type = 'integer-expression'
+        self.exemplar = 'integer-expression'
 
 
 
