@@ -23,7 +23,6 @@ reserved = {
 	'System': 'SYSTEM',
 	'out': 'OUT',
 	'println': 'PRINTLN',
-	'length': 'LENGTH',
 }
 
 tokens = list(reserved.values()) + [

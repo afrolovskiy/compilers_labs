@@ -109,10 +109,11 @@ class ArrayElementExpression(Expression):
         self.index = None
 
 
-class LengthExpression(Expression):
+class FieldExpression(Expression):
     def __init__(self):
-        self.exemplar = 'length-expression'
+        self.exemplar = 'field-expression'
         self.expression = None
+        self.identifier = None
 
 
 class CallMethodExpression(Expression):

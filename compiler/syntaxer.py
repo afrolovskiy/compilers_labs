@@ -5,7 +5,7 @@ from lexer import tokens
 from models import (
     JSONEncoder, Programm, Class, Method, Variable, Type, ArrayType,
     Argument, IFStatement, WhileStatement, PrintStatement, AssignmentStatement,
-    ArrayElementExpression, LengthExpression, CallMethodExpression,
+    ArrayElementExpression, FieldExpression, CallMethodExpression,
     BinaryArithmeticExpression, ParenthesisExpression, UnaryArithmeticExpression,
     NewExpression, NewArrayExpression, IdentifierExpression, IntegerExpression,
     BooleanExpression, NullExpression, ThisExpression)
@@ -30,10 +30,10 @@ def p_empty_class_list(p):
 
 def p_class_list(p):
     '''
-    class_list : class class_list
+    class_list : class_list class 
     '''
-    p[0] = p[2]
-    p[0].append(p[1])
+    p[0] = p[1]
+    p[0].append(p[2])
 
 def p_main_class(p):
     '''
@@ -93,11 +93,11 @@ def p_empty_declaration_list(p):
 
 def p_declaration_list(p):
     """
-    declaration_list : field declaration_list
-                           | method declaration_list
+    declaration_list : declaration_list field 
+                           | declaration_list method 
     """
-    p[0] = p[2]
-    p[0].append(p[1])    
+    p[0] = p[1]
+    p[0].append(p[2])    
 
 def p_field(p):
     """
@@ -138,10 +138,10 @@ def p_single_args_list(p):
 
 def p_args_list(p):
     """
-    args_list : arg COMMA args_list
+    args_list : args_list COMMA arg
     """
-    p[0] = p[3]
-    p[0].append(p[1])
+    p[0] = p[1]
+    p[0].append(p[3])
 
 def p_arg(p):
     '''
@@ -151,6 +151,19 @@ def p_arg(p):
     p[0].type = p[1]
     p[0].name = p[2]
 
+def p_empty_statement_list(p):
+    """
+    statement_list : empty
+    """
+    p[0] = []
+
+def p_statement_list(p):
+    """
+    statement_list : statement_list statement
+    """
+    p[0] = p[1]
+    p[0].append(p[2])
+
 def p_empty_var_list(p):
     """
     var_list : empty
@@ -159,10 +172,10 @@ def p_empty_var_list(p):
 
 def p_var_list(p):
     """
-    var_list : var var_list
+    var_list : var_list var 
     """
-    p[0] = p[2]
-    p[0].append(p[1])
+    p[0] = p[1]
+    p[0].append(p[2])
 
 def p_var(p):
     """
@@ -181,19 +194,6 @@ def p_var_with_value(p):
     p[0].name = p[2]
     p[0].value = p[3]
 
-def p_empty_statement_list(p):
-    """
-    statement_list : empty
-    """
-    p[0] = []
-
-def p_statement_list(p):
-    """
-    statement_list : statement statement_list
-    """
-    p[0] = p[2]
-    p[0].append(p[1])
-
 def p_simple_type(p):
     '''
     type : BOOLEAN 
@@ -207,16 +207,10 @@ def p_array_type(p):
     '''
     type : BOOLEAN LEFT_BRACKET RIGHT_BRACKET
            | INT LEFT_BRACKET RIGHT_BRACKET
-           | IDENTIFIER LEFT_BRACKET RIGHT_BRACKET
+           | IDENTIFIER LEFT_BRACKET RIGHT_BRACKET 
     '''
     p[0] = ArrayType()
     p[0].name = p[1]
-
-def p_block_statement(p):
-    '''
-    statement : LEFT_BRACE statement_list RIGHT_BRACE
-    '''
-    p[0] = p[2]
 
 def p_statement(p):
     '''
@@ -267,10 +261,16 @@ def p_assignment_statement(p):
     p[0].left_part = p[1]
     p[0].right_part = p[3]
 
+def p_block_statement(p):
+    '''
+    statement : LEFT_BRACE statement_list RIGHT_BRACE
+    '''
+    p[0] = p[2]
+
 def p_expression(p):
     '''
     expression : array_element_expression 
-                     | length_expression
+                     | field_expression
                      | call_method_expression
                      | binary_expression
                      | parenthesis_expression
@@ -293,12 +293,13 @@ def p_array_element_expression(p):
     p[0].array = p[1]
     p[0].index = p[3]
 
-def p_lenght_expression(p):
+def p_field_expression(p):
     '''
-    length_expression : expression POINT LENGTH
+    field_expression : expression POINT IDENTIFIER
     '''
-    p[0] = LengthExpression()
+    p[0] = FieldExpression()
     p[0].expression = p[1]
+    p[0].identifier = p[3]
 
 def p_call_method_expression(p):
     '''
@@ -309,18 +310,30 @@ def p_call_method_expression(p):
     p[0].method_name = p[3]
     p[0].args = p[5]
 
+def p_empty_expression_list(p):
+    '''
+    expression_list : empty
+    '''
+    p[0] = []
+    
+def p_nonempty_expression_list(p):
+    '''
+    expression_list : nonempty_expression_list 
+    '''
+    p[0] = p[1]
+
 def p_single_expression_list(p):
     '''
-    expression_list : expression
+    nonempty_expression_list : expression
     '''
     p[0] = [p[1], ]
 
-def p_expression_list(p):
+def p_expression_list_head(p):
     '''
-    expression_list : expression COMMA expression_list
+    nonempty_expression_list : expression_list COMMA expression
     '''
-    p[0] = p[3]
-    p[0].append(p[1])
+    p[0] = p[1]
+    p[0].append(p[2])
 
 def p_binary_expression(p):
     '''
@@ -406,21 +419,21 @@ def p_null_expression(p):
     p[0] = NullExpression()
 
 def p_error(p):
-	print "Syntax error in input! %s" % p
+    print "Syntax error in input! %s" % p
+    #yacc.errok()
 
 precedence = (
-    ('right', 'ASSIGNMENT'),
     #('left', 'RIGHT_BRACE'),
     #('right', 'LEFT_BRACE'),
-   # ('left', 'SEMICOLON'),
-    ('left', 'COMMA'),
+    ('left', 'SEMICOLON'),
+    ('left', 'ASSIGNMENT'),
     ('left', 'OR', 'AND'),
     ('nonassoc', 'LESS', 'GREATER', 'EQUAL', 'NOT_EQUAL'),
     ('left', 'PLUS', 'MINUS'),
     ('left', 'TIMES', 'DIVIDE'),
     ('right', 'UMINUS', 'NOT'),
-    ('left', 'POINT'),
-    #('nonassoc', 'IDENTIFIER', 'INTEGER_LITERAL'),
+    ('right', 'POINT'),
+    #('left', 'IDENTIFIER', 'INTEGER_LITERAL'),
     #('left', 'RIGHT_PARENTHESIS'),
     #('right', 'LEFT_PARENTHESIS'),
     #('left', 'RIGHT_BRACKET'),
@@ -430,8 +443,16 @@ precedence = (
 
 
 if __name__ == '__main__':
-    parser = yacc.yacc()
+    import logging
+    logging.basicConfig(
+        level = logging.DEBUG,
+        filename = "parselog.txt",
+        filemode = "w",
+        format = "%(filename)10s:%(lineno)4d:%(message)s"
+    )
+    log = logging.getLogger()
+    parser = yacc.yacc(debug=True)
     with open('test.java') as fin:
-        result = parser.parse(fin.read())
+        result = parser.parse(fin.read(), debug=log)
         #ipdb.set_trace()
         print json.dumps(result, cls=JSONEncoder)
