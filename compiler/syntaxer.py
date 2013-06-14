@@ -97,12 +97,7 @@ def p_method(p):
     """
     method : PUBLIC single_or_array_var LEFT_PARENTHESIS params_list RIGHT_PARENTHESIS LEFT_BRACE statements_list RETURN expression SEMICOLON RIGHT_BRACE
     """
-    #p[0] = Method()
-    #p[0].return_type = #p[2]
-    #p[0].name = #p[3]
-    #p[0].args = #p[5]
-    #p[0].variables= #p[8]
-    #p[0].statements = #p[9]
+    p[0] = Node('method', children=[p[2], p[4], p[7], p[9]], leaf=[p[1], p[3], p[5], p[6], p[8], p[10], p[11]])
 
 def p_empty_params_list(p):
     """
@@ -114,50 +109,73 @@ def p_params_list(p):
     """
     params_list : args_list
     """
-    #p[0] = #p[1]
+    p[0] = Node('args', children=[p[1]])
 
 def p_single_args_list(p):
     """
     args_list : arg
     """
-    #p[0] = [#p[1], ]
+    p[0] = Node('args', children=[p[0]])
 
 def p_args_list(p):
     """
     args_list : args_list COMMA arg
     """
-    #p[0] = #p[1]
-    #p[0].append(#p[3])
+    children = p[1].children if p[1] else []
+    children.append(p[3])
+    leafs = p[1].leafs
+    leafs.append(p[2])
+    p[0] = Node('args', children=children, leaf=leafs)
 
 def p_arg(p):
     '''
     arg : single_or_array_var
     '''
-    #p[0] = Argument()
-    #p[0].type = #p[1]
-    #p[0].name = #p[2]
+    p[0] = Node('arg', children=[p[1]])
+
+def p_empty_statements_list(p):
+    '''
+    statements_list : empty
+    '''
 
 def p_statements_list(p):
     '''
-    statements_list : empty
-                           | statements_list statement
+    statements_list : statements_list statement
     '''
+    children = p[1].children if p[1] else []
+    children.append(p[2])
+    p[0] = Node('statements_list', children=children)    
 
 def p_statement(p):
     '''
     statement : INT identifier_or_brackets SEMICOLON
                    | BOOLEAN IDENTIFIER SEMICOLON
-                   | IDENTIFIER identifier_or_assignment SEMICOLON
-                   | if_statement 
-                   | while_statement 
-                   | print_statement 
     '''
+    p[0] = Node('statement', children=[p[2]], leaf=[p[1], p[3]])
+    #children = p[2][0]
+    #children.insert(0, p[2])
+    #leaf = p[2][1]
+    #leaf.extend([p
+    #p[0] = Node('variable-statement', children=children, 
 
-def p_identifier_or_brackets(p):
+def p_complex_statement(p):
+    '''
+    statement : IDENTIFIER identifier_or_assignment SEMICOLON
+    '''
+    p[0] = Node('statement', children=[p[1], p[2]], leaf=[p[3]])
+    #p[0] = ([p[1]. p[2]], [p[3]])
+
+def p_identifier_or_brackets_id(p):
     '''
     identifier_or_brackets : IDENTIFIER
-                                    | LEFT_BRACKET RIGHT_BRACKET IDENTIFIER
     '''
+    p[0] = Node('variable', children=[p[0]])
+
+def p_identifier_or_brackets_br(p):
+    '''
+    identifier_or_brackets : LEFT_BRACKET RIGHT_BRACKET IDENTIFIER
+    '''
+    p[0] = Node('array_variable', children=[p[3]], leaf=[p[1],p[2]])
 
 def p_identifier_or_assignment(p):
     '''
@@ -168,24 +186,24 @@ def p_identifier_or_assignment(p):
 
 def p_if_statement(p):
     '''
-    if_statement : IF LEFT_PARENTHESIS expression RIGHT_PARENTHESIS statement
+    statement : IF LEFT_PARENTHESIS expression RIGHT_PARENTHESIS statement else_statement
     '''
-    #p[0] = IFStatement()
-    #p[0].condition = #p[3]
-    #p[0].success_expression = #p[5]
 
-def p_if_else_statement(p):
+def p_empty_else_statement(p):
     '''
-    if_statement : IF LEFT_PARENTHESIS expression RIGHT_PARENTHESIS statement ELSE statement
+    else_statement : empty
     '''
-    #p[0] = IFStatement()
-    #p[0].condition = #p[3]
-    #p[0].success_expression = #p[5]
-    #p[0].failed_expression = #p[7]
+
+def p_else_statement(p):
+    '''
+    else_statement : ELSE statement
+    '''
+
+
 
 def p_while_statement(p):
     '''
-    while_statement : WHILE LEFT_PARENTHESIS expression RIGHT_PARENTHESIS statement
+    statement : WHILE LEFT_PARENTHESIS expression RIGHT_PARENTHESIS statement
     ''' 
     #p[0] = WhileStatement()
     #p[0].condition = #p[3]
@@ -193,7 +211,7 @@ def p_while_statement(p):
 
 def p_print_statement(p):
     '''
-    print_statement : SYSTEM POINT OUT POINT PRINTLN LEFT_PARENTHESIS expression RIGHT_PARENTHESIS SEMICOLON
+    statement : SYSTEM POINT OUT POINT PRINTLN LEFT_PARENTHESIS expression RIGHT_PARENTHESIS SEMICOLON
     '''
     #p[0] = PrintStatement()
     #p[0].expression = #p[7]
@@ -366,23 +384,12 @@ def p_error(p):
     #return tok
 
 precedence = (
-    #('left', 'RIGHT_BRACE'),
-    #('right', 'LEFT_BRACE'),
-    #('left', 'SEMICOLON'),
-    #('left', 'VARDECLR'),
-    #('left', 'VASSIGN'),
-    #('left', 'ASSIGNMENT'),
     ('left', 'OR', 'AND'),
     ('nonassoc', 'LESS', 'GREATER', 'EQUAL', 'NOT_EQUAL'),
     ('left', 'PLUS', 'MINUS'),
     ('left', 'TIMES', 'DIVIDE'),
     ('right', 'UMINUS', 'NOT'),
     ('right', 'POINT'),
-    #('left', 'IDENTIFIER', 'INTEGER_LITERAL'),
-    #('left', 'RIGHT_PARENTHESIS'),
-    #('right', 'LEFT_PARENTHESIS'),
-    #('left', 'RIGHT_BRACKET'),
-    #('right', 'LEFT_BRACKET'),
 )
 
 
