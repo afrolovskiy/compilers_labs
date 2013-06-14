@@ -420,12 +420,16 @@ def p_null_expression(p):
 
 def p_error(p):
     print "Syntax error in input! %s" % p
-    #yacc.errok()
+    yacc.errok()
+    #while 1:
+    #    tok = yacc.token()             # Get the next token
+    #    if not tok or tok.type == 'RIGHT_BRACE': break
+    #yacc.restart()
 
 precedence = (
     #('left', 'RIGHT_BRACE'),
     #('right', 'LEFT_BRACE'),
-    ('left', 'SEMICOLON'),
+   ('left', 'SEMICOLON'),
     ('left', 'ASSIGNMENT'),
     ('left', 'OR', 'AND'),
     ('nonassoc', 'LESS', 'GREATER', 'EQUAL', 'NOT_EQUAL'),
