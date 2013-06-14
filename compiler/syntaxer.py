@@ -2,117 +2,96 @@ import json
 from ply import yacc
 from lexer import tokens
 #import ipdb
-from models import (
-    JSONEncoder, Programm, Class, Method, Variable, Type, ArrayType,
-    Argument, IFStatement, WhileStatement, PrintStatement, AssignmentStatement,
-    ArrayElementExpression, FieldExpression, CallMethodExpression,
-    BinaryArithmeticExpression, ParenthesisExpression, UnaryArithmeticExpression,
-    NewExpression, NewArrayExpression, IdentifierExpression, IntegerExpression,
-    BooleanExpression, NullExpression, ThisExpression)
+from models import JSONEncoder, Node
 
 
 start = 'programm'
 
 def p_programm(p):
-    'programm : main_class class_list'
-    #p[0] = Programm()
-    #p[0].main_class = #p[1]
-    #p[0].classes = #p[2]
+    '''
+    programm : main_class class_list
+    '''
+    p[0] = Node('programm', children=[p[1], p[2]])
 
 def p_empty(p):
-    'empty :'
+    '''
+    empty :
+    '''
 
 def p_empty_class_list(p):
     '''
     class_list : empty 
     '''
-    #p[0] = []
-
+    
 def p_class_list(p):
     '''
     class_list : class_list class 
     '''
-    #p[0] = #p[1]
-    #p[0].append(#p[2])
-
+    children = p[1].children if p[1] else []
+    children.append(p[2])
+    p[0] = Node('class_list', children=children)
+    
 def p_main_class(p):
     '''
     main_class : CLASS IDENTIFIER LEFT_BRACE main_method RIGHT_BRACE
     '''
-    #p[0] = Class()
-    #p[0].name = #p[2]
-    #p[0].methods.append(#p[4])
-
+    p[0] = Node('main_class', children=[p[4], ], leaf=[p[1], p[2], p[3], p[5]])
+    
 def p_main_method(p):
     '''
     main_method : PUBLIC STATIC VOID MAIN LEFT_PARENTHESIS STRING LEFT_BRACKET RIGHT_BRACKET IDENTIFIER RIGHT_PARENTHESIS LEFT_BRACE statements_list RIGHT_BRACE
     '''
-    #arg = Argument()
-    #arg.type = ArrayType()
-    #arg.type.name = 'String'
-    #arg.name = #p[9]
-
-    #p[0] = Method()
-    #p[0].name = #p[4]
-    #p[0].args.append(arg)
-    #p[0].variables = #p[12]
-    #p[0].statements = #p[13]
-    #p[0].return_type = Type()
-    #p[0].return_type.name = 'void'
+    p[0] = Node('main_method', children=[p[12]], leaf=[p[1], p[2], p[3], p[4], p[5], p[6], p[7], p[8], p[9], p[10], p[11], p[13]])
 
 def p_class(p):
     '''
     class : CLASS IDENTIFIER extends LEFT_BRACE declaration_list RIGHT_BRACE
     '''
-    #p[0] = Class()
-    #p[0].name = #p[2]
-    #for field in #p[5]:
-    #    if isinstance(field, Variable):
-    #        #p[0].variables.append(field)
-    #    elif isinstance(field, Method):
-    #        #p[0].methods.append(field)
-    #p[0].extends = #p[3]
+    p[0] = Node('class', children=[p[3], p[5]], leaf=[p[1], p[2], p[4], p[6]])
 
 def p_empty_extends(p):
     '''
     extends : empty
     '''
-    #p[0] = None
-
+    
 def p_extends(p):
     '''
     extends : EXTENDS IDENTIFIER
     '''
-    #p[0] = #p[2]
+    p[0] = Node('extends', children=[], leaf=[p[1], p[2]])
 
 def p_empty_declaration_list(p):
     """
     declaration_list : empty
     """
-    #p[0] = []
-
+   
 def p_declaration_list(p):
     """
     declaration_list : declaration_list field 
                            | declaration_list method 
     """
-    #p[0] = #p[1]
-    #p[0].append(#p[2])    
+    children = p[1].children if p[1] else []
+    children.append(p[2])
+    p[0] = Node('declaration_list', children=children)
 
 def p_field(p):
     """
     field : single_or_array_var SEMICOLON
     """
-    #p[0] = Variable()
-    #p[0].type = #p[1]
-    #p[0].name = #p[2]
+    p[0] = Node('field', children=[p[1]], leaf=[p[2]])
 
 def p_single_or_array_var(p):
     '''
     single_or_array_var : INT identifier_or_brackets
                                  | BOOLEAN IDENTIFIER
-                                 | IDENTIFIER IDENTIFIER
     '''
+    p[0] = Node('variable', children=[p[2]], leaf=[p[1]])
+
+def p_single_or_array_var_ref(p):
+    '''
+    single_or_array_var : IDENTIFIER IDENTIFIER
+    '''
+    p[0] = Node('variable', children=[p[1], p[2]])
 
 def p_method(p):
     """
