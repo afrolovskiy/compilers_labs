@@ -29,6 +29,7 @@ class NodeDrawer:
 				self.id += 1
 				gr.add_edge(node_id, leaf_id)
 		else:
+			print "label:", node
 			gr.add_node(self.id, label=node)
 			self.id += 1
 

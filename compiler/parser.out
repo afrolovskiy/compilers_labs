@@ -62,7 +62,7 @@ Rule 56    call_method_expression -> expression POINT IDENTIFIER LEFT_PARENTHESI
 Rule 57    expression_list -> empty
 Rule 58    expression_list -> nonempty_expression_list
 Rule 59    nonempty_expression_list -> expression
-Rule 60    nonempty_expression_list -> expression_list COMMA expression
+Rule 60    nonempty_expression_list -> nonempty_expression_list COMMA expression
 Rule 61    binary_expression -> expression OR expression
 Rule 62    binary_expression -> expression AND expression
 Rule 63    binary_expression -> expression EQUAL expression
@@ -147,7 +147,7 @@ declaration_list     : 7 11 12
 else_statement       : 36
 empty                : 3 8 10 21 26 37 57
 expression           : 17 34 35 35 36 39 40 54 54 55 56 59 60 61 61 62 62 63 63 64 64 65 65 66 66 67 67 68 68 69 69 70 70 71 72 73 74
-expression_list      : 56 60
+expression_list      : 56
 extends              : 7
 field                : 11
 field_expression     : 43
@@ -159,7 +159,7 @@ main_class           : 1
 main_method          : 5
 method               : 12
 new_expression       : 48
-nonempty_expression_list : 58
+nonempty_expression_list : 58 60
 null_expression      : 53
 params_list          : 17
 parenthesis_expression : 46
@@ -1082,10 +1082,10 @@ state 80
     MINUS           reduce using rule 81 (null_expression -> NULL .)
     TIMES           reduce using rule 81 (null_expression -> NULL .)
     DIVIDE          reduce using rule 81 (null_expression -> NULL .)
-    RIGHT_PARENTHESIS reduce using rule 81 (null_expression -> NULL .)
-    COMMA           reduce using rule 81 (null_expression -> NULL .)
     SEMICOLON       reduce using rule 81 (null_expression -> NULL .)
+    RIGHT_PARENTHESIS reduce using rule 81 (null_expression -> NULL .)
     RIGHT_BRACKET   reduce using rule 81 (null_expression -> NULL .)
+    COMMA           reduce using rule 81 (null_expression -> NULL .)
 
 
 state 81
@@ -1963,8 +1963,8 @@ state 110
     MINUS           reduce using rule 72 (unary_expression -> MINUS expression .)
     TIMES           reduce using rule 72 (unary_expression -> MINUS expression .)
     DIVIDE          reduce using rule 72 (unary_expression -> MINUS expression .)
-    RIGHT_PARENTHESIS reduce using rule 72 (unary_expression -> MINUS expression .)
     COMMA           reduce using rule 72 (unary_expression -> MINUS expression .)
+    RIGHT_PARENTHESIS reduce using rule 72 (unary_expression -> MINUS expression .)
     SEMICOLON       reduce using rule 72 (unary_expression -> MINUS expression .)
     RIGHT_BRACKET   reduce using rule 72 (unary_expression -> MINUS expression .)
     POINT           shift and go to state 120
@@ -2057,8 +2057,8 @@ state 114
     MINUS           reduce using rule 73 (unary_expression -> NOT expression .)
     TIMES           reduce using rule 73 (unary_expression -> NOT expression .)
     DIVIDE          reduce using rule 73 (unary_expression -> NOT expression .)
-    RIGHT_PARENTHESIS reduce using rule 73 (unary_expression -> NOT expression .)
     COMMA           reduce using rule 73 (unary_expression -> NOT expression .)
+    RIGHT_PARENTHESIS reduce using rule 73 (unary_expression -> NOT expression .)
     SEMICOLON       reduce using rule 73 (unary_expression -> NOT expression .)
     RIGHT_BRACKET   reduce using rule 73 (unary_expression -> NOT expression .)
     POINT           shift and go to state 120
@@ -3764,7 +3764,7 @@ state 159
     (58) expression_list -> . nonempty_expression_list
     (2) empty -> .
     (59) nonempty_expression_list -> . expression
-    (60) nonempty_expression_list -> . expression_list COMMA expression
+    (60) nonempty_expression_list -> . nonempty_expression_list COMMA expression
     (42) expression -> . array_element_expression
     (43) expression -> . field_expression
     (44) expression -> . call_method_expression
@@ -3803,7 +3803,6 @@ state 159
     (81) null_expression -> . NULL
 
     RIGHT_PARENTHESIS reduce using rule 2 (empty -> .)
-    COMMA           reduce using rule 2 (empty -> .)
     LEFT_PARENTHESIS shift and go to state 87
     MINUS           shift and go to state 82
     NOT             shift and go to state 96
@@ -3993,7 +3992,6 @@ state 166
     (57) expression_list -> empty .
 
     RIGHT_PARENTHESIS reduce using rule 57 (expression_list -> empty .)
-    COMMA           reduce using rule 57 (expression_list -> empty .)
 
 
 state 167
@@ -4013,8 +4011,8 @@ state 167
     (69) binary_expression -> expression . TIMES expression
     (70) binary_expression -> expression . DIVIDE expression
 
-    RIGHT_PARENTHESIS reduce using rule 59 (nonempty_expression_list -> expression .)
     COMMA           reduce using rule 59 (nonempty_expression_list -> expression .)
+    RIGHT_PARENTHESIS reduce using rule 59 (nonempty_expression_list -> expression .)
     LEFT_BRACKET    shift and go to state 127
     POINT           shift and go to state 120
     OR              shift and go to state 126
@@ -4032,18 +4030,17 @@ state 167
 state 168
 
     (56) call_method_expression -> expression POINT IDENTIFIER LEFT_PARENTHESIS expression_list . RIGHT_PARENTHESIS
-    (60) nonempty_expression_list -> expression_list . COMMA expression
 
-    RIGHT_PARENTHESIS shift and go to state 176
-    COMMA           shift and go to state 175
+    RIGHT_PARENTHESIS shift and go to state 175
 
 
 state 169
 
     (58) expression_list -> nonempty_expression_list .
+    (60) nonempty_expression_list -> nonempty_expression_list . COMMA expression
 
     RIGHT_PARENTHESIS reduce using rule 58 (expression_list -> nonempty_expression_list .)
-    COMMA           reduce using rule 58 (expression_list -> nonempty_expression_list .)
+    COMMA           shift and go to state 176
 
 
 state 170
@@ -4198,7 +4195,29 @@ state 174
 
 state 175
 
-    (60) nonempty_expression_list -> expression_list COMMA . expression
+    (56) call_method_expression -> expression POINT IDENTIFIER LEFT_PARENTHESIS expression_list RIGHT_PARENTHESIS .
+
+    RIGHT_PARENTHESIS reduce using rule 56 (call_method_expression -> expression POINT IDENTIFIER LEFT_PARENTHESIS expression_list RIGHT_PARENTHESIS .)
+    LEFT_BRACKET    reduce using rule 56 (call_method_expression -> expression POINT IDENTIFIER LEFT_PARENTHESIS expression_list RIGHT_PARENTHESIS .)
+    POINT           reduce using rule 56 (call_method_expression -> expression POINT IDENTIFIER LEFT_PARENTHESIS expression_list RIGHT_PARENTHESIS .)
+    OR              reduce using rule 56 (call_method_expression -> expression POINT IDENTIFIER LEFT_PARENTHESIS expression_list RIGHT_PARENTHESIS .)
+    AND             reduce using rule 56 (call_method_expression -> expression POINT IDENTIFIER LEFT_PARENTHESIS expression_list RIGHT_PARENTHESIS .)
+    EQUAL           reduce using rule 56 (call_method_expression -> expression POINT IDENTIFIER LEFT_PARENTHESIS expression_list RIGHT_PARENTHESIS .)
+    NOT_EQUAL       reduce using rule 56 (call_method_expression -> expression POINT IDENTIFIER LEFT_PARENTHESIS expression_list RIGHT_PARENTHESIS .)
+    GREATER         reduce using rule 56 (call_method_expression -> expression POINT IDENTIFIER LEFT_PARENTHESIS expression_list RIGHT_PARENTHESIS .)
+    LESS            reduce using rule 56 (call_method_expression -> expression POINT IDENTIFIER LEFT_PARENTHESIS expression_list RIGHT_PARENTHESIS .)
+    PLUS            reduce using rule 56 (call_method_expression -> expression POINT IDENTIFIER LEFT_PARENTHESIS expression_list RIGHT_PARENTHESIS .)
+    MINUS           reduce using rule 56 (call_method_expression -> expression POINT IDENTIFIER LEFT_PARENTHESIS expression_list RIGHT_PARENTHESIS .)
+    TIMES           reduce using rule 56 (call_method_expression -> expression POINT IDENTIFIER LEFT_PARENTHESIS expression_list RIGHT_PARENTHESIS .)
+    DIVIDE          reduce using rule 56 (call_method_expression -> expression POINT IDENTIFIER LEFT_PARENTHESIS expression_list RIGHT_PARENTHESIS .)
+    SEMICOLON       reduce using rule 56 (call_method_expression -> expression POINT IDENTIFIER LEFT_PARENTHESIS expression_list RIGHT_PARENTHESIS .)
+    RIGHT_BRACKET   reduce using rule 56 (call_method_expression -> expression POINT IDENTIFIER LEFT_PARENTHESIS expression_list RIGHT_PARENTHESIS .)
+    COMMA           reduce using rule 56 (call_method_expression -> expression POINT IDENTIFIER LEFT_PARENTHESIS expression_list RIGHT_PARENTHESIS .)
+
+
+state 176
+
+    (60) nonempty_expression_list -> nonempty_expression_list COMMA . expression
     (42) expression -> . array_element_expression
     (43) expression -> . field_expression
     (44) expression -> . call_method_expression
@@ -4261,28 +4280,6 @@ state 175
     expression                     shift and go to state 179
     call_method_expression         shift and go to state 91
 
-state 176
-
-    (56) call_method_expression -> expression POINT IDENTIFIER LEFT_PARENTHESIS expression_list RIGHT_PARENTHESIS .
-
-    RIGHT_PARENTHESIS reduce using rule 56 (call_method_expression -> expression POINT IDENTIFIER LEFT_PARENTHESIS expression_list RIGHT_PARENTHESIS .)
-    LEFT_BRACKET    reduce using rule 56 (call_method_expression -> expression POINT IDENTIFIER LEFT_PARENTHESIS expression_list RIGHT_PARENTHESIS .)
-    POINT           reduce using rule 56 (call_method_expression -> expression POINT IDENTIFIER LEFT_PARENTHESIS expression_list RIGHT_PARENTHESIS .)
-    OR              reduce using rule 56 (call_method_expression -> expression POINT IDENTIFIER LEFT_PARENTHESIS expression_list RIGHT_PARENTHESIS .)
-    AND             reduce using rule 56 (call_method_expression -> expression POINT IDENTIFIER LEFT_PARENTHESIS expression_list RIGHT_PARENTHESIS .)
-    EQUAL           reduce using rule 56 (call_method_expression -> expression POINT IDENTIFIER LEFT_PARENTHESIS expression_list RIGHT_PARENTHESIS .)
-    NOT_EQUAL       reduce using rule 56 (call_method_expression -> expression POINT IDENTIFIER LEFT_PARENTHESIS expression_list RIGHT_PARENTHESIS .)
-    GREATER         reduce using rule 56 (call_method_expression -> expression POINT IDENTIFIER LEFT_PARENTHESIS expression_list RIGHT_PARENTHESIS .)
-    LESS            reduce using rule 56 (call_method_expression -> expression POINT IDENTIFIER LEFT_PARENTHESIS expression_list RIGHT_PARENTHESIS .)
-    PLUS            reduce using rule 56 (call_method_expression -> expression POINT IDENTIFIER LEFT_PARENTHESIS expression_list RIGHT_PARENTHESIS .)
-    MINUS           reduce using rule 56 (call_method_expression -> expression POINT IDENTIFIER LEFT_PARENTHESIS expression_list RIGHT_PARENTHESIS .)
-    TIMES           reduce using rule 56 (call_method_expression -> expression POINT IDENTIFIER LEFT_PARENTHESIS expression_list RIGHT_PARENTHESIS .)
-    DIVIDE          reduce using rule 56 (call_method_expression -> expression POINT IDENTIFIER LEFT_PARENTHESIS expression_list RIGHT_PARENTHESIS .)
-    SEMICOLON       reduce using rule 56 (call_method_expression -> expression POINT IDENTIFIER LEFT_PARENTHESIS expression_list RIGHT_PARENTHESIS .)
-    RIGHT_BRACKET   reduce using rule 56 (call_method_expression -> expression POINT IDENTIFIER LEFT_PARENTHESIS expression_list RIGHT_PARENTHESIS .)
-    COMMA           reduce using rule 56 (call_method_expression -> expression POINT IDENTIFIER LEFT_PARENTHESIS expression_list RIGHT_PARENTHESIS .)
-
-
 state 177
 
     (38) else_statement -> ELSE statement .
@@ -4333,7 +4330,7 @@ state 178
 
 state 179
 
-    (60) nonempty_expression_list -> expression_list COMMA expression .
+    (60) nonempty_expression_list -> nonempty_expression_list COMMA expression .
     (54) array_element_expression -> expression . LEFT_BRACKET expression RIGHT_BRACKET
     (55) field_expression -> expression . POINT IDENTIFIER
     (56) call_method_expression -> expression . POINT IDENTIFIER LEFT_PARENTHESIS expression_list RIGHT_PARENTHESIS
@@ -4348,8 +4345,8 @@ state 179
     (69) binary_expression -> expression . TIMES expression
     (70) binary_expression -> expression . DIVIDE expression
 
-    RIGHT_PARENTHESIS reduce using rule 60 (nonempty_expression_list -> expression_list COMMA expression .)
-    COMMA           reduce using rule 60 (nonempty_expression_list -> expression_list COMMA expression .)
+    COMMA           reduce using rule 60 (nonempty_expression_list -> nonempty_expression_list COMMA expression .)
+    RIGHT_PARENTHESIS reduce using rule 60 (nonempty_expression_list -> nonempty_expression_list COMMA expression .)
     LEFT_BRACKET    shift and go to state 127
     POINT           shift and go to state 120
     OR              shift and go to state 126

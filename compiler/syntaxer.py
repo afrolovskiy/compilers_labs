@@ -28,7 +28,7 @@ def p_class_list(p):
     '''
     class_list : class_list class 
     '''
-    children = p[1].children if p[1] else []
+    children = p[1].children[:] if p[1] else []
     children.append(p[2])
     p[0] = Node('class_list', children=children)
     
@@ -36,19 +36,24 @@ def p_main_class(p):
     '''
     main_class : CLASS IDENTIFIER LEFT_BRACE main_method RIGHT_BRACE
     '''
-    p[0] = Node('main_class', children=[p[4], ], leaf=[p[1], p[2], p[3], p[5]])
+    id_node = Node('identifier', leaf=[p[2]])
+    p[0] = Node('main_class', children=[id_node, p[4]])
     
 def p_main_method(p):
     '''
     main_method : PUBLIC STATIC VOID MAIN LEFT_PARENTHESIS STRING LEFT_BRACKET RIGHT_BRACKET IDENTIFIER RIGHT_PARENTHESIS LEFT_BRACE statements_list RIGHT_BRACE
     '''
-    p[0] = Node('main_method', children=[p[12]], leaf=[p[1], p[2], p[3], p[4], p[5], p[6], p[7], p[8], p[9], p[10], p[11], p[13]])
+    dim_node = Node('dim', leaf=[1])
+    type_node = Node('type', children=[dim_node, p[6]])
+    id_node = Node('identifier', children=[p[9]])
+    arg_node = Node('arg', children=[type_node, id_node])
+    p[0] = Node('main_method', children=[arg_node, p[12]])
 
 def p_class(p):
     '''
     class : CLASS IDENTIFIER extends LEFT_BRACE declaration_list RIGHT_BRACE
     '''
-    p[0] = Node('class', children=[p[3], p[5]], leaf=[p[1], p[2], p[4], p[6]])
+    p[0] = Node('class', children=[p[2], p[3], p[5]])
 
 def p_empty_extends(p):
     '''
@@ -59,7 +64,7 @@ def p_extends(p):
     '''
     extends : EXTENDS IDENTIFIER
     '''
-    p[0] = Node('extends', children=[], leaf=[p[1], p[2]])
+    p[0] = Node('extends', children=[p[2]])
 
 def p_empty_declaration_list(p):
     """
@@ -71,7 +76,7 @@ def p_declaration_list(p):
     declaration_list : declaration_list field 
                            | declaration_list method 
     """
-    children = p[1].children if p[1] else []
+    children = p[1].children[:] if p[1] else []
     children.append(p[2])
     p[0] = Node('declaration_list', children=children)
 
@@ -79,10 +84,7 @@ def p_field(p):
     """
     field : single_or_array_var SEMICOLON
     """
-    leaf = []
-    leaf.extend(p[1].leaf)
-    leaf.append(p[2])
-    p[0] = Node('field', children=p[1].children, leaf=leaf)
+    p[0] = Node('field', children=p[1].children[:])
 
 def p_int_single_or_array_var(p):
     '''
@@ -168,8 +170,9 @@ def p_args_list(p):
     """
     children = p[1].children if p[1] else []
     children.append(p[3])
-    leaf = p[1].leaf
-    leaf.append(p[2])
+    leaf = p[1].leaf if p[1] else []
+    if p[1]:
+        leaf.append(p[2])
     p[0] = Node('args', children=children, leaf=leaf)
 
 def p_arg(p):
@@ -351,11 +354,11 @@ def p_single_expression_list(p):
 
 def p_expression_list_head(p):
     '''
-    nonempty_expression_list : expression_list COMMA expression
+    nonempty_expression_list : nonempty_expression_list COMMA expression
     '''
-    children=p[1].children
+    children=p[1].children[:]
     children.append(p[3])
-    leaf = p[1].leaf
+    leaf = p[1].leaf[:]
     leaf.append(p[2])
     p[0] = Node('expressions', children=children, leaf=leaf)
 
@@ -403,32 +406,32 @@ def p_identifier_expression(p):
     '''
     identifier_expression : IDENTIFIER
     '''
-    p[0] = p[1]
+    p[0] = Node('identifier', leaf=[p[1]])
 
 def p_integer_literal_expression(p):
     '''
     integer_literal_expression : INTEGER_LITERAL
     '''
-    p[0] = p[1]
+    p[0] = Node('integer', leaf=[p[1]])
 
 def p_boolean_expression(p):
     '''
     boolean_expression : TRUE
                                   |  FALSE
     '''
-    p[0] = p[1]
+    p[0] = Node('boolean', leaf=[p[1]])
     
 def p_this_expression(p):
     '''
     this_expression : THIS
     '''
-    p[0] = p[1]
+    p[0] = Node('this')
 
 def p_null_expression(p):
     '''
     null_expression : NULL
     '''
-    p[0] = p[1]
+    p[0] = Node('null')
 
 def p_error(p):
     print "Syntax error in input! %s" % p
