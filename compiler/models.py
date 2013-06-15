@@ -14,6 +14,3 @@ class Node:
         self.children = children
         self.leaf = leaf
 
-
-
-

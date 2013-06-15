@@ -3,6 +3,7 @@ from ply import yacc
 from lexer import tokens
 #import ipdb
 from models import JSONEncoder, Node
+from utils import NodeDrawer
 
 
 start = 'programm'
@@ -456,3 +457,5 @@ if __name__ == '__main__':
     with open('test.java') as fin:
         result = parser.parse(fin.read(), debug=log)
         print json.dumps(result, cls=JSONEncoder)
+        drawer = NodeDrawer()
+        drawer.draw(result)
