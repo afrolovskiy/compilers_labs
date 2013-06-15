@@ -1,9 +1,8 @@
 import json
 from ply import yacc
 from lexer import tokens
-#import ipdb
-from models import JSONEncoder, Node
-from utils import NodeDrawer
+from models import Node
+from utils import NodeDrawer,JSONEncoder
 
 
 start = 'programm'

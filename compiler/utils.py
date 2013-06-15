@@ -1,6 +1,14 @@
+import json
 import pygraphviz as pgv
-
 from models import Node
+
+
+class JSONEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if not isinstance(obj, Node):
+            return super(JSONEncoder, self).default(obj)
+        return obj.__dict__
+
 
 class NodeDrawer:
 	def draw(self, node):
