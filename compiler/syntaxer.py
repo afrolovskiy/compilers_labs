@@ -78,44 +78,88 @@ def p_field(p):
     """
     field : single_or_array_var SEMICOLON
     """
-    p[0] = Node('field', children=[p[1]], leaf=[p[2]])
+    leaf = []
+    leaf.extend(p[1].leaf)
+    leaf.append(p[2])
+    p[0] = Node('field', children=p[1].children, leaf=leaf)
 
-def p_single_or_array_var(p):
+def p_int_single_or_array_var(p):
     '''
-    single_or_array_var : INT identifier_or_brackets
-                                 | BOOLEAN IDENTIFIER
+    single_or_array_var : INT identifier_or_brackets 
     '''
-    p[0] = Node('variable', children=[p[2]], leaf=[p[1]])
+    leaf = [p[1], ]
+    leaf.extend(p[2].leaf)
+    p[0] = Node('single_or_array_var', children=p[2].children, leaf=leaf)
+
+def p_boolean_single_or_array_var(p):
+    '''
+    single_or_array_var : BOOLEAN IDENTIFIER
+    '''
+    p[0] = Node('single_or_array_var', children=[p[2], ], leaf=[p[1], ])
 
 def p_single_or_array_var_ref(p):
     '''
     single_or_array_var : IDENTIFIER IDENTIFIER
     '''
-    p[0] = Node('variable', children=[p[1], p[2]])
+    p[0] = Node('single_or_array_var', children=[p[1], p[2]])
 
 def p_method(p):
     """
-    method : PUBLIC single_or_array_var LEFT_PARENTHESIS params_list RIGHT_PARENTHESIS LEFT_BRACE statements_list RETURN expression SEMICOLON RIGHT_BRACE
+    method : PUBLIC return_type_and_name LEFT_PARENTHESIS params_list RIGHT_PARENTHESIS LEFT_BRACE statements_list RETURN expression SEMICOLON RIGHT_BRACE
     """
-    p[0] = Node('method', children=[p[2], p[4], p[7], p[9]], leaf=[p[1], p[3], p[5], p[6], p[8], p[10], p[11]])
+    children = p[2].children
+    children.extend([p[4], p[7], p[9]])
+    leaf = [p[1], ]
+    leaf.extend(p[2].leaf)
+    leaf.extend([p[3], p[5], p[6], p[8], p[10], p[11]])
+    p[0] = Node('method', children=children, leaf=leaf)
+
+def p_int_return_type_and_name(p):
+    '''
+    return_type_and_name : INT identifier_or_brackets
+    '''
+    leaf = [p[1], ]
+    leaf.extend(p[2].leaf)
+    type_node = Node('type', leaf=leaf)
+    id_node = Node('identifier', children=p[2].children)
+    children = [type_node, id_node]
+    p[0] = Node('return_type_and_name', children=children)
+
+def p_boolean_return_type_and_name(p):
+    '''
+    return_type_and_name : BOOLEAN IDENTIFIER
+    '''
+    type_node = Node('type', leaf=[p[1], ])
+    id_node = Node('identifier', children=[p[2], ])
+    children = [type_node, id_node]
+    p[0] = Node('return_type_and_name', children=children)
+
+def p_id_return_type_and_name(p):
+    '''
+    return_type_and_name : IDENTIFIER IDENTIFIER
+    '''
+    type_node = Node('type', children=[p[1], ])
+    id_node = Node('identifier', children=[p[2], ])
+    children = [type_node, id_node]
+    p[0] = Node('return_type_and_name', children=children)
 
 def p_empty_params_list(p):
     """
     params_list : empty
     """
-#    #p[0] = []
+    p[0] = Node('args')
 
 def p_params_list(p):
     """
     params_list : args_list
     """
-    p[0] = Node('args', children=[p[1]])
+    p[0] = Node('args', children=[p[1], ])
 
 def p_single_args_list(p):
     """
     args_list : arg
     """
-    p[0] = Node('args', children=[p[0]])
+    p[0] = Node('args', children=[p[1], ])
 
 def p_args_list(p):
     """
@@ -123,15 +167,15 @@ def p_args_list(p):
     """
     children = p[1].children if p[1] else []
     children.append(p[3])
-    leafs = p[1].leafs
-    leafs.append(p[2])
-    p[0] = Node('args', children=children, leaf=leafs)
+    leaf = p[1].leaf
+    leaf.append(p[2])
+    p[0] = Node('args', children=children, leaf=leaf)
 
 def p_arg(p):
     '''
     arg : single_or_array_var
     '''
-    p[0] = Node('arg', children=[p[1]])
+    p[0] = Node('arg', children=p[1].children, leaf=p[1].leaf)
 
 def p_empty_statements_list(p):
     '''
@@ -146,48 +190,81 @@ def p_statements_list(p):
     children.append(p[2])
     p[0] = Node('statements_list', children=children)    
 
-def p_statement(p):
+def p_bool_statement(p):
+    '''
+    statement : BOOLEAN IDENTIFIER SEMICOLON
+    '''
+    p[0] = Node('variable', children=[p[2]], leaf=[p[1], p[3]])
+
+def p_int_statement(p):
     '''
     statement : INT identifier_or_brackets SEMICOLON
-                   | BOOLEAN IDENTIFIER SEMICOLON
     '''
-    p[0] = Node('statement', children=[p[2]], leaf=[p[1], p[3]])
-    #children = p[2][0]
-    #children.insert(0, p[2])
-    #leaf = p[2][1]
-    #leaf.extend([p
-    #p[0] = Node('variable-statement', children=children, 
-
-def p_complex_statement(p):
-    '''
-    statement : IDENTIFIER identifier_or_assignment SEMICOLON
-    '''
-    p[0] = Node('statement', children=[p[1], p[2]], leaf=[p[3]])
-    #p[0] = ([p[1]. p[2]], [p[3]])
+    leaf = [p[1], ]
+    leaf.extend(p[2].leaf)
+    leaf.append(p[3])
+    if p[2].type == 'identifier_or_brackets_1':
+        p[0] = Node('variable', children=p[2].children, leaf=leaf)
+    elif p[2].type == 'identifier_or_brackets_2':
+        p[0] = Node('array_variable', children=p[2].children, leaf=leaf)
 
 def p_identifier_or_brackets_id(p):
     '''
     identifier_or_brackets : IDENTIFIER
     '''
-    p[0] = Node('variable', children=[p[0]])
+    p[0] = Node('identifier_or_brackets_1', children=[p[1], ])
 
 def p_identifier_or_brackets_br(p):
     '''
     identifier_or_brackets : LEFT_BRACKET RIGHT_BRACKET IDENTIFIER
     '''
-    p[0] = Node('array_variable', children=[p[3]], leaf=[p[1],p[2]])
+    p[0] = Node('identifier_or_brackets_2', children=[p[3], ], leaf=[p[1], p[2]])
 
-def p_identifier_or_assignment(p):
+def p_complex_statement(p):
+    '''
+    statement : IDENTIFIER identifier_or_assignment SEMICOLON
+    '''
+    identifier_or_assignment = p[2]
+    if identifier_or_assignment[0] == 'identifier_or_assignment_1':
+        children = [p[1], identifier_or_assignment[1]]
+        leaf = [p[3], ]
+        p[0] = Node('variable', children=children, leaf=leaf)
+    elif identifier_or_assignment[0] == 'identifier_or_assignment_2':
+        children = [p[1], identifier_or_assignment[2]]
+        leaf = [identifier_or_assignment[1], p[3]]
+        p[0] = Node('assignment', children=children, leaf=leaf)
+    elif identifier_or_assignment[0] == 'identifier_or_assignment_3':
+        children = [p[1], identifier_or_assignment[2], identifier_or_assignment[5]]
+        leaf = [identifier_or_assignment[1], identifier_or_assignment[3], idenitfier_or_assignment[4], p[3]]
+        p[0] = Node('array_element_assignment', children=children, leaf=leaf)
+
+def p_identifier_or_assignment_id(p):
     '''
     identifier_or_assignment : IDENTIFIER
-                                        | ASSIGNMENT expression
-                                        | LEFT_BRACKET expression RIGHT_BRACKET ASSIGNMENT expression
     '''
+    p[0] = ('identifier_or_assignment_1', p[1])
+
+def p_identifier_or_assignment_assign(p):
+    '''
+    identifier_or_assignment : ASSIGNMENT expression
+    '''
+    p[0] = ('identifier_or_assignment_2', p[1], p[2])
+
+def p_identifier_or_assignment_array_element_assign(p):
+    '''
+    identifier_or_assignment : LEFT_BRACKET expression RIGHT_BRACKET ASSIGNMENT expression
+    '''
+    p[0] = ('identifier_or_assignment_3', p[1], p[2], p[3], p[4], p[5])
 
 def p_if_statement(p):
     '''
     statement : IF LEFT_PARENTHESIS expression RIGHT_PARENTHESIS statement else_statement
     '''
+    children = [p[3], p[5]]
+    if p[6]:
+        children.append(p[6])
+    leaf = [p[1], p[2], p[4]]
+    p[0] = Node('if', children=children, leaf=leaf)
 
 def p_empty_else_statement(p):
     '''
@@ -198,37 +275,25 @@ def p_else_statement(p):
     '''
     else_statement : ELSE statement
     '''
-
-
+    p[0] = Node('else', children=[p[2]], leaf=[p[1]])
 
 def p_while_statement(p):
     '''
     statement : WHILE LEFT_PARENTHESIS expression RIGHT_PARENTHESIS statement
     ''' 
-    #p[0] = WhileStatement()
-    #p[0].condition = #p[3]
-    #p[0].expression = #p[5]
+    p[0] = Node('while', children=[p[3], p[5]], leaf=[p[1], p[2], p[4]])
 
 def p_print_statement(p):
     '''
     statement : SYSTEM POINT OUT POINT PRINTLN LEFT_PARENTHESIS expression RIGHT_PARENTHESIS SEMICOLON
     '''
-    #p[0] = PrintStatement()
-    #p[0].expression = #p[7]
-
-#def p_assignment_statement(p):
-#    '''
-#    assignment_statement : IDENTIFIER ASSIGNMENT expression SEMICOLON %prec VASSIGN
-#    '''
-    #p[0] = AssignmentStatement()
-    #p[0].left_part = #p[1]
-    #p[0].right_part = #p[3]
+    p[0] = Node('print', children=[p[7]], leaf=[p[1], p[2], p[3], p[4], p[5], p[6], p[8], p[9]])
 
 def p_block_statement(p):
     '''
     statement : LEFT_BRACE statements_list RIGHT_BRACE
     '''
-    #p[0] = #p[2]
+    p[0] = Node('block', children=[p[2], ], leaf=[p[1], p[3]])
 
 def p_expression(p):
     '''
@@ -245,57 +310,53 @@ def p_expression(p):
                      | this_expression
                      | null_expression
     '''
-    #p[0] = #p[1]
+    p[0] = p[1]
 
 def p_array_element_expression(p):
     '''
     array_element_expression : expression LEFT_BRACKET expression RIGHT_BRACKET
     '''
-    #p[0] = ArrayElementExpression()
-    #p[0].array = #p[1]
-    #p[0].index = #p[3]
+    p[0] = Node('array_element', children=[p[1], p[3]], leaf=[p[2], p[4]])
 
 def p_field_expression(p):
     '''
     field_expression : expression POINT IDENTIFIER
     '''
-    #p[0] = FieldExpression()
-    #p[0].expression = #p[1]
-    #p[0].identifier = #p[3]
+    p[0] = Node('field', children=[p[1], p[3]], leaf=[p[2]])    
 
 def p_call_method_expression(p):
     '''
     call_method_expression : expression POINT IDENTIFIER LEFT_PARENTHESIS expression_list RIGHT_PARENTHESIS
     '''
-    #p[0] = CallMethodExpression()
-    #p[0].expression = #p[1]
-    #p[0].method_name = #p[3]
-    #p[0].args = #p[5]
+    p[0] = Node('method_call', children=[p[1], p[3], p[5]], leaf=[p[2], p[4], p[6]])
 
 def p_empty_expression_list(p):
     '''
     expression_list : empty
     '''
-    #p[0] = []
+    p[0] = Node('expressions')
     
 def p_nonempty_expression_list(p):
     '''
     expression_list : nonempty_expression_list 
     '''
-    #p[0] = #p[1]
+    p[0] = p[1]
 
 def p_single_expression_list(p):
     '''
     nonempty_expression_list : expression
     '''
-    #p[0] = [#p[1], ]
+    p[0] = Node('expressions', children=[p[1], ])
 
 def p_expression_list_head(p):
     '''
     nonempty_expression_list : expression_list COMMA expression
     '''
-    #p[0] = #p[1]
-    #p[0].append(#p[2])
+    children=p[1].children
+    children.append(p[3])
+    leaf = p[1].leaf
+    leaf.append(p[2])
+    p[0] = Node('expressions', children=children, leaf=leaf)
 
 def p_binary_expression(p):
     '''
@@ -310,78 +371,66 @@ def p_binary_expression(p):
                                | expression TIMES expression
                                | expression DIVIDE expression
     '''
-    #p[0] = BinaryArithmeticExpression()
-    #p[0].operator = #p[2]
-    #p[0].operand1 = #p[1]
-    #p[0].operand2 = #p[3]
+    p[0] = Node('binary_expression', children=[p[1], p[3], ], leaf=[p[2],])
 
 def p_parenthesis_expression(p):
     '''
     parenthesis_expression : LEFT_PARENTHESIS expression RIGHT_PARENTHESIS
     '''	
-    #p[0] = ParenthesisExpression()
-    #p[0].operand = #p[2]
+    p[0] = Node('parenthesis_expression', children=[p[2],], leaf=[p[1], p[3],] )
 
 def p_unary_expression(p):
     '''
     unary_expression : MINUS expression %prec UMINUS
                                | NOT expression
     '''
-    #p[0] = UnaryArithmeticExpression()
-    #p[0].operator = #p[1]
-    #p[0].operand = #p[2]
+    p[0] = Node('unary_expression', children=[p[2],], leaf=[p[1],])
 
-def p_new_expression(p):
+def p_new_array_expression(p):
     '''
     new_expression : NEW INT LEFT_BRACKET expression RIGHT_BRACKET 
-                             | NEW IDENTIFIER LEFT_PARENTHESIS RIGHT_PARENTHESIS
     '''
-    #p[0] = NewExpression()
-    #p[0].type_name = #p[2]
+    p[0] = Node('new_array_expression', children=[p[4],], leaf=[p[1], p[2], p[3], p[5]])
+
+def p_new_identifier_expression(p):
+    '''
+    new_expression : NEW IDENTIFIER LEFT_PARENTHESIS RIGHT_PARENTHESIS
+    '''
+    p[0] = Node('new_identifier_expression', children=[p[2], ], leaf=[p[1], p[3], p[4]])
 
 def p_identifier_expression(p):
     '''
     identifier_expression : IDENTIFIER
     '''
-    #p[0] = IdentifierExpression()
-    #p[0].name = #p[1]
+    p[0] = p[1]
 
 def p_integer_literal_expression(p):
     '''
     integer_literal_expression : INTEGER_LITERAL
     '''
-    #p[0] = IntegerExpression()
-    #p[0].value = #p[1]
+    p[0] = p[1]
 
 def p_boolean_expression(p):
     '''
     boolean_expression : TRUE
                                   |  FALSE
     '''
-    #p[0] = BooleanExpression()
-    #p[0].value = #p[1]
+    p[0] = p[1]
     
 def p_this_expression(p):
     '''
     this_expression : THIS
     '''
-    #p[0] = ThisExpression()
+    p[0] = p[1]
 
 def p_null_expression(p):
     '''
     null_expression : NULL
     '''
-    #p[0] = NullExpression()
+    p[0] = p[1]
 
 def p_error(p):
     print "Syntax error in input! %s" % p
-    #yacc.errok()
-    #while 1:
-    #    tok = yacc.token()             # Get the next token
-    #    if not tok or tok.type == 'ASSIGNMENT': break
-    #yacc.restart()
-    #yacc.errok()
-    #return tok
 
 precedence = (
     ('left', 'OR', 'AND'),
@@ -406,5 +455,4 @@ if __name__ == '__main__':
     parser = yacc.yacc(debug=True)
     with open('test.java') as fin:
         result = parser.parse(fin.read(), debug=log)
-        #ipdb.set_trace()
         print json.dumps(result, cls=JSONEncoder)
