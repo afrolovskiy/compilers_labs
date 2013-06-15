@@ -64,7 +64,7 @@
    yacc.py: 338:State  : 64
    yacc.py: 352:Stack  : CLASS IDENTIFIER LEFT_BRACE PUBLIC STATIC VOID MAIN LEFT_PARENTHESIS STRING LEFT_BRACKET RIGHT_BRACKET IDENTIFIER RIGHT_PARENTHESIS LEFT_BRACE empty . LexToken(SYSTEM,'System',3,59)
    yacc.py: 389:Action : Reduce rule [statements_list -> empty] with [None] and goto state 26
-   yacc.py: 423:Result : <NoneType @ 0x82bba80> (None)
+   yacc.py: 423:Result : <instance @ 0x9250aac> (<models.Node instance at 0x9250aac>)
    yacc.py: 337:
    yacc.py: 338:State  : 75
    yacc.py: 352:Stack  : CLASS IDENTIFIER LEFT_BRACE PUBLIC STATIC VOID MAIN LEFT_PARENTHESIS STRING LEFT_BRACKET RIGHT_BRACKET IDENTIFIER RIGHT_PARENTHESIS LEFT_BRACE statements_list . LexToken(SYSTEM,'System',3,59)
@@ -109,12 +109,12 @@
    yacc.py: 338:State  : 158
    yacc.py: 352:Stack  : CLASS IDENTIFIER LEFT_BRACE PUBLIC STATIC VOID MAIN LEFT_PARENTHESIS STRING LEFT_BRACKET RIGHT_BRACKET IDENTIFIER RIGHT_PARENTHESIS LEFT_BRACE statements_list SYSTEM POINT OUT POINT PRINTLN LEFT_PARENTHESIS NEW IDENTIFIER LEFT_PARENTHESIS RIGHT_PARENTHESIS . LexToken(POINT,'.',3,87)
    yacc.py: 389:Action : Reduce rule [new_expression -> NEW IDENTIFIER LEFT_PARENTHESIS RIGHT_PARENTHESIS] with ['new','Fac','(',')'] and goto state 75
-   yacc.py: 423:Result : <instance @ 0x87aaa4c> (<models.Node instance at 0x87aaa4c>)
+   yacc.py: 423:Result : <instance @ 0x9250c0c> (<models.Node instance at 0x9250c0c>)
    yacc.py: 337:
    yacc.py: 338:State  : 79
    yacc.py: 352:Stack  : CLASS IDENTIFIER LEFT_BRACE PUBLIC STATIC VOID MAIN LEFT_PARENTHESIS STRING LEFT_BRACKET RIGHT_BRACKET IDENTIFIER RIGHT_PARENTHESIS LEFT_BRACE statements_list SYSTEM POINT OUT POINT PRINTLN LEFT_PARENTHESIS new_expression . LexToken(POINT,'.',3,87)
-   yacc.py: 389:Action : Reduce rule [expression -> new_expression] with [<instance @ 0x87aaa4c>] and goto state 48
-   yacc.py: 423:Result : <instance @ 0x87aaa4c> (<models.Node instance at 0x87aaa4c>)
+   yacc.py: 389:Action : Reduce rule [expression -> new_expression] with [<instance @ 0x9250c0c>] and goto state 48
+   yacc.py: 423:Result : <instance @ 0x9250b4c> (<models.Node instance at 0x9250b4c>)
    yacc.py: 337:
    yacc.py: 338:State  : 178
    yacc.py: 352:Stack  : CLASS IDENTIFIER LEFT_BRACE PUBLIC STATIC VOID MAIN LEFT_PARENTHESIS STRING LEFT_BRACKET RIGHT_BRACKET IDENTIFIER RIGHT_PARENTHESIS LEFT_BRACE statements_list SYSTEM POINT OUT POINT PRINTLN LEFT_PARENTHESIS expression . LexToken(POINT,'.',3,87)
@@ -135,22 +135,22 @@
    yacc.py: 338:State  : 78
    yacc.py: 352:Stack  : CLASS IDENTIFIER LEFT_BRACE PUBLIC STATIC VOID MAIN LEFT_PARENTHESIS STRING LEFT_BRACKET RIGHT_BRACKET IDENTIFIER RIGHT_PARENTHESIS LEFT_BRACE statements_list SYSTEM POINT OUT POINT PRINTLN LEFT_PARENTHESIS expression POINT IDENTIFIER LEFT_PARENTHESIS INTEGER_LITERAL . LexToken(RIGHT_PARENTHESIS,')',3,101)
    yacc.py: 389:Action : Reduce rule [integer_literal_expression -> INTEGER_LITERAL] with [10] and goto state 77
-   yacc.py: 423:Result : <instance @ 0x87f01ec> (<models.Node instance at 0x87f01ec>)
+   yacc.py: 423:Result : <instance @ 0x925098c> (<models.Node instance at 0x925098c>)
    yacc.py: 337:
    yacc.py: 338:State  : 98
    yacc.py: 352:Stack  : CLASS IDENTIFIER LEFT_BRACE PUBLIC STATIC VOID MAIN LEFT_PARENTHESIS STRING LEFT_BRACKET RIGHT_BRACKET IDENTIFIER RIGHT_PARENTHESIS LEFT_BRACE statements_list SYSTEM POINT OUT POINT PRINTLN LEFT_PARENTHESIS expression POINT IDENTIFIER LEFT_PARENTHESIS integer_literal_expression . LexToken(RIGHT_PARENTHESIS,')',3,101)
-   yacc.py: 389:Action : Reduce rule [expression -> integer_literal_expression] with [<instance @ 0x87f01ec>] and goto state 50
-   yacc.py: 423:Result : <instance @ 0x87f01ec> (<models.Node instance at 0x87f01ec>)
+   yacc.py: 389:Action : Reduce rule [expression -> integer_literal_expression] with [<instance @ 0x925098c>] and goto state 50
+   yacc.py: 423:Result : <instance @ 0x9250bec> (<models.Node instance at 0x9250bec>)
    yacc.py: 337:
    yacc.py: 338:State  : 167
    yacc.py: 352:Stack  : CLASS IDENTIFIER LEFT_BRACE PUBLIC STATIC VOID MAIN LEFT_PARENTHESIS STRING LEFT_BRACKET RIGHT_BRACKET IDENTIFIER RIGHT_PARENTHESIS LEFT_BRACE statements_list SYSTEM POINT OUT POINT PRINTLN LEFT_PARENTHESIS expression POINT IDENTIFIER LEFT_PARENTHESIS expression . LexToken(RIGHT_PARENTHESIS,')',3,101)
-   yacc.py: 389:Action : Reduce rule [nonempty_expression_list -> expression] with [<instance @ 0x87f01ec>] and goto state 59
-   yacc.py: 423:Result : <instance @ 0x87f026c> (<models.Node instance at 0x87f026c>)
+   yacc.py: 389:Action : Reduce rule [nonempty_expression_list -> expression] with [<instance @ 0x9250bec>] and goto state 59
+   yacc.py: 423:Result : <instance @ 0x9250bcc> (<models.Node instance at 0x9250bcc>)
    yacc.py: 337:
    yacc.py: 338:State  : 169
    yacc.py: 352:Stack  : CLASS IDENTIFIER LEFT_BRACE PUBLIC STATIC VOID MAIN LEFT_PARENTHESIS STRING LEFT_BRACKET RIGHT_BRACKET IDENTIFIER RIGHT_PARENTHESIS LEFT_BRACE statements_list SYSTEM POINT OUT POINT PRINTLN LEFT_PARENTHESIS expression POINT IDENTIFIER LEFT_PARENTHESIS nonempty_expression_list . LexToken(RIGHT_PARENTHESIS,')',3,101)
-   yacc.py: 389:Action : Reduce rule [expression_list -> nonempty_expression_list] with [<instance @ 0x87f026c>] and goto state 58
-   yacc.py: 423:Result : <instance @ 0x87f026c> (<models.Node instance at 0x87f026c>)
+   yacc.py: 389:Action : Reduce rule [expression_list -> nonempty_expression_list] with [<instance @ 0x9250bcc>] and goto state 58
+   yacc.py: 423:Result : <instance @ 0x9250bcc> (<models.Node instance at 0x9250bcc>)
    yacc.py: 337:
    yacc.py: 338:State  : 168
    yacc.py: 352:Stack  : CLASS IDENTIFIER LEFT_BRACE PUBLIC STATIC VOID MAIN LEFT_PARENTHESIS STRING LEFT_BRACKET RIGHT_BRACKET IDENTIFIER RIGHT_PARENTHESIS LEFT_BRACE statements_list SYSTEM POINT OUT POINT PRINTLN LEFT_PARENTHESIS expression POINT IDENTIFIER LEFT_PARENTHESIS expression_list . LexToken(RIGHT_PARENTHESIS,')',3,101)
@@ -158,13 +158,13 @@
    yacc.py: 337:
    yacc.py: 338:State  : 175
    yacc.py: 352:Stack  : CLASS IDENTIFIER LEFT_BRACE PUBLIC STATIC VOID MAIN LEFT_PARENTHESIS STRING LEFT_BRACKET RIGHT_BRACKET IDENTIFIER RIGHT_PARENTHESIS LEFT_BRACE statements_list SYSTEM POINT OUT POINT PRINTLN LEFT_PARENTHESIS expression POINT IDENTIFIER LEFT_PARENTHESIS expression_list RIGHT_PARENTHESIS . LexToken(RIGHT_PARENTHESIS,')',3,102)
-   yacc.py: 389:Action : Reduce rule [call_method_expression -> expression POINT IDENTIFIER LEFT_PARENTHESIS expression_list RIGHT_PARENTHESIS] with [<instance @ 0x87aaa4c>,'.','ComputeFac','(',<instance @ 0x87f026c>,')'] and goto state 56
-   yacc.py: 423:Result : <instance @ 0x87f038c> (<models.Node instance at 0x87f038c>)
+   yacc.py: 389:Action : Reduce rule [call_method_expression -> expression POINT IDENTIFIER LEFT_PARENTHESIS expression_list RIGHT_PARENTHESIS] with [<instance @ 0x9250b4c>,'.','ComputeFac','(',<instance @ 0x9250bcc>,')'] and goto state 56
+   yacc.py: 423:Result : <instance @ 0x9250cec> (<models.Node instance at 0x9250cec>)
    yacc.py: 337:
    yacc.py: 338:State  : 91
    yacc.py: 352:Stack  : CLASS IDENTIFIER LEFT_BRACE PUBLIC STATIC VOID MAIN LEFT_PARENTHESIS STRING LEFT_BRACKET RIGHT_BRACKET IDENTIFIER RIGHT_PARENTHESIS LEFT_BRACE statements_list SYSTEM POINT OUT POINT PRINTLN LEFT_PARENTHESIS call_method_expression . LexToken(RIGHT_PARENTHESIS,')',3,102)
-   yacc.py: 389:Action : Reduce rule [expression -> call_method_expression] with [<instance @ 0x87f038c>] and goto state 44
-   yacc.py: 423:Result : <instance @ 0x87f038c> (<models.Node instance at 0x87f038c>)
+   yacc.py: 389:Action : Reduce rule [expression -> call_method_expression] with [<instance @ 0x9250cec>] and goto state 44
+   yacc.py: 423:Result : <instance @ 0x9250c2c> (<models.Node instance at 0x9250c2c>)
    yacc.py: 337:
    yacc.py: 338:State  : 178
    yacc.py: 352:Stack  : CLASS IDENTIFIER LEFT_BRACE PUBLIC STATIC VOID MAIN LEFT_PARENTHESIS STRING LEFT_BRACKET RIGHT_BRACKET IDENTIFIER RIGHT_PARENTHESIS LEFT_BRACE statements_list SYSTEM POINT OUT POINT PRINTLN LEFT_PARENTHESIS expression . LexToken(RIGHT_PARENTHESIS,')',3,102)
@@ -176,13 +176,13 @@
    yacc.py: 337:
    yacc.py: 338:State  : 181
    yacc.py: 352:Stack  : CLASS IDENTIFIER LEFT_BRACE PUBLIC STATIC VOID MAIN LEFT_PARENTHESIS STRING LEFT_BRACKET RIGHT_BRACKET IDENTIFIER RIGHT_PARENTHESIS LEFT_BRACE statements_list SYSTEM POINT OUT POINT PRINTLN LEFT_PARENTHESIS expression RIGHT_PARENTHESIS SEMICOLON . LexToken(RIGHT_BRACE,'}',4,109)
-   yacc.py: 389:Action : Reduce rule [statement -> SYSTEM POINT OUT POINT PRINTLN LEFT_PARENTHESIS expression RIGHT_PARENTHESIS SEMICOLON] with ['System','.','out','.','println','(',<instance @ 0x87f038c>,')',';'] and goto state 40
-   yacc.py: 423:Result : <instance @ 0x87f034c> (<models.Node instance at 0x87f034c>)
+   yacc.py: 389:Action : Reduce rule [statement -> SYSTEM POINT OUT POINT PRINTLN LEFT_PARENTHESIS expression RIGHT_PARENTHESIS SEMICOLON] with ['System','.','out','.','println','(',<instance @ 0x9250c2c>,')',';'] and goto state 40
+   yacc.py: 423:Result : <instance @ 0x9250ccc> (<models.Node instance at 0x9250ccc>)
    yacc.py: 337:
    yacc.py: 338:State  : 69
    yacc.py: 352:Stack  : CLASS IDENTIFIER LEFT_BRACE PUBLIC STATIC VOID MAIN LEFT_PARENTHESIS STRING LEFT_BRACKET RIGHT_BRACKET IDENTIFIER RIGHT_PARENTHESIS LEFT_BRACE statements_list statement . LexToken(RIGHT_BRACE,'}',4,109)
-   yacc.py: 389:Action : Reduce rule [statements_list -> statements_list statement] with [None,<instance @ 0x87f034c>] and goto state 27
-   yacc.py: 423:Result : <instance @ 0x87f002c> (<models.Node instance at 0x87f002c>)
+   yacc.py: 389:Action : Reduce rule [statements_list -> statements_list statement] with [<instance @ 0x9250aac>,<instance @ 0x9250ccc>] and goto state 27
+   yacc.py: 423:Result : <instance @ 0x92508ec> (<models.Node instance at 0x92508ec>)
    yacc.py: 337:
    yacc.py: 338:State  : 75
    yacc.py: 352:Stack  : CLASS IDENTIFIER LEFT_BRACE PUBLIC STATIC VOID MAIN LEFT_PARENTHESIS STRING LEFT_BRACKET RIGHT_BRACKET IDENTIFIER RIGHT_PARENTHESIS LEFT_BRACE statements_list . LexToken(RIGHT_BRACE,'}',4,109)
@@ -190,8 +190,8 @@
    yacc.py: 337:
    yacc.py: 338:State  : 109
    yacc.py: 352:Stack  : CLASS IDENTIFIER LEFT_BRACE PUBLIC STATIC VOID MAIN LEFT_PARENTHESIS STRING LEFT_BRACKET RIGHT_BRACKET IDENTIFIER RIGHT_PARENTHESIS LEFT_BRACE statements_list RIGHT_BRACE . LexToken(RIGHT_BRACE,'}',5,111)
-   yacc.py: 389:Action : Reduce rule [main_method -> PUBLIC STATIC VOID MAIN LEFT_PARENTHESIS STRING LEFT_BRACKET RIGHT_BRACKET IDENTIFIER RIGHT_PARENTHESIS LEFT_BRACE statements_list RIGHT_BRACE] with ['public','static','void','main','(','String','[',']','a',')','{',<instance @ 0x87f002c>,'}'] and goto state 6
-   yacc.py: 423:Result : <instance @ 0x87f036c> (<models.Node instance at 0x87f036c>)
+   yacc.py: 389:Action : Reduce rule [main_method -> PUBLIC STATIC VOID MAIN LEFT_PARENTHESIS STRING LEFT_BRACKET RIGHT_BRACKET IDENTIFIER RIGHT_PARENTHESIS LEFT_BRACE statements_list RIGHT_BRACE] with ['public','static','void','main','(','String','[',']','a',')','{',<instance @ 0x92508ec>,'}'] and goto state 6
+   yacc.py: 423:Result : <instance @ 0x9250a6c> (<models.Node instance at 0x9250a6c>)
    yacc.py: 337:
    yacc.py: 338:State  : 11
    yacc.py: 352:Stack  : CLASS IDENTIFIER LEFT_BRACE main_method . LexToken(RIGHT_BRACE,'}',5,111)
@@ -199,8 +199,8 @@
    yacc.py: 337:
    yacc.py: 338:State  : 16
    yacc.py: 352:Stack  : CLASS IDENTIFIER LEFT_BRACE main_method RIGHT_BRACE . LexToken(CLASS,'class',7,114)
-   yacc.py: 389:Action : Reduce rule [main_class -> CLASS IDENTIFIER LEFT_BRACE main_method RIGHT_BRACE] with ['class','Factorial','{',<instance @ 0x87f036c>,'}'] and goto state 5
-   yacc.py: 423:Result : <instance @ 0x87e3f6c> (<models.Node instance at 0x87e3f6c>)
+   yacc.py: 389:Action : Reduce rule [main_class -> CLASS IDENTIFIER LEFT_BRACE main_method RIGHT_BRACE] with ['class','Factorial','{',<instance @ 0x9250a6c>,'}'] and goto state 5
+   yacc.py: 423:Result : <instance @ 0x925084c> (<models.Node instance at 0x925084c>)
    yacc.py: 337:
    yacc.py: 338:State  : 1
    yacc.py: 352:Stack  : main_class . LexToken(CLASS,'class',7,114)
@@ -228,7 +228,7 @@
    yacc.py: 338:State  : 15
    yacc.py: 352:Stack  : main_class class_list CLASS IDENTIFIER empty . LexToken(LEFT_BRACE,'{',7,124)
    yacc.py: 389:Action : Reduce rule [extends -> empty] with [None] and goto state 8
-   yacc.py: 423:Result : <NoneType @ 0x82bba80> (None)
+   yacc.py: 423:Result : <instance @ 0x92508cc> (<models.Node instance at 0x92508cc>)
    yacc.py: 337:
    yacc.py: 338:State  : 13
    yacc.py: 352:Stack  : main_class class_list CLASS IDENTIFIER extends . LexToken(LEFT_BRACE,'{',7,124)
@@ -259,12 +259,12 @@
    yacc.py: 338:State  : 34
    yacc.py: 352:Stack  : main_class class_list CLASS IDENTIFIER extends LEFT_BRACE declaration_list PUBLIC INT IDENTIFIER . LexToken(LEFT_PARENTHESIS,'(',9,152)
    yacc.py: 389:Action : Reduce rule [identifier_or_brackets -> IDENTIFIER] with ['ComputeFac'] and goto state 30
-   yacc.py: 423:Result : <instance @ 0x87e3fcc> (<models.Node instance at 0x87e3fcc>)
+   yacc.py: 423:Result : <list @ 0x9241eac> ([<models.Node instance at 0x925088c>, <m ...)
    yacc.py: 337:
    yacc.py: 338:State  : 46
    yacc.py: 352:Stack  : main_class class_list CLASS IDENTIFIER extends LEFT_BRACE declaration_list PUBLIC INT identifier_or_brackets . LexToken(LEFT_PARENTHESIS,'(',9,152)
-   yacc.py: 389:Action : Reduce rule [return_type_and_name -> INT identifier_or_brackets] with ['int',<instance @ 0x87e3fcc>] and goto state 18
-   yacc.py: 423:Result : <instance @ 0x87f014c> (<models.Node instance at 0x87f014c>)
+   yacc.py: 389:Action : Reduce rule [return_type_and_name -> INT identifier_or_brackets] with ['int',<list @ 0x9241eac>] and goto state 18
+   yacc.py: 423:Result : <list @ 0x9241b4c> ([<models.Node instance at 0x92509ac>, <m ...)
    yacc.py: 337:
    yacc.py: 338:State  : 40
    yacc.py: 352:Stack  : main_class class_list CLASS IDENTIFIER extends LEFT_BRACE declaration_list PUBLIC return_type_and_name . LexToken(LEFT_PARENTHESIS,'(',9,152)
@@ -281,22 +281,22 @@
    yacc.py: 338:State  : 34
    yacc.py: 352:Stack  : main_class class_list CLASS IDENTIFIER extends LEFT_BRACE declaration_list PUBLIC return_type_and_name LEFT_PARENTHESIS INT IDENTIFIER . LexToken(COMMA,',',9,160)
    yacc.py: 389:Action : Reduce rule [identifier_or_brackets -> IDENTIFIER] with ['num'] and goto state 30
-   yacc.py: 423:Result : <instance @ 0x871764c> (<models.Node instance at 0x871764c>)
+   yacc.py: 423:Result : <list @ 0x917edac> ([<models.Node instance at 0x9156f8c>, <m ...)
    yacc.py: 337:
    yacc.py: 338:State  : 35
    yacc.py: 352:Stack  : main_class class_list CLASS IDENTIFIER extends LEFT_BRACE declaration_list PUBLIC return_type_and_name LEFT_PARENTHESIS INT identifier_or_brackets . LexToken(COMMA,',',9,160)
-   yacc.py: 389:Action : Reduce rule [single_or_array_var -> INT identifier_or_brackets] with ['int',<instance @ 0x871764c>] and goto state 14
-   yacc.py: 423:Result : <instance @ 0x87e3fcc> (<models.Node instance at 0x87e3fcc>)
+   yacc.py: 389:Action : Reduce rule [single_or_array_var -> INT identifier_or_brackets] with ['int',<list @ 0x917edac>] and goto state 14
+   yacc.py: 423:Result : <instance @ 0x9250dac> (<models.Node instance at 0x9250dac>)
    yacc.py: 337:
    yacc.py: 338:State  : 51
    yacc.py: 352:Stack  : main_class class_list CLASS IDENTIFIER extends LEFT_BRACE declaration_list PUBLIC return_type_and_name LEFT_PARENTHESIS single_or_array_var . LexToken(COMMA,',',9,160)
-   yacc.py: 389:Action : Reduce rule [arg -> single_or_array_var] with [<instance @ 0x87e3fcc>] and goto state 25
-   yacc.py: 423:Result : <instance @ 0x871764c> (<models.Node instance at 0x871764c>)
+   yacc.py: 389:Action : Reduce rule [arg -> single_or_array_var] with [<instance @ 0x9250dac>] and goto state 25
+   yacc.py: 423:Result : <instance @ 0x9250a2c> (<models.Node instance at 0x9250a2c>)
    yacc.py: 337:
    yacc.py: 338:State  : 53
    yacc.py: 352:Stack  : main_class class_list CLASS IDENTIFIER extends LEFT_BRACE declaration_list PUBLIC return_type_and_name LEFT_PARENTHESIS arg . LexToken(COMMA,',',9,160)
-   yacc.py: 389:Action : Reduce rule [args_list -> arg] with [<instance @ 0x871764c>] and goto state 23
-   yacc.py: 423:Result : <instance @ 0x87e3f8c> (<models.Node instance at 0x87e3f8c>)
+   yacc.py: 389:Action : Reduce rule [args_list -> arg] with [<instance @ 0x9250a2c>] and goto state 23
+   yacc.py: 423:Result : <instance @ 0x9250c6c> (<models.Node instance at 0x9250c6c>)
    yacc.py: 337:
    yacc.py: 338:State  : 54
    yacc.py: 352:Stack  : main_class class_list CLASS IDENTIFIER extends LEFT_BRACE declaration_list PUBLIC return_type_and_name LEFT_PARENTHESIS args_list . LexToken(COMMA,',',9,160)
@@ -313,22 +313,22 @@
    yacc.py: 338:State  : 37
    yacc.py: 352:Stack  : main_class class_list CLASS IDENTIFIER extends LEFT_BRACE declaration_list PUBLIC return_type_and_name LEFT_PARENTHESIS args_list COMMA BOOLEAN IDENTIFIER . LexToken(RIGHT_PARENTHESIS,')',9,174)
    yacc.py: 389:Action : Reduce rule [single_or_array_var -> BOOLEAN IDENTIFIER] with ['boolean','test'] and goto state 15
-   yacc.py: 423:Result : <instance @ 0x87f024c> (<models.Node instance at 0x87f024c>)
+   yacc.py: 423:Result : <instance @ 0x9250a0c> (<models.Node instance at 0x9250a0c>)
    yacc.py: 337:
    yacc.py: 338:State  : 51
    yacc.py: 352:Stack  : main_class class_list CLASS IDENTIFIER extends LEFT_BRACE declaration_list PUBLIC return_type_and_name LEFT_PARENTHESIS args_list COMMA single_or_array_var . LexToken(RIGHT_PARENTHESIS,')',9,174)
-   yacc.py: 389:Action : Reduce rule [arg -> single_or_array_var] with [<instance @ 0x87f024c>] and goto state 25
-   yacc.py: 423:Result : <instance @ 0x87f02cc> (<models.Node instance at 0x87f02cc>)
+   yacc.py: 389:Action : Reduce rule [arg -> single_or_array_var] with [<instance @ 0x9250a0c>] and goto state 25
+   yacc.py: 423:Result : <instance @ 0x9250b2c> (<models.Node instance at 0x9250b2c>)
    yacc.py: 337:
    yacc.py: 338:State  : 60
    yacc.py: 352:Stack  : main_class class_list CLASS IDENTIFIER extends LEFT_BRACE declaration_list PUBLIC return_type_and_name LEFT_PARENTHESIS args_list COMMA arg . LexToken(RIGHT_PARENTHESIS,')',9,174)
-   yacc.py: 389:Action : Reduce rule [args_list -> args_list COMMA arg] with [<instance @ 0x87e3f8c>,',',<instance @ 0x87f02cc>] and goto state 24
-   yacc.py: 423:Result : <instance @ 0x87e3fcc> (<models.Node instance at 0x87e3fcc>)
+   yacc.py: 389:Action : Reduce rule [args_list -> args_list COMMA arg] with [<instance @ 0x9250c6c>,',',<instance @ 0x9250b2c>] and goto state 24
+   yacc.py: 423:Result : <instance @ 0x9250d4c> (<models.Node instance at 0x9250d4c>)
    yacc.py: 337:
    yacc.py: 338:State  : 54
    yacc.py: 352:Stack  : main_class class_list CLASS IDENTIFIER extends LEFT_BRACE declaration_list PUBLIC return_type_and_name LEFT_PARENTHESIS args_list . LexToken(RIGHT_PARENTHESIS,')',9,174)
-   yacc.py: 389:Action : Reduce rule [params_list -> args_list] with [<instance @ 0x87e3fcc>] and goto state 22
-   yacc.py: 423:Result : <instance @ 0x87e3f8c> (<models.Node instance at 0x87e3f8c>)
+   yacc.py: 389:Action : Reduce rule [params_list -> args_list] with [<instance @ 0x9250d4c>] and goto state 22
+   yacc.py: 423:Result : <instance @ 0x9250d4c> (<models.Node instance at 0x9250d4c>)
    yacc.py: 337:
    yacc.py: 338:State  : 55
    yacc.py: 352:Stack  : main_class class_list CLASS IDENTIFIER extends LEFT_BRACE declaration_list PUBLIC return_type_and_name LEFT_PARENTHESIS params_list . LexToken(RIGHT_PARENTHESIS,')',9,174)
@@ -346,7 +346,7 @@
    yacc.py: 338:State  : 64
    yacc.py: 352:Stack  : main_class class_list CLASS IDENTIFIER extends LEFT_BRACE declaration_list PUBLIC return_type_and_name LEFT_PARENTHESIS params_list RIGHT_PARENTHESIS LEFT_BRACE empty . LexToken(INT,'int',10,178)
    yacc.py: 389:Action : Reduce rule [statements_list -> empty] with [None] and goto state 26
-   yacc.py: 423:Result : <NoneType @ 0x82bba80> (None)
+   yacc.py: 423:Result : <instance @ 0x9250e8c> (<models.Node instance at 0x9250e8c>)
    yacc.py: 337:
    yacc.py: 338:State  : 63
    yacc.py: 352:Stack  : main_class class_list CLASS IDENTIFIER extends LEFT_BRACE declaration_list PUBLIC return_type_and_name LEFT_PARENTHESIS params_list RIGHT_PARENTHESIS LEFT_BRACE statements_list . LexToken(INT,'int',10,178)
@@ -359,7 +359,7 @@
    yacc.py: 338:State  : 34
    yacc.py: 352:Stack  : main_class class_list CLASS IDENTIFIER extends LEFT_BRACE declaration_list PUBLIC return_type_and_name LEFT_PARENTHESIS params_list RIGHT_PARENTHESIS LEFT_BRACE statements_list INT IDENTIFIER . LexToken(SEMICOLON,';',10,190)
    yacc.py: 389:Action : Reduce rule [identifier_or_brackets -> IDENTIFIER] with ['num_aux'] and goto state 30
-   yacc.py: 423:Result : <instance @ 0x87f03ec> (<models.Node instance at 0x87f03ec>)
+   yacc.py: 423:Result : <list @ 0x924504c> ([<models.Node instance at 0x92509cc>, <m ...)
    yacc.py: 337:
    yacc.py: 338:State  : 106
    yacc.py: 352:Stack  : main_class class_list CLASS IDENTIFIER extends LEFT_BRACE declaration_list PUBLIC return_type_and_name LEFT_PARENTHESIS params_list RIGHT_PARENTHESIS LEFT_BRACE statements_list INT identifier_or_brackets . LexToken(SEMICOLON,';',10,190)
@@ -367,13 +367,13 @@
    yacc.py: 337:
    yacc.py: 338:State  : 134
    yacc.py: 352:Stack  : main_class class_list CLASS IDENTIFIER extends LEFT_BRACE declaration_list PUBLIC return_type_and_name LEFT_PARENTHESIS params_list RIGHT_PARENTHESIS LEFT_BRACE statements_list INT identifier_or_brackets SEMICOLON . LexToken(IF,'if',11,193)
-   yacc.py: 389:Action : Reduce rule [statement -> INT identifier_or_brackets SEMICOLON] with ['int',<instance @ 0x87f03ec>,';'] and goto state 29
-   yacc.py: 423:Result : <instance @ 0x87f012c> (<models.Node instance at 0x87f012c>)
+   yacc.py: 389:Action : Reduce rule [statement -> INT identifier_or_brackets SEMICOLON] with ['int',<list @ 0x924504c>,';'] and goto state 29
+   yacc.py: 423:Result : <instance @ 0x9250f2c> (<models.Node instance at 0x9250f2c>)
    yacc.py: 337:
    yacc.py: 338:State  : 69
    yacc.py: 352:Stack  : main_class class_list CLASS IDENTIFIER extends LEFT_BRACE declaration_list PUBLIC return_type_and_name LEFT_PARENTHESIS params_list RIGHT_PARENTHESIS LEFT_BRACE statements_list statement . LexToken(IF,'if',11,193)
-   yacc.py: 389:Action : Reduce rule [statements_list -> statements_list statement] with [None,<instance @ 0x87f012c>] and goto state 27
-   yacc.py: 423:Result : <instance @ 0x87f046c> (<models.Node instance at 0x87f046c>)
+   yacc.py: 389:Action : Reduce rule [statements_list -> statements_list statement] with [<instance @ 0x9250e8c>,<instance @ 0x9250f2c>] and goto state 27
+   yacc.py: 423:Result : <instance @ 0x9250eec> (<models.Node instance at 0x9250eec>)
    yacc.py: 337:
    yacc.py: 338:State  : 63
    yacc.py: 352:Stack  : main_class class_list CLASS IDENTIFIER extends LEFT_BRACE declaration_list PUBLIC return_type_and_name LEFT_PARENTHESIS params_list RIGHT_PARENTHESIS LEFT_BRACE statements_list . LexToken(IF,'if',11,193)
@@ -390,12 +390,12 @@
    yacc.py: 338:State  : 86
    yacc.py: 352:Stack  : main_class class_list CLASS IDENTIFIER extends LEFT_BRACE declaration_list PUBLIC return_type_and_name LEFT_PARENTHESIS params_list RIGHT_PARENTHESIS LEFT_BRACE statements_list IF LEFT_PARENTHESIS IDENTIFIER . LexToken(LESS,'<',11,201)
    yacc.py: 389:Action : Reduce rule [identifier_expression -> IDENTIFIER] with ['num'] and goto state 76
-   yacc.py: 423:Result : <instance @ 0x87f048c> (<models.Node instance at 0x87f048c>)
+   yacc.py: 423:Result : <instance @ 0x9250ecc> (<models.Node instance at 0x9250ecc>)
    yacc.py: 337:
    yacc.py: 338:State  : 77
    yacc.py: 352:Stack  : main_class class_list CLASS IDENTIFIER extends LEFT_BRACE declaration_list PUBLIC return_type_and_name LEFT_PARENTHESIS params_list RIGHT_PARENTHESIS LEFT_BRACE statements_list IF LEFT_PARENTHESIS identifier_expression . LexToken(LESS,'<',11,201)
-   yacc.py: 389:Action : Reduce rule [expression -> identifier_expression] with [<instance @ 0x87f048c>] and goto state 49
-   yacc.py: 423:Result : <instance @ 0x87f048c> (<models.Node instance at 0x87f048c>)
+   yacc.py: 389:Action : Reduce rule [expression -> identifier_expression] with [<instance @ 0x9250ecc>] and goto state 49
+   yacc.py: 423:Result : <instance @ 0x9250fcc> (<models.Node instance at 0x9250fcc>)
    yacc.py: 337:
    yacc.py: 338:State  : 130
    yacc.py: 352:Stack  : main_class class_list CLASS IDENTIFIER extends LEFT_BRACE declaration_list PUBLIC return_type_and_name LEFT_PARENTHESIS params_list RIGHT_PARENTHESIS LEFT_BRACE statements_list IF LEFT_PARENTHESIS expression . LexToken(LESS,'<',11,201)
@@ -408,22 +408,22 @@
    yacc.py: 338:State  : 78
    yacc.py: 352:Stack  : main_class class_list CLASS IDENTIFIER extends LEFT_BRACE declaration_list PUBLIC return_type_and_name LEFT_PARENTHESIS params_list RIGHT_PARENTHESIS LEFT_BRACE statements_list IF LEFT_PARENTHESIS expression LESS INTEGER_LITERAL . LexToken(RIGHT_PARENTHESIS,')',11,204)
    yacc.py: 389:Action : Reduce rule [integer_literal_expression -> INTEGER_LITERAL] with [1] and goto state 77
-   yacc.py: 423:Result : <instance @ 0x87f04ac> (<models.Node instance at 0x87f04ac>)
+   yacc.py: 423:Result : <instance @ 0x9250dec> (<models.Node instance at 0x9250dec>)
    yacc.py: 337:
    yacc.py: 338:State  : 98
    yacc.py: 352:Stack  : main_class class_list CLASS IDENTIFIER extends LEFT_BRACE declaration_list PUBLIC return_type_and_name LEFT_PARENTHESIS params_list RIGHT_PARENTHESIS LEFT_BRACE statements_list IF LEFT_PARENTHESIS expression LESS integer_literal_expression . LexToken(RIGHT_PARENTHESIS,')',11,204)
-   yacc.py: 389:Action : Reduce rule [expression -> integer_literal_expression] with [<instance @ 0x87f04ac>] and goto state 50
-   yacc.py: 423:Result : <instance @ 0x87f04ac> (<models.Node instance at 0x87f04ac>)
+   yacc.py: 389:Action : Reduce rule [expression -> integer_literal_expression] with [<instance @ 0x9250dec>] and goto state 50
+   yacc.py: 423:Result : <instance @ 0x925502c> (<models.Node instance at 0x925502c>)
    yacc.py: 337:
    yacc.py: 338:State  : 140
    yacc.py: 352:Stack  : main_class class_list CLASS IDENTIFIER extends LEFT_BRACE declaration_list PUBLIC return_type_and_name LEFT_PARENTHESIS params_list RIGHT_PARENTHESIS LEFT_BRACE statements_list IF LEFT_PARENTHESIS expression LESS expression . LexToken(RIGHT_PARENTHESIS,')',11,204)
-   yacc.py: 389:Action : Reduce rule [binary_expression -> expression LESS expression] with [<instance @ 0x87f048c>,'<',<instance @ 0x87f04ac>] and goto state 66
-   yacc.py: 423:Result : <instance @ 0x87f056c> (<models.Node instance at 0x87f056c>)
+   yacc.py: 389:Action : Reduce rule [binary_expression -> expression LESS expression] with [<instance @ 0x9250fcc>,'<',<instance @ 0x925502c>] and goto state 66
+   yacc.py: 423:Result : <instance @ 0x92550cc> (<models.Node instance at 0x92550cc>)
    yacc.py: 337:
    yacc.py: 338:State  : 93
    yacc.py: 352:Stack  : main_class class_list CLASS IDENTIFIER extends LEFT_BRACE declaration_list PUBLIC return_type_and_name LEFT_PARENTHESIS params_list RIGHT_PARENTHESIS LEFT_BRACE statements_list IF LEFT_PARENTHESIS binary_expression . LexToken(RIGHT_PARENTHESIS,')',11,204)
-   yacc.py: 389:Action : Reduce rule [expression -> binary_expression] with [<instance @ 0x87f056c>] and goto state 45
-   yacc.py: 423:Result : <instance @ 0x87f056c> (<models.Node instance at 0x87f056c>)
+   yacc.py: 389:Action : Reduce rule [expression -> binary_expression] with [<instance @ 0x92550cc>] and goto state 45
+   yacc.py: 423:Result : <instance @ 0x9250e8c> (<models.Node instance at 0x9250e8c>)
    yacc.py: 337:
    yacc.py: 338:State  : 130
    yacc.py: 352:Stack  : main_class class_list CLASS IDENTIFIER extends LEFT_BRACE declaration_list PUBLIC return_type_and_name LEFT_PARENTHESIS params_list RIGHT_PARENTHESIS LEFT_BRACE statements_list IF LEFT_PARENTHESIS expression . LexToken(RIGHT_PARENTHESIS,')',11,204)
@@ -444,17 +444,17 @@
    yacc.py: 338:State  : 78
    yacc.py: 352:Stack  : main_class class_list CLASS IDENTIFIER extends LEFT_BRACE declaration_list PUBLIC return_type_and_name LEFT_PARENTHESIS params_list RIGHT_PARENTHESIS LEFT_BRACE statements_list IF LEFT_PARENTHESIS expression RIGHT_PARENTHESIS IDENTIFIER ASSIGNMENT INTEGER_LITERAL . LexToken(SEMICOLON,';',12,223)
    yacc.py: 389:Action : Reduce rule [integer_literal_expression -> INTEGER_LITERAL] with [1] and goto state 77
-   yacc.py: 423:Result : <instance @ 0x87f058c> (<models.Node instance at 0x87f058c>)
+   yacc.py: 423:Result : <instance @ 0x92550ec> (<models.Node instance at 0x92550ec>)
    yacc.py: 337:
    yacc.py: 338:State  : 98
    yacc.py: 352:Stack  : main_class class_list CLASS IDENTIFIER extends LEFT_BRACE declaration_list PUBLIC return_type_and_name LEFT_PARENTHESIS params_list RIGHT_PARENTHESIS LEFT_BRACE statements_list IF LEFT_PARENTHESIS expression RIGHT_PARENTHESIS IDENTIFIER ASSIGNMENT integer_literal_expression . LexToken(SEMICOLON,';',12,223)
-   yacc.py: 389:Action : Reduce rule [expression -> integer_literal_expression] with [<instance @ 0x87f058c>] and goto state 50
-   yacc.py: 423:Result : <instance @ 0x87f058c> (<models.Node instance at 0x87f058c>)
+   yacc.py: 389:Action : Reduce rule [expression -> integer_literal_expression] with [<instance @ 0x92550ec>] and goto state 50
+   yacc.py: 423:Result : <instance @ 0x925512c> (<models.Node instance at 0x925512c>)
    yacc.py: 337:
    yacc.py: 338:State  : 131
    yacc.py: 352:Stack  : main_class class_list CLASS IDENTIFIER extends LEFT_BRACE declaration_list PUBLIC return_type_and_name LEFT_PARENTHESIS params_list RIGHT_PARENTHESIS LEFT_BRACE statements_list IF LEFT_PARENTHESIS expression RIGHT_PARENTHESIS IDENTIFIER ASSIGNMENT expression . LexToken(SEMICOLON,';',12,223)
-   yacc.py: 389:Action : Reduce rule [identifier_or_assignment -> ASSIGNMENT expression] with ['=',<instance @ 0x87f058c>] and goto state 34
-   yacc.py: 423:Result : <tuple @ 0x87df8c4> (('identifier_or_assignment_2', '=', <mod ...)
+   yacc.py: 389:Action : Reduce rule [identifier_or_assignment -> ASSIGNMENT expression] with ['=',<instance @ 0x925512c>] and goto state 34
+   yacc.py: 423:Result : <tuple @ 0x92429b4> (('assign', None, <models.Node instance a ...)
    yacc.py: 337:
    yacc.py: 338:State  : 105
    yacc.py: 352:Stack  : main_class class_list CLASS IDENTIFIER extends LEFT_BRACE declaration_list PUBLIC return_type_and_name LEFT_PARENTHESIS params_list RIGHT_PARENTHESIS LEFT_BRACE statements_list IF LEFT_PARENTHESIS expression RIGHT_PARENTHESIS IDENTIFIER identifier_or_assignment . LexToken(SEMICOLON,';',12,223)
@@ -462,8 +462,8 @@
    yacc.py: 337:
    yacc.py: 338:State  : 133
    yacc.py: 352:Stack  : main_class class_list CLASS IDENTIFIER extends LEFT_BRACE declaration_list PUBLIC return_type_and_name LEFT_PARENTHESIS params_list RIGHT_PARENTHESIS LEFT_BRACE statements_list IF LEFT_PARENTHESIS expression RIGHT_PARENTHESIS IDENTIFIER identifier_or_assignment SEMICOLON . LexToken(ELSE,'else',13,226)
-   yacc.py: 389:Action : Reduce rule [statement -> IDENTIFIER identifier_or_assignment SEMICOLON] with ['num_aux',<tuple @ 0x87df8c4>,';'] and goto state 32
-   yacc.py: 423:Result : <instance @ 0x87f05cc> (<models.Node instance at 0x87f05cc>)
+   yacc.py: 389:Action : Reduce rule [statement -> IDENTIFIER identifier_or_assignment SEMICOLON] with ['num_aux',<tuple @ 0x92429b4>,';'] and goto state 32
+   yacc.py: 423:Result : <instance @ 0x925524c> (<models.Node instance at 0x925524c>)
    yacc.py: 337:
    yacc.py: 338:State  : 162
    yacc.py: 352:Stack  : main_class class_list CLASS IDENTIFIER extends LEFT_BRACE declaration_list PUBLIC return_type_and_name LEFT_PARENTHESIS params_list RIGHT_PARENTHESIS LEFT_BRACE statements_list IF LEFT_PARENTHESIS expression RIGHT_PARENTHESIS statement . LexToken(ELSE,'else',13,226)
@@ -484,12 +484,12 @@
    yacc.py: 338:State  : 86
    yacc.py: 352:Stack  : main_class class_list CLASS IDENTIFIER extends LEFT_BRACE declaration_list PUBLIC return_type_and_name LEFT_PARENTHESIS params_list RIGHT_PARENTHESIS LEFT_BRACE statements_list IF LEFT_PARENTHESIS expression RIGHT_PARENTHESIS statement ELSE IDENTIFIER ASSIGNMENT IDENTIFIER . LexToken(TIMES,'*',14,251)
    yacc.py: 389:Action : Reduce rule [identifier_expression -> IDENTIFIER] with ['num'] and goto state 76
-   yacc.py: 423:Result : <instance @ 0x87f03ec> (<models.Node instance at 0x87f03ec>)
+   yacc.py: 423:Result : <instance @ 0x925518c> (<models.Node instance at 0x925518c>)
    yacc.py: 337:
    yacc.py: 338:State  : 77
    yacc.py: 352:Stack  : main_class class_list CLASS IDENTIFIER extends LEFT_BRACE declaration_list PUBLIC return_type_and_name LEFT_PARENTHESIS params_list RIGHT_PARENTHESIS LEFT_BRACE statements_list IF LEFT_PARENTHESIS expression RIGHT_PARENTHESIS statement ELSE IDENTIFIER ASSIGNMENT identifier_expression . LexToken(TIMES,'*',14,251)
-   yacc.py: 389:Action : Reduce rule [expression -> identifier_expression] with [<instance @ 0x87f03ec>] and goto state 49
-   yacc.py: 423:Result : <instance @ 0x87f03ec> (<models.Node instance at 0x87f03ec>)
+   yacc.py: 389:Action : Reduce rule [expression -> identifier_expression] with [<instance @ 0x925518c>] and goto state 49
+   yacc.py: 423:Result : <instance @ 0x92552ec> (<models.Node instance at 0x92552ec>)
    yacc.py: 337:
    yacc.py: 338:State  : 131
    yacc.py: 352:Stack  : main_class class_list CLASS IDENTIFIER extends LEFT_BRACE declaration_list PUBLIC return_type_and_name LEFT_PARENTHESIS params_list RIGHT_PARENTHESIS LEFT_BRACE statements_list IF LEFT_PARENTHESIS expression RIGHT_PARENTHESIS statement ELSE IDENTIFIER ASSIGNMENT expression . LexToken(TIMES,'*',14,251)
@@ -506,12 +506,12 @@
    yacc.py: 338:State  : 95
    yacc.py: 352:Stack  : main_class class_list CLASS IDENTIFIER extends LEFT_BRACE declaration_list PUBLIC return_type_and_name LEFT_PARENTHESIS params_list RIGHT_PARENTHESIS LEFT_BRACE statements_list IF LEFT_PARENTHESIS expression RIGHT_PARENTHESIS statement ELSE IDENTIFIER ASSIGNMENT expression TIMES LEFT_PARENTHESIS THIS . LexToken(POINT,'.',14,258)
    yacc.py: 389:Action : Reduce rule [this_expression -> THIS] with ['this'] and goto state 80
-   yacc.py: 423:Result : <instance @ 0x87f04ec> (<models.Node instance at 0x87f04ec>)
+   yacc.py: 423:Result : <instance @ 0x92552cc> (<models.Node instance at 0x92552cc>)
    yacc.py: 337:
    yacc.py: 338:State  : 88
    yacc.py: 352:Stack  : main_class class_list CLASS IDENTIFIER extends LEFT_BRACE declaration_list PUBLIC return_type_and_name LEFT_PARENTHESIS params_list RIGHT_PARENTHESIS LEFT_BRACE statements_list IF LEFT_PARENTHESIS expression RIGHT_PARENTHESIS statement ELSE IDENTIFIER ASSIGNMENT expression TIMES LEFT_PARENTHESIS this_expression . LexToken(POINT,'.',14,258)
-   yacc.py: 389:Action : Reduce rule [expression -> this_expression] with [<instance @ 0x87f04ec>] and goto state 52
-   yacc.py: 423:Result : <instance @ 0x87f04ec> (<models.Node instance at 0x87f04ec>)
+   yacc.py: 389:Action : Reduce rule [expression -> this_expression] with [<instance @ 0x92552cc>] and goto state 52
+   yacc.py: 423:Result : <instance @ 0x92553cc> (<models.Node instance at 0x92553cc>)
    yacc.py: 337:
    yacc.py: 338:State  : 113
    yacc.py: 352:Stack  : main_class class_list CLASS IDENTIFIER extends LEFT_BRACE declaration_list PUBLIC return_type_and_name LEFT_PARENTHESIS params_list RIGHT_PARENTHESIS LEFT_BRACE statements_list IF LEFT_PARENTHESIS expression RIGHT_PARENTHESIS statement ELSE IDENTIFIER ASSIGNMENT expression TIMES LEFT_PARENTHESIS expression . LexToken(POINT,'.',14,258)
@@ -532,12 +532,12 @@
    yacc.py: 338:State  : 86
    yacc.py: 352:Stack  : main_class class_list CLASS IDENTIFIER extends LEFT_BRACE declaration_list PUBLIC return_type_and_name LEFT_PARENTHESIS params_list RIGHT_PARENTHESIS LEFT_BRACE statements_list IF LEFT_PARENTHESIS expression RIGHT_PARENTHESIS statement ELSE IDENTIFIER ASSIGNMENT expression TIMES LEFT_PARENTHESIS expression POINT IDENTIFIER LEFT_PARENTHESIS IDENTIFIER . LexToken(MINUS,'-',14,273)
    yacc.py: 389:Action : Reduce rule [identifier_expression -> IDENTIFIER] with ['num'] and goto state 76
-   yacc.py: 423:Result : <instance @ 0x87f06ac> (<models.Node instance at 0x87f06ac>)
+   yacc.py: 423:Result : <instance @ 0x925536c> (<models.Node instance at 0x925536c>)
    yacc.py: 337:
    yacc.py: 338:State  : 77
    yacc.py: 352:Stack  : main_class class_list CLASS IDENTIFIER extends LEFT_BRACE declaration_list PUBLIC return_type_and_name LEFT_PARENTHESIS params_list RIGHT_PARENTHESIS LEFT_BRACE statements_list IF LEFT_PARENTHESIS expression RIGHT_PARENTHESIS statement ELSE IDENTIFIER ASSIGNMENT expression TIMES LEFT_PARENTHESIS expression POINT IDENTIFIER LEFT_PARENTHESIS identifier_expression . LexToken(MINUS,'-',14,273)
-   yacc.py: 389:Action : Reduce rule [expression -> identifier_expression] with [<instance @ 0x87f06ac>] and goto state 49
-   yacc.py: 423:Result : <instance @ 0x87f06ac> (<models.Node instance at 0x87f06ac>)
+   yacc.py: 389:Action : Reduce rule [expression -> identifier_expression] with [<instance @ 0x925536c>] and goto state 49
+   yacc.py: 423:Result : <instance @ 0x925542c> (<models.Node instance at 0x925542c>)
    yacc.py: 337:
    yacc.py: 338:State  : 167
    yacc.py: 352:Stack  : main_class class_list CLASS IDENTIFIER extends LEFT_BRACE declaration_list PUBLIC return_type_and_name LEFT_PARENTHESIS params_list RIGHT_PARENTHESIS LEFT_BRACE statements_list IF LEFT_PARENTHESIS expression RIGHT_PARENTHESIS statement ELSE IDENTIFIER ASSIGNMENT expression TIMES LEFT_PARENTHESIS expression POINT IDENTIFIER LEFT_PARENTHESIS expression . LexToken(MINUS,'-',14,273)
@@ -550,32 +550,32 @@
    yacc.py: 338:State  : 78
    yacc.py: 352:Stack  : main_class class_list CLASS IDENTIFIER extends LEFT_BRACE declaration_list PUBLIC return_type_and_name LEFT_PARENTHESIS params_list RIGHT_PARENTHESIS LEFT_BRACE statements_list IF LEFT_PARENTHESIS expression RIGHT_PARENTHESIS statement ELSE IDENTIFIER ASSIGNMENT expression TIMES LEFT_PARENTHESIS expression POINT IDENTIFIER LEFT_PARENTHESIS expression MINUS INTEGER_LITERAL . LexToken(RIGHT_PARENTHESIS,')',14,275)
    yacc.py: 389:Action : Reduce rule [integer_literal_expression -> INTEGER_LITERAL] with [1] and goto state 77
-   yacc.py: 423:Result : <instance @ 0x87f076c> (<models.Node instance at 0x87f076c>)
+   yacc.py: 423:Result : <instance @ 0x925530c> (<models.Node instance at 0x925530c>)
    yacc.py: 337:
    yacc.py: 338:State  : 98
    yacc.py: 352:Stack  : main_class class_list CLASS IDENTIFIER extends LEFT_BRACE declaration_list PUBLIC return_type_and_name LEFT_PARENTHESIS params_list RIGHT_PARENTHESIS LEFT_BRACE statements_list IF LEFT_PARENTHESIS expression RIGHT_PARENTHESIS statement ELSE IDENTIFIER ASSIGNMENT expression TIMES LEFT_PARENTHESIS expression POINT IDENTIFIER LEFT_PARENTHESIS expression MINUS integer_literal_expression . LexToken(RIGHT_PARENTHESIS,')',14,275)
-   yacc.py: 389:Action : Reduce rule [expression -> integer_literal_expression] with [<instance @ 0x87f076c>] and goto state 50
-   yacc.py: 423:Result : <instance @ 0x87f076c> (<models.Node instance at 0x87f076c>)
+   yacc.py: 389:Action : Reduce rule [expression -> integer_literal_expression] with [<instance @ 0x925530c>] and goto state 50
+   yacc.py: 423:Result : <instance @ 0x925548c> (<models.Node instance at 0x925548c>)
    yacc.py: 337:
    yacc.py: 338:State  : 142
    yacc.py: 352:Stack  : main_class class_list CLASS IDENTIFIER extends LEFT_BRACE declaration_list PUBLIC return_type_and_name LEFT_PARENTHESIS params_list RIGHT_PARENTHESIS LEFT_BRACE statements_list IF LEFT_PARENTHESIS expression RIGHT_PARENTHESIS statement ELSE IDENTIFIER ASSIGNMENT expression TIMES LEFT_PARENTHESIS expression POINT IDENTIFIER LEFT_PARENTHESIS expression MINUS expression . LexToken(RIGHT_PARENTHESIS,')',14,275)
-   yacc.py: 389:Action : Reduce rule [binary_expression -> expression MINUS expression] with [<instance @ 0x87f06ac>,'-',<instance @ 0x87f076c>] and goto state 68
-   yacc.py: 423:Result : <instance @ 0x87f078c> (<models.Node instance at 0x87f078c>)
+   yacc.py: 389:Action : Reduce rule [binary_expression -> expression MINUS expression] with [<instance @ 0x925542c>,'-',<instance @ 0x925548c>] and goto state 68
+   yacc.py: 423:Result : <instance @ 0x925556c> (<models.Node instance at 0x925556c>)
    yacc.py: 337:
    yacc.py: 338:State  : 93
    yacc.py: 352:Stack  : main_class class_list CLASS IDENTIFIER extends LEFT_BRACE declaration_list PUBLIC return_type_and_name LEFT_PARENTHESIS params_list RIGHT_PARENTHESIS LEFT_BRACE statements_list IF LEFT_PARENTHESIS expression RIGHT_PARENTHESIS statement ELSE IDENTIFIER ASSIGNMENT expression TIMES LEFT_PARENTHESIS expression POINT IDENTIFIER LEFT_PARENTHESIS binary_expression . LexToken(RIGHT_PARENTHESIS,')',14,275)
-   yacc.py: 389:Action : Reduce rule [expression -> binary_expression] with [<instance @ 0x87f078c>] and goto state 45
-   yacc.py: 423:Result : <instance @ 0x87f078c> (<models.Node instance at 0x87f078c>)
+   yacc.py: 389:Action : Reduce rule [expression -> binary_expression] with [<instance @ 0x925556c>] and goto state 45
+   yacc.py: 423:Result : <instance @ 0x925546c> (<models.Node instance at 0x925546c>)
    yacc.py: 337:
    yacc.py: 338:State  : 167
    yacc.py: 352:Stack  : main_class class_list CLASS IDENTIFIER extends LEFT_BRACE declaration_list PUBLIC return_type_and_name LEFT_PARENTHESIS params_list RIGHT_PARENTHESIS LEFT_BRACE statements_list IF LEFT_PARENTHESIS expression RIGHT_PARENTHESIS statement ELSE IDENTIFIER ASSIGNMENT expression TIMES LEFT_PARENTHESIS expression POINT IDENTIFIER LEFT_PARENTHESIS expression . LexToken(RIGHT_PARENTHESIS,')',14,275)
-   yacc.py: 389:Action : Reduce rule [nonempty_expression_list -> expression] with [<instance @ 0x87f078c>] and goto state 59
-   yacc.py: 423:Result : <instance @ 0x87f088c> (<models.Node instance at 0x87f088c>)
+   yacc.py: 389:Action : Reduce rule [nonempty_expression_list -> expression] with [<instance @ 0x925546c>] and goto state 59
+   yacc.py: 423:Result : <instance @ 0x925558c> (<models.Node instance at 0x925558c>)
    yacc.py: 337:
    yacc.py: 338:State  : 169
    yacc.py: 352:Stack  : main_class class_list CLASS IDENTIFIER extends LEFT_BRACE declaration_list PUBLIC return_type_and_name LEFT_PARENTHESIS params_list RIGHT_PARENTHESIS LEFT_BRACE statements_list IF LEFT_PARENTHESIS expression RIGHT_PARENTHESIS statement ELSE IDENTIFIER ASSIGNMENT expression TIMES LEFT_PARENTHESIS expression POINT IDENTIFIER LEFT_PARENTHESIS nonempty_expression_list . LexToken(RIGHT_PARENTHESIS,')',14,275)
-   yacc.py: 389:Action : Reduce rule [expression_list -> nonempty_expression_list] with [<instance @ 0x87f088c>] and goto state 58
-   yacc.py: 423:Result : <instance @ 0x87f088c> (<models.Node instance at 0x87f088c>)
+   yacc.py: 389:Action : Reduce rule [expression_list -> nonempty_expression_list] with [<instance @ 0x925558c>] and goto state 58
+   yacc.py: 423:Result : <instance @ 0x925558c> (<models.Node instance at 0x925558c>)
    yacc.py: 337:
    yacc.py: 338:State  : 168
    yacc.py: 352:Stack  : main_class class_list CLASS IDENTIFIER extends LEFT_BRACE declaration_list PUBLIC return_type_and_name LEFT_PARENTHESIS params_list RIGHT_PARENTHESIS LEFT_BRACE statements_list IF LEFT_PARENTHESIS expression RIGHT_PARENTHESIS statement ELSE IDENTIFIER ASSIGNMENT expression TIMES LEFT_PARENTHESIS expression POINT IDENTIFIER LEFT_PARENTHESIS expression_list . LexToken(RIGHT_PARENTHESIS,')',14,275)
@@ -583,13 +583,13 @@
    yacc.py: 337:
    yacc.py: 338:State  : 175
    yacc.py: 352:Stack  : main_class class_list CLASS IDENTIFIER extends LEFT_BRACE declaration_list PUBLIC return_type_and_name LEFT_PARENTHESIS params_list RIGHT_PARENTHESIS LEFT_BRACE statements_list IF LEFT_PARENTHESIS expression RIGHT_PARENTHESIS statement ELSE IDENTIFIER ASSIGNMENT expression TIMES LEFT_PARENTHESIS expression POINT IDENTIFIER LEFT_PARENTHESIS expression_list RIGHT_PARENTHESIS . LexToken(RIGHT_PARENTHESIS,')',14,276)
-   yacc.py: 389:Action : Reduce rule [call_method_expression -> expression POINT IDENTIFIER LEFT_PARENTHESIS expression_list RIGHT_PARENTHESIS] with [<instance @ 0x87f04ec>,'.','ComputeFac','(',<instance @ 0x87f088c>,')'] and goto state 56
-   yacc.py: 423:Result : <instance @ 0x87f07cc> (<models.Node instance at 0x87f07cc>)
+   yacc.py: 389:Action : Reduce rule [call_method_expression -> expression POINT IDENTIFIER LEFT_PARENTHESIS expression_list RIGHT_PARENTHESIS] with [<instance @ 0x92553cc>,'.','ComputeFac','(',<instance @ 0x925558c>,')'] and goto state 56
+   yacc.py: 423:Result : <instance @ 0x92555cc> (<models.Node instance at 0x92555cc>)
    yacc.py: 337:
    yacc.py: 338:State  : 91
    yacc.py: 352:Stack  : main_class class_list CLASS IDENTIFIER extends LEFT_BRACE declaration_list PUBLIC return_type_and_name LEFT_PARENTHESIS params_list RIGHT_PARENTHESIS LEFT_BRACE statements_list IF LEFT_PARENTHESIS expression RIGHT_PARENTHESIS statement ELSE IDENTIFIER ASSIGNMENT expression TIMES LEFT_PARENTHESIS call_method_expression . LexToken(RIGHT_PARENTHESIS,')',14,276)
-   yacc.py: 389:Action : Reduce rule [expression -> call_method_expression] with [<instance @ 0x87f07cc>] and goto state 44
-   yacc.py: 423:Result : <instance @ 0x87f07cc> (<models.Node instance at 0x87f07cc>)
+   yacc.py: 389:Action : Reduce rule [expression -> call_method_expression] with [<instance @ 0x92555cc>] and goto state 44
+   yacc.py: 423:Result : <instance @ 0x925532c> (<models.Node instance at 0x925532c>)
    yacc.py: 337:
    yacc.py: 338:State  : 113
    yacc.py: 352:Stack  : main_class class_list CLASS IDENTIFIER extends LEFT_BRACE declaration_list PUBLIC return_type_and_name LEFT_PARENTHESIS params_list RIGHT_PARENTHESIS LEFT_BRACE statements_list IF LEFT_PARENTHESIS expression RIGHT_PARENTHESIS statement ELSE IDENTIFIER ASSIGNMENT expression TIMES LEFT_PARENTHESIS expression . LexToken(RIGHT_PARENTHESIS,')',14,276)
@@ -597,28 +597,28 @@
    yacc.py: 337:
    yacc.py: 338:State  : 139
    yacc.py: 352:Stack  : main_class class_list CLASS IDENTIFIER extends LEFT_BRACE declaration_list PUBLIC return_type_and_name LEFT_PARENTHESIS params_list RIGHT_PARENTHESIS LEFT_BRACE statements_list IF LEFT_PARENTHESIS expression RIGHT_PARENTHESIS statement ELSE IDENTIFIER ASSIGNMENT expression TIMES LEFT_PARENTHESIS expression RIGHT_PARENTHESIS . LexToken(SEMICOLON,';',14,278)
-   yacc.py: 389:Action : Reduce rule [parenthesis_expression -> LEFT_PARENTHESIS expression RIGHT_PARENTHESIS] with ['(',<instance @ 0x87f07cc>,')'] and goto state 71
-   yacc.py: 423:Result : <instance @ 0x87f08ec> (<models.Node instance at 0x87f08ec>)
+   yacc.py: 389:Action : Reduce rule [parenthesis_expression -> LEFT_PARENTHESIS expression RIGHT_PARENTHESIS] with ['(',<instance @ 0x925532c>,')'] and goto state 71
+   yacc.py: 423:Result : <instance @ 0x92555ac> (<models.Node instance at 0x92555ac>)
    yacc.py: 337:
    yacc.py: 338:State  : 83
    yacc.py: 352:Stack  : main_class class_list CLASS IDENTIFIER extends LEFT_BRACE declaration_list PUBLIC return_type_and_name LEFT_PARENTHESIS params_list RIGHT_PARENTHESIS LEFT_BRACE statements_list IF LEFT_PARENTHESIS expression RIGHT_PARENTHESIS statement ELSE IDENTIFIER ASSIGNMENT expression TIMES parenthesis_expression . LexToken(SEMICOLON,';',14,278)
-   yacc.py: 389:Action : Reduce rule [expression -> parenthesis_expression] with [<instance @ 0x87f08ec>] and goto state 46
-   yacc.py: 423:Result : <instance @ 0x87f08ec> (<models.Node instance at 0x87f08ec>)
+   yacc.py: 389:Action : Reduce rule [expression -> parenthesis_expression] with [<instance @ 0x92555ac>] and goto state 46
+   yacc.py: 423:Result : <instance @ 0x92551ec> (<models.Node instance at 0x92551ec>)
    yacc.py: 337:
    yacc.py: 338:State  : 148
    yacc.py: 352:Stack  : main_class class_list CLASS IDENTIFIER extends LEFT_BRACE declaration_list PUBLIC return_type_and_name LEFT_PARENTHESIS params_list RIGHT_PARENTHESIS LEFT_BRACE statements_list IF LEFT_PARENTHESIS expression RIGHT_PARENTHESIS statement ELSE IDENTIFIER ASSIGNMENT expression TIMES expression . LexToken(SEMICOLON,';',14,278)
-   yacc.py: 389:Action : Reduce rule [binary_expression -> expression TIMES expression] with [<instance @ 0x87f03ec>,'*',<instance @ 0x87f08ec>] and goto state 69
-   yacc.py: 423:Result : <instance @ 0x87f06cc> (<models.Node instance at 0x87f06cc>)
+   yacc.py: 389:Action : Reduce rule [binary_expression -> expression TIMES expression] with [<instance @ 0x92552ec>,'*',<instance @ 0x92551ec>] and goto state 69
+   yacc.py: 423:Result : <instance @ 0x925568c> (<models.Node instance at 0x925568c>)
    yacc.py: 337:
    yacc.py: 338:State  : 93
    yacc.py: 352:Stack  : main_class class_list CLASS IDENTIFIER extends LEFT_BRACE declaration_list PUBLIC return_type_and_name LEFT_PARENTHESIS params_list RIGHT_PARENTHESIS LEFT_BRACE statements_list IF LEFT_PARENTHESIS expression RIGHT_PARENTHESIS statement ELSE IDENTIFIER ASSIGNMENT binary_expression . LexToken(SEMICOLON,';',14,278)
-   yacc.py: 389:Action : Reduce rule [expression -> binary_expression] with [<instance @ 0x87f06cc>] and goto state 45
-   yacc.py: 423:Result : <instance @ 0x87f06cc> (<models.Node instance at 0x87f06cc>)
+   yacc.py: 389:Action : Reduce rule [expression -> binary_expression] with [<instance @ 0x925568c>] and goto state 45
+   yacc.py: 423:Result : <instance @ 0x925522c> (<models.Node instance at 0x925522c>)
    yacc.py: 337:
    yacc.py: 338:State  : 131
    yacc.py: 352:Stack  : main_class class_list CLASS IDENTIFIER extends LEFT_BRACE declaration_list PUBLIC return_type_and_name LEFT_PARENTHESIS params_list RIGHT_PARENTHESIS LEFT_BRACE statements_list IF LEFT_PARENTHESIS expression RIGHT_PARENTHESIS statement ELSE IDENTIFIER ASSIGNMENT expression . LexToken(SEMICOLON,';',14,278)
-   yacc.py: 389:Action : Reduce rule [identifier_or_assignment -> ASSIGNMENT expression] with ['=',<instance @ 0x87f06cc>] and goto state 34
-   yacc.py: 423:Result : <tuple @ 0x87df8c4> (('identifier_or_assignment_2', '=', <mod ...)
+   yacc.py: 389:Action : Reduce rule [identifier_or_assignment -> ASSIGNMENT expression] with ['=',<instance @ 0x925522c>] and goto state 34
+   yacc.py: 423:Result : <tuple @ 0x92429b4> (('assign', None, <models.Node instance a ...)
    yacc.py: 337:
    yacc.py: 338:State  : 105
    yacc.py: 352:Stack  : main_class class_list CLASS IDENTIFIER extends LEFT_BRACE declaration_list PUBLIC return_type_and_name LEFT_PARENTHESIS params_list RIGHT_PARENTHESIS LEFT_BRACE statements_list IF LEFT_PARENTHESIS expression RIGHT_PARENTHESIS statement ELSE IDENTIFIER identifier_or_assignment . LexToken(SEMICOLON,';',14,278)
@@ -626,23 +626,23 @@
    yacc.py: 337:
    yacc.py: 338:State  : 133
    yacc.py: 352:Stack  : main_class class_list CLASS IDENTIFIER extends LEFT_BRACE declaration_list PUBLIC return_type_and_name LEFT_PARENTHESIS params_list RIGHT_PARENTHESIS LEFT_BRACE statements_list IF LEFT_PARENTHESIS expression RIGHT_PARENTHESIS statement ELSE IDENTIFIER identifier_or_assignment SEMICOLON . LexToken(RETURN,'return',15,281)
-   yacc.py: 389:Action : Reduce rule [statement -> IDENTIFIER identifier_or_assignment SEMICOLON] with ['num_aux',<tuple @ 0x87df8c4>,';'] and goto state 32
-   yacc.py: 423:Result : <instance @ 0x87f070c> (<models.Node instance at 0x87f070c>)
+   yacc.py: 389:Action : Reduce rule [statement -> IDENTIFIER identifier_or_assignment SEMICOLON] with ['num_aux',<tuple @ 0x92429b4>,';'] and goto state 32
+   yacc.py: 423:Result : <instance @ 0x92557ac> (<models.Node instance at 0x92557ac>)
    yacc.py: 337:
    yacc.py: 338:State  : 177
    yacc.py: 352:Stack  : main_class class_list CLASS IDENTIFIER extends LEFT_BRACE declaration_list PUBLIC return_type_and_name LEFT_PARENTHESIS params_list RIGHT_PARENTHESIS LEFT_BRACE statements_list IF LEFT_PARENTHESIS expression RIGHT_PARENTHESIS statement ELSE statement . LexToken(RETURN,'return',15,281)
-   yacc.py: 389:Action : Reduce rule [else_statement -> ELSE statement] with ['else',<instance @ 0x87f070c>] and goto state 38
-   yacc.py: 423:Result : <instance @ 0x87f062c> (<models.Node instance at 0x87f062c>)
+   yacc.py: 389:Action : Reduce rule [else_statement -> ELSE statement] with ['else',<instance @ 0x92557ac>] and goto state 38
+   yacc.py: 423:Result : <instance @ 0x925528c> (<models.Node instance at 0x925528c>)
    yacc.py: 337:
    yacc.py: 338:State  : 172
    yacc.py: 352:Stack  : main_class class_list CLASS IDENTIFIER extends LEFT_BRACE declaration_list PUBLIC return_type_and_name LEFT_PARENTHESIS params_list RIGHT_PARENTHESIS LEFT_BRACE statements_list IF LEFT_PARENTHESIS expression RIGHT_PARENTHESIS statement else_statement . LexToken(RETURN,'return',15,281)
-   yacc.py: 389:Action : Reduce rule [statement -> IF LEFT_PARENTHESIS expression RIGHT_PARENTHESIS statement else_statement] with ['if','(',<instance @ 0x87f056c>,')',<instance @ 0x87f05cc>,<instance @ 0x87f062c>] and goto state 36
-   yacc.py: 423:Result : <instance @ 0x87f052c> (<models.Node instance at 0x87f052c>)
+   yacc.py: 389:Action : Reduce rule [statement -> IF LEFT_PARENTHESIS expression RIGHT_PARENTHESIS statement else_statement] with ['if','(',<instance @ 0x9250e8c>,')',<instance @ 0x925524c>,<instance @ 0x925528c>] and goto state 36
+   yacc.py: 423:Result : <instance @ 0x925582c> (<models.Node instance at 0x925582c>)
    yacc.py: 337:
    yacc.py: 338:State  : 69
    yacc.py: 352:Stack  : main_class class_list CLASS IDENTIFIER extends LEFT_BRACE declaration_list PUBLIC return_type_and_name LEFT_PARENTHESIS params_list RIGHT_PARENTHESIS LEFT_BRACE statements_list statement . LexToken(RETURN,'return',15,281)
-   yacc.py: 389:Action : Reduce rule [statements_list -> statements_list statement] with [<instance @ 0x87f046c>,<instance @ 0x87f052c>] and goto state 27
-   yacc.py: 423:Result : <instance @ 0x87f04cc> (<models.Node instance at 0x87f04cc>)
+   yacc.py: 389:Action : Reduce rule [statements_list -> statements_list statement] with [<instance @ 0x9250eec>,<instance @ 0x925582c>] and goto state 27
+   yacc.py: 423:Result : <instance @ 0x9250f6c> (<models.Node instance at 0x9250f6c>)
    yacc.py: 337:
    yacc.py: 338:State  : 63
    yacc.py: 352:Stack  : main_class class_list CLASS IDENTIFIER extends LEFT_BRACE declaration_list PUBLIC return_type_and_name LEFT_PARENTHESIS params_list RIGHT_PARENTHESIS LEFT_BRACE statements_list . LexToken(RETURN,'return',15,281)
@@ -655,12 +655,12 @@
    yacc.py: 338:State  : 86
    yacc.py: 352:Stack  : main_class class_list CLASS IDENTIFIER extends LEFT_BRACE declaration_list PUBLIC return_type_and_name LEFT_PARENTHESIS params_list RIGHT_PARENTHESIS LEFT_BRACE statements_list RETURN IDENTIFIER . LexToken(SEMICOLON,';',15,296)
    yacc.py: 389:Action : Reduce rule [identifier_expression -> IDENTIFIER] with ['num_aux'] and goto state 76
-   yacc.py: 423:Result : <instance @ 0x87f050c> (<models.Node instance at 0x87f050c>)
+   yacc.py: 423:Result : <instance @ 0x9250fac> (<models.Node instance at 0x9250fac>)
    yacc.py: 337:
    yacc.py: 338:State  : 77
    yacc.py: 352:Stack  : main_class class_list CLASS IDENTIFIER extends LEFT_BRACE declaration_list PUBLIC return_type_and_name LEFT_PARENTHESIS params_list RIGHT_PARENTHESIS LEFT_BRACE statements_list RETURN identifier_expression . LexToken(SEMICOLON,';',15,296)
-   yacc.py: 389:Action : Reduce rule [expression -> identifier_expression] with [<instance @ 0x87f050c>] and goto state 49
-   yacc.py: 423:Result : <instance @ 0x87f050c> (<models.Node instance at 0x87f050c>)
+   yacc.py: 389:Action : Reduce rule [expression -> identifier_expression] with [<instance @ 0x9250fac>] and goto state 49
+   yacc.py: 423:Result : <instance @ 0x925588c> (<models.Node instance at 0x925588c>)
    yacc.py: 337:
    yacc.py: 338:State  : 97
    yacc.py: 352:Stack  : main_class class_list CLASS IDENTIFIER extends LEFT_BRACE declaration_list PUBLIC return_type_and_name LEFT_PARENTHESIS params_list RIGHT_PARENTHESIS LEFT_BRACE statements_list RETURN expression . LexToken(SEMICOLON,';',15,296)
@@ -672,13 +672,13 @@
    yacc.py: 337:
    yacc.py: 338:State  : 144
    yacc.py: 352:Stack  : main_class class_list CLASS IDENTIFIER extends LEFT_BRACE declaration_list PUBLIC return_type_and_name LEFT_PARENTHESIS params_list RIGHT_PARENTHESIS LEFT_BRACE statements_list RETURN expression SEMICOLON RIGHT_BRACE . LexToken(RIGHT_BRACE,'}',18,305)
-   yacc.py: 389:Action : Reduce rule [method -> PUBLIC return_type_and_name LEFT_PARENTHESIS params_list RIGHT_PARENTHESIS LEFT_BRACE statements_list RETURN expression SEMICOLON RIGHT_BRACE] with ['public',<instance @ 0x87f014c>,'(',<instance @ 0x87e3f8c>,')','{',<instance @ 0x87f04cc>,'return',<instance @ 0x87f050c>,';','}'] and goto state 17
-   yacc.py: 423:Result : <instance @ 0x87f044c> (<models.Node instance at 0x87f044c>)
+   yacc.py: 389:Action : Reduce rule [method -> PUBLIC return_type_and_name LEFT_PARENTHESIS params_list RIGHT_PARENTHESIS LEFT_BRACE statements_list RETURN expression SEMICOLON RIGHT_BRACE] with ['public',<list @ 0x9241b4c>,'(',<instance @ 0x9250d4c>,')','{',<instance @ 0x9250f6c>,'return',<instance @ 0x925588c>,';','}'] and goto state 17
+   yacc.py: 423:Result : <instance @ 0x925592c> (<models.Node instance at 0x925592c>)
    yacc.py: 337:
    yacc.py: 338:State  : 30
    yacc.py: 352:Stack  : main_class class_list CLASS IDENTIFIER extends LEFT_BRACE declaration_list method . LexToken(RIGHT_BRACE,'}',18,305)
-   yacc.py: 389:Action : Reduce rule [declaration_list -> declaration_list method] with [None,<instance @ 0x87f044c>] and goto state 12
-   yacc.py: 423:Result : <instance @ 0x87e3f2c> (<models.Node instance at 0x87e3f2c>)
+   yacc.py: 389:Action : Reduce rule [declaration_list -> declaration_list method] with [None,<instance @ 0x925592c>] and goto state 12
+   yacc.py: 423:Result : <instance @ 0x925080c> (<models.Node instance at 0x925080c>)
    yacc.py: 337:
    yacc.py: 338:State  : 21
    yacc.py: 352:Stack  : main_class class_list CLASS IDENTIFIER extends LEFT_BRACE declaration_list . LexToken(RIGHT_BRACE,'}',18,305)
@@ -686,20 +686,20 @@
    yacc.py: 337:
    yacc.py: 338:State  : 26
    yacc.py: 352:Stack  : main_class class_list CLASS IDENTIFIER extends LEFT_BRACE declaration_list RIGHT_BRACE . $end
-   yacc.py: 389:Action : Reduce rule [class -> CLASS IDENTIFIER extends LEFT_BRACE declaration_list RIGHT_BRACE] with ['class','Fac',None,'{',<instance @ 0x87e3f2c>,'}'] and goto state 7
-   yacc.py: 423:Result : <instance @ 0x87e3fac> (<models.Node instance at 0x87e3fac>)
+   yacc.py: 389:Action : Reduce rule [class -> CLASS IDENTIFIER extends LEFT_BRACE declaration_list RIGHT_BRACE] with ['class','Fac',<instance @ 0x92508cc>,'{',<instance @ 0x925080c>,'}'] and goto state 7
+   yacc.py: 423:Result : <instance @ 0x9250a4c> (<models.Node instance at 0x9250a4c>)
    yacc.py: 337:
    yacc.py: 338:State  : 8
    yacc.py: 352:Stack  : main_class class_list class . $end
-   yacc.py: 389:Action : Reduce rule [class_list -> class_list class] with [None,<instance @ 0x87e3fac>] and goto state 4
-   yacc.py: 423:Result : <instance @ 0x87e3f4c> (<models.Node instance at 0x87e3f4c>)
+   yacc.py: 389:Action : Reduce rule [class_list -> class_list class] with [None,<instance @ 0x9250a4c>] and goto state 4
+   yacc.py: 423:Result : <instance @ 0x9250cac> (<models.Node instance at 0x9250cac>)
    yacc.py: 337:
    yacc.py: 338:State  : 4
    yacc.py: 352:Stack  : main_class class_list . $end
-   yacc.py: 389:Action : Reduce rule [programm -> main_class class_list] with [<instance @ 0x87e3f6c>,<instance @ 0x87e3f4c>] and goto state 1
-   yacc.py: 423:Result : <instance @ 0x87aa90c> (<models.Node instance at 0x87aa90c>)
+   yacc.py: 389:Action : Reduce rule [programm -> main_class class_list] with [<instance @ 0x925084c>,<instance @ 0x9250cac>] and goto state 1
+   yacc.py: 423:Result : <instance @ 0x92111ec> (<models.Node instance at 0x92111ec>)
    yacc.py: 337:
    yacc.py: 338:State  : 2
    yacc.py: 352:Stack  : programm . $end
-   yacc.py: 484:Done   : Returning <instance @ 0x87aa90c> (<models.Node instance at 0x87aa90c>)
+   yacc.py: 484:Done   : Returning <instance @ 0x92111ec> (<models.Node instance at 0x92111ec>)
    yacc.py: 485:PLY: PARSE DEBUG END

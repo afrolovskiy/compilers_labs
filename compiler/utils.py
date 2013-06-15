@@ -22,14 +22,7 @@ class NodeDrawer:
 			for children in node.children:
 				children_id = self.draw_node(gr, children)
 				gr.add_edge(node_id, children_id)
-
-			for leaf in node.leaf:
-				leaf_id = self.id
-				gr.add_node(self.id, label=leaf)
-				self.id += 1
-				gr.add_edge(node_id, leaf_id)
 		else:
-			print "label:", node
 			gr.add_node(self.id, label=node)
 			self.id += 1
 

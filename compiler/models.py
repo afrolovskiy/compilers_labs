@@ -9,8 +9,7 @@ class JSONEncoder(json.JSONEncoder):
 
 
 class Node:
-    def __init__(self, type, children=[], leaf=[]):
+    def __init__(self, type, children=[]):
         self.type = type
         self.children = children
-        self.leaf = leaf
 
