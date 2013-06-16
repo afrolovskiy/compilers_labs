@@ -1,0 +1,23 @@
+; ModuleID = 'mymodule'
+
+@__internalGlobalConst = internal constant [4 x i8] c"%d\0A\00"
+
+declare i32 @printf(i8*, ...)
+
+define void @printInt(i32) {
+bb:
+  %1 = call i32 (i8*, ...)* @printf(i8* getelementptr inbounds ([4 x i8]* @__internalGlobalConst, i32 0, i32 0), i32 %0)
+  ret void
+}
+
+define i32 @main() {
+entry:
+  br label %bb
+
+bb:                                               ; preds = %entry
+  call void @printInt(i32 0)
+  call void @printInt(i32 42)
+  call void @printInt(i32 -21)
+  ret i32 0
+}
+
