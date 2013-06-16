@@ -64,7 +64,7 @@
    yacc.py: 338:State  : 64
    yacc.py: 352:Stack  : CLASS IDENTIFIER LEFT_BRACE PUBLIC STATIC VOID MAIN LEFT_PARENTHESIS STRING LEFT_BRACKET RIGHT_BRACKET IDENTIFIER RIGHT_PARENTHESIS LEFT_BRACE empty . LexToken(SYSTEM,'System',3,64)
    yacc.py: 389:Action : Reduce rule [statements_list -> empty] with [None] and goto state 26
-   yacc.py: 423:Result : <instance @ 0x8bc6a8c> (<models.Node instance at 0x8bc6a8c>)
+   yacc.py: 423:Result : <instance @ 0x9a5eaac> (<models.Node instance at 0x9a5eaac>)
    yacc.py: 337:
    yacc.py: 338:State  : 75
    yacc.py: 352:Stack  : CLASS IDENTIFIER LEFT_BRACE PUBLIC STATIC VOID MAIN LEFT_PARENTHESIS STRING LEFT_BRACKET RIGHT_BRACKET IDENTIFIER RIGHT_PARENTHESIS LEFT_BRACE statements_list . LexToken(SYSTEM,'System',3,64)
@@ -97,12 +97,12 @@
    yacc.py: 338:State  : 78
    yacc.py: 352:Stack  : CLASS IDENTIFIER LEFT_BRACE PUBLIC STATIC VOID MAIN LEFT_PARENTHESIS STRING LEFT_BRACKET RIGHT_BRACKET IDENTIFIER RIGHT_PARENTHESIS LEFT_BRACE statements_list SYSTEM POINT OUT POINT PRINTLN LEFT_PARENTHESIS INTEGER_LITERAL . LexToken(RIGHT_PARENTHESIS,')',3,85)
    yacc.py: 389:Action : Reduce rule [integer_literal_expression -> INTEGER_LITERAL] with [10] and goto state 77
-   yacc.py: 423:Result : <instance @ 0x8b8730c> (<models.Node instance at 0x8b8730c>)
+   yacc.py: 423:Result : <instance @ 0x9a1e32c> (<models.Node instance at 0x9a1e32c>)
    yacc.py: 337:
    yacc.py: 338:State  : 98
    yacc.py: 352:Stack  : CLASS IDENTIFIER LEFT_BRACE PUBLIC STATIC VOID MAIN LEFT_PARENTHESIS STRING LEFT_BRACKET RIGHT_BRACKET IDENTIFIER RIGHT_PARENTHESIS LEFT_BRACE statements_list SYSTEM POINT OUT POINT PRINTLN LEFT_PARENTHESIS integer_literal_expression . LexToken(RIGHT_PARENTHESIS,')',3,85)
-   yacc.py: 389:Action : Reduce rule [expression -> integer_literal_expression] with [<instance @ 0x8b8730c>] and goto state 50
-   yacc.py: 423:Result : <instance @ 0x8bc6b2c> (<models.Node instance at 0x8bc6b2c>)
+   yacc.py: 389:Action : Reduce rule [expression -> integer_literal_expression] with [<instance @ 0x9a1e32c>] and goto state 50
+   yacc.py: 423:Result : <instance @ 0x9a5eb4c> (<models.Node instance at 0x9a5eb4c>)
    yacc.py: 337:
    yacc.py: 338:State  : 178
    yacc.py: 352:Stack  : CLASS IDENTIFIER LEFT_BRACE PUBLIC STATIC VOID MAIN LEFT_PARENTHESIS STRING LEFT_BRACKET RIGHT_BRACKET IDENTIFIER RIGHT_PARENTHESIS LEFT_BRACE statements_list SYSTEM POINT OUT POINT PRINTLN LEFT_PARENTHESIS expression . LexToken(RIGHT_PARENTHESIS,')',3,85)
@@ -114,13 +114,13 @@
    yacc.py: 337:
    yacc.py: 338:State  : 181
    yacc.py: 352:Stack  : CLASS IDENTIFIER LEFT_BRACE PUBLIC STATIC VOID MAIN LEFT_PARENTHESIS STRING LEFT_BRACKET RIGHT_BRACKET IDENTIFIER RIGHT_PARENTHESIS LEFT_BRACE statements_list SYSTEM POINT OUT POINT PRINTLN LEFT_PARENTHESIS expression RIGHT_PARENTHESIS SEMICOLON . LexToken(RIGHT_BRACE,'}',4,92)
-   yacc.py: 389:Action : Reduce rule [statement -> SYSTEM POINT OUT POINT PRINTLN LEFT_PARENTHESIS expression RIGHT_PARENTHESIS SEMICOLON] with ['System','.','out','.','println','(',<instance @ 0x8bc6b2c>,')',';'] and goto state 40
-   yacc.py: 423:Result : <instance @ 0x8bc6c0c> (<models.Node instance at 0x8bc6c0c>)
+   yacc.py: 389:Action : Reduce rule [statement -> SYSTEM POINT OUT POINT PRINTLN LEFT_PARENTHESIS expression RIGHT_PARENTHESIS SEMICOLON] with ['System','.','out','.','println','(',<instance @ 0x9a5eb4c>,')',';'] and goto state 40
+   yacc.py: 423:Result : <instance @ 0x9a5ec2c> (<models.Node instance at 0x9a5ec2c>)
    yacc.py: 337:
    yacc.py: 338:State  : 69
    yacc.py: 352:Stack  : CLASS IDENTIFIER LEFT_BRACE PUBLIC STATIC VOID MAIN LEFT_PARENTHESIS STRING LEFT_BRACKET RIGHT_BRACKET IDENTIFIER RIGHT_PARENTHESIS LEFT_BRACE statements_list statement . LexToken(RIGHT_BRACE,'}',4,92)
-   yacc.py: 389:Action : Reduce rule [statements_list -> statements_list statement] with [<instance @ 0x8bc6a8c>,<instance @ 0x8bc6c0c>] and goto state 27
-   yacc.py: 423:Result : <instance @ 0x8bc68cc> (<models.Node instance at 0x8bc68cc>)
+   yacc.py: 389:Action : Reduce rule [statements_list -> statements_list statement] with [<instance @ 0x9a5eaac>,<instance @ 0x9a5ec2c>] and goto state 27
+   yacc.py: 423:Result : <instance @ 0x9a5e8ec> (<models.Node instance at 0x9a5e8ec>)
    yacc.py: 337:
    yacc.py: 338:State  : 75
    yacc.py: 352:Stack  : CLASS IDENTIFIER LEFT_BRACE PUBLIC STATIC VOID MAIN LEFT_PARENTHESIS STRING LEFT_BRACKET RIGHT_BRACKET IDENTIFIER RIGHT_PARENTHESIS LEFT_BRACE statements_list . LexToken(RIGHT_BRACE,'}',4,92)
@@ -128,8 +128,8 @@
    yacc.py: 337:
    yacc.py: 338:State  : 109
    yacc.py: 352:Stack  : CLASS IDENTIFIER LEFT_BRACE PUBLIC STATIC VOID MAIN LEFT_PARENTHESIS STRING LEFT_BRACKET RIGHT_BRACKET IDENTIFIER RIGHT_PARENTHESIS LEFT_BRACE statements_list RIGHT_BRACE . LexToken(RIGHT_BRACE,'}',5,94)
-   yacc.py: 389:Action : Reduce rule [main_method -> PUBLIC STATIC VOID MAIN LEFT_PARENTHESIS STRING LEFT_BRACKET RIGHT_BRACKET IDENTIFIER RIGHT_PARENTHESIS LEFT_BRACE statements_list RIGHT_BRACE] with ['public','static','void','main','(','String','[',']','a',')','{',<instance @ 0x8bc68cc>,'}'] and goto state 6
-   yacc.py: 423:Result : <instance @ 0x8bc6a4c> (<models.Node instance at 0x8bc6a4c>)
+   yacc.py: 389:Action : Reduce rule [main_method -> PUBLIC STATIC VOID MAIN LEFT_PARENTHESIS STRING LEFT_BRACKET RIGHT_BRACKET IDENTIFIER RIGHT_PARENTHESIS LEFT_BRACE statements_list RIGHT_BRACE] with ['public','static','void','main','(','String','[',']','a',')','{',<instance @ 0x9a5e8ec>,'}'] and goto state 6
+   yacc.py: 423:Result : <instance @ 0x9a5ea6c> (<models.Node instance at 0x9a5ea6c>)
    yacc.py: 337:
    yacc.py: 338:State  : 11
    yacc.py: 352:Stack  : CLASS IDENTIFIER LEFT_BRACE main_method . LexToken(RIGHT_BRACE,'}',5,94)
@@ -137,8 +137,8 @@
    yacc.py: 337:
    yacc.py: 338:State  : 16
    yacc.py: 352:Stack  : CLASS IDENTIFIER LEFT_BRACE main_method RIGHT_BRACE . $end
-   yacc.py: 389:Action : Reduce rule [main_class -> CLASS IDENTIFIER LEFT_BRACE main_method RIGHT_BRACE] with ['class',<str @ 0x8bb8908>,'{',<instance @ 0x8bc6a4c>,'}'] and goto state 5
-   yacc.py: 423:Result : <instance @ 0x8bc682c> (<models.Node instance at 0x8bc682c>)
+   yacc.py: 389:Action : Reduce rule [main_class -> CLASS IDENTIFIER LEFT_BRACE main_method RIGHT_BRACE] with ['class',<str @ 0x9a4d980>,'{',<instance @ 0x9a5ea6c>,'}'] and goto state 5
+   yacc.py: 423:Result : <instance @ 0x9a5e84c> (<models.Node instance at 0x9a5e84c>)
    yacc.py: 337:
    yacc.py: 338:State  : 1
    yacc.py: 352:Stack  : main_class . $end
@@ -148,14 +148,14 @@
    yacc.py: 338:State  : 5
    yacc.py: 352:Stack  : main_class empty . $end
    yacc.py: 389:Action : Reduce rule [class_list -> empty] with [None] and goto state 3
-   yacc.py: 423:Result : <NoneType @ 0x82bba80> (None)
+   yacc.py: 423:Result : <instance @ 0x998a2cc> (<models.Node instance at 0x998a2cc>)
    yacc.py: 337:
    yacc.py: 338:State  : 4
    yacc.py: 352:Stack  : main_class class_list . $end
-   yacc.py: 389:Action : Reduce rule [programm -> main_class class_list] with [<instance @ 0x8bc682c>,None] and goto state 1
-   yacc.py: 423:Result : <instance @ 0x8bc686c> (<models.Node instance at 0x8bc686c>)
+   yacc.py: 389:Action : Reduce rule [programm -> main_class class_list] with [<instance @ 0x9a5e84c>,<instance @ 0x998a2cc>] and goto state 1
+   yacc.py: 423:Result : <instance @ 0x9a5e88c> (<models.Node instance at 0x9a5e88c>)
    yacc.py: 337:
    yacc.py: 338:State  : 2
    yacc.py: 352:Stack  : programm . $end
-   yacc.py: 484:Done   : Returning <instance @ 0x8bc686c> (<models.Node instance at 0x8bc686c>)
+   yacc.py: 484:Done   : Returning <instance @ 0x9a5e88c> (<models.Node instance at 0x9a5e88c>)
    yacc.py: 485:PLY: PARSE DEBUG END

@@ -22,6 +22,7 @@ def p_empty_class_list(p):
     '''
     class_list : empty 
     '''
+    p[0] = Node('class_list')
     
 def p_class_list(p):
     '''
@@ -471,6 +472,15 @@ precedence = (
     ('right', 'POINT'),
 )
 
+
+def parse(filename):
+    parser = yacc.yacc()
+    with open(filename) as fin:
+        result = parser.parse(fin.read())
+        print json.dumps(result, cls=JSONEncoder)
+        drawer = NodeDrawer()
+        drawer.draw(result)	
+        return result
 
 
 if __name__ == '__main__':

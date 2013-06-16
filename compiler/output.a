@@ -1,4 +1,4 @@
-; ModuleID = 'mymodule'
+; ModuleID = 'mainmodule'
 
 @__internalGlobalConst = internal constant [4 x i8] c"%d\0A\00"
 
@@ -15,9 +15,6 @@ entry:
   br label %bb
 
 bb:                                               ; preds = %entry
-  call void @printInt(i32 0)
-  call void @printInt(i32 42)
-  call void @printInt(i32 -21)
+  call void @printInt(i32 10)
   ret i32 0
 }
-
