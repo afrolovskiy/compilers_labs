@@ -18,7 +18,7 @@ class NodeDrawer:
 		gr.write('foo.dot')
 		image = pgv.AGraph('foo.dot')
 		image.layout(prog='dot')
-		image.draw('foo.png')
+		image.draw('foo.svg')
 		image.close()
 
 	def draw_node(self, gr, node):

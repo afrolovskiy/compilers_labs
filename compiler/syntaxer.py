@@ -237,11 +237,11 @@ def p_complex_statement(p):
     '''
     st_type = p[2]
     if st_type[0] == 'var':
-        dim_node = Node('dim', childrens=[0])
+        dim_node = Node('dim', children=[0])
         type_id_node = Node('identifier', children=[p[1]])
         type_node = Node('type', children=[dim_node, type_id_node])
         id_node = st_type[1]
-        var_node = Node('variable', type_node, id_node)
+        var_node = Node('variable', children=[type_node, id_node])
         statement_node = Node('statement', children=[var_node])
     elif st_type[0] == 'assign':
         id_node = Node('identifier', children=[p[1]])        
@@ -274,7 +274,7 @@ def p_identifier_or_assignment_array_element_assign(p):
     '''
     index_node = Node('index', children=[p[2]])
     right_part_node = Node('rignt_part', children=[p[5]])
-    p[0] = ('assign', index_node, rigth_part_node)
+    p[0] = ('assign',index_node, right_part_node)
 
 def p_if_statement(p):
     '''

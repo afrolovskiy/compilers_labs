@@ -1,4 +1,4 @@
-#!/usr/bin/python
+# coding: utf-8
 import sys
  
 # sys.path.append('path/to/llvm-py') # you may need to setup the path to llvm-py explicitly.
@@ -30,6 +30,13 @@ class ASTWalker(object):
             callee = self._onExpression
         elif node.type == 'integer':
             callee = self._onInteger
+        elif node.type == 'class_list':
+            callee = self._onClassList
+        elif node.type == 'class':
+            callee = self._onClass
+        elif node.type == 'declarations_list':
+            callee = self._onDeclarationsList
+
            
         
         if callee:
@@ -108,8 +115,8 @@ class CodeGen(ASTWalker):
 
     def _onStatementsList(self, node):
         print '_onStatementsList'
-        for children in node.children:
-            self._dispatch(children)
+        for child in node.children:
+            self._dispatch(child)
 
     def _onStatement(self, node):   
         print '_onStatement'
@@ -119,7 +126,7 @@ class CodeGen(ASTWalker):
         print '_onPrint'
         expression = node.children[0]
         self._dispatch(expression)
-        value = expression.value
+        value = expression['value']
         if isinstance(value, ConstantInt):
             self._currentBuilder.call(self._printInt, [value])
         else:
@@ -128,11 +135,30 @@ class CodeGen(ASTWalker):
     def _onExpression(self, node):
         children = node.children[0]
         self._dispatch(children)
-        node.value = children.value
+        node.attrs['value'] = children['value']
 
     def _onInteger(self, node):
         value = int(node.children[0])
-        node.value = Constant.int(Type.int(32), value)
+        node.attrs['value'] = Constant.int(Type.int(32), value)
+
+    def _onClassList(self, node):
+        # только генерируем код для методов классов
+        for child in node.children:
+            self._dispatch(child)
+
+    def _onClass(self, node):
+        id_node = node.children[0]
+        name = id_node.children[0]
+
+        # на extends забиваем!
+
+        declarations_list = node.children[2]
+        self._dispatch(declarations_list)
+
+    def _onDeclarationsList(node):
+        pass
+        
+
         
         
          

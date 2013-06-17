@@ -15,6 +15,5 @@ entry:
   br label %bb
 
 bb:                                               ; preds = %entry
-  call void @printInt(i32 10)
   ret i32 0
 }
