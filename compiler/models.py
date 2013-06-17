@@ -1,8 +1,9 @@
 
 class Node:
-    def __init__(self, type, children=[]):
+    def __init__(self, type, children=[], parent=Nones):
         self.type = type
         self.children = children
+	self.parent = parent
 	self.value = None
 	self.attrs = {}
 

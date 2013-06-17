@@ -12,6 +12,7 @@ def check_semantics(ast):
         table.classes.append(class_node)     
     #check_no_undefined(class_list)    
     print table
+    
 
 def check_class_duplicates(ast):
     class_names = []
@@ -135,9 +136,9 @@ def check_method_args(node):
     print arg_names
     return arg_nodes
 
-def check_no_undefined(node, table):
-    pass
+#def check_no_undefined(node, table):
+#    for cl in node.children:
 
-    
+#def check_node(node, table, cl):
+#    if isinstance(node, Node) and node.type == 'method':
 
-    
